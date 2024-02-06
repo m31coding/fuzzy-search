@@ -1,0 +1,30 @@
+import { Match } from './match';
+import { Memento } from '../interfaces/memento';
+import { Meta } from '../interfaces/meta';
+import { Query } from '../interfaces/query';
+import { Result } from './result';
+import { SortingSearcher } from './sorting-searcher';
+
+const stringSearcher = {
+  index: (_terms: string[]): Meta => new Meta(),
+  getMatches: (query: Query): Result =>
+    new Result(
+      [new Match(7, 0.2), new Match(16, 1.0), new Match(10, 0.5), new Match(4, 0.5), new Match(8, 0.6)],
+      query,
+      new Meta()
+    ),
+  save: (_memento: Memento): void => {},
+  load: (_memento: Memento): void => {}
+};
+
+const sortingSearcher = new SortingSearcher(stringSearcher);
+
+test('can sort matches by quality and index', () => {
+  expect(sortingSearcher.getMatches(new Query('some query')).matches).toEqual([
+    new Match(16, 1.0),
+    new Match(8, 0.6),
+    new Match(4, 0.5),
+    new Match(10, 0.5),
+    new Match(7, 0.2)
+  ]);
+});

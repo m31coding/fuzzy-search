@@ -1,0 +1,10 @@
+export * from './commons/index';
+export * from './dynamic-searchers/index';
+export * from './entity-searchers/index';
+export * from './fuzzy-searchers/index';
+export * from './interfaces/index';
+export * from './normalization/index';
+export * from './performance/index';
+export * from './string-searchers/index';
+export { Config } from './config';
+export { SearcherFactory } from './searcher-factory';

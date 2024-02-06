@@ -1,0 +1,250 @@
+.center {
+  text-align: center;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+button {
+  height: 2em;
+  background-color: #f4f5f8;
+  border: 1px solid black;
+  padding: 0em 1em;
+  margin-bottom: 1em;
+}
+button:hover {
+  cursor: pointer;
+}
+button:active {
+  background-color: #e4e7ee;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  width: 100%;
+}
+table tbody tr {
+  border: solid 1px #dfdfdf;
+  border-left: 0;
+  border-right: 0;
+}
+table td {
+  padding: 0.75em 0.75em;
+}
+table th {
+  font-weight: bold;
+  padding: 0 0.75em 0.75em 0.75em;
+  text-align: left;
+}
+table thead {
+  border-bottom: solid 2px #dfdfdf;
+}
+table tfoot {
+  border-top: solid 2px #dfdfdf;
+}
+
+#fuzzy-demo {
+  width: 80%;
+  margin: auto;
+}
+#fuzzy-demo #dataset-header {
+  margin: 4em 0 2em 0;
+}
+#fuzzy-demo #data-selection {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: flex-start;
+  justify-content: space-between;
+  gap: 1em;
+  margin-bottom: 2em;
+}
+#fuzzy-demo .data-card {
+  background-color: #f4f5f8;
+  box-shadow: 5px 5px 10px dimgray;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 1.2em;
+  width: calc(50% - 0.5em);
+}
+#fuzzy-demo .data-card:hover {
+  box-shadow: 7px 7px 12px 2px dimgray;
+  cursor: pointer;
+}
+#fuzzy-demo .data-card .data-description {
+  margin-bottom: 0.5em;
+}
+#fuzzy-demo #index-status,
+#fuzzy-demo #reindex-status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+  margin-bottom: 1em;
+  gap: 1em;
+}
+#fuzzy-demo #index-status-text,
+#fuzzy-demo #reindex-status-text {
+  color: #1b998b;
+}
+#fuzzy-demo #cancel-button {
+  margin-bottom: 0em;
+}
+#fuzzy-demo #performance-test input {
+  width: 10em;
+  padding-left: 0.5em;
+  padding-right: 0px;
+}
+#fuzzy-demo details > summary {
+  margin-bottom: 1em;
+}
+#fuzzy-demo details > div {
+  margin-left: 2em;
+  margin-bottom: 1em;
+}
+#fuzzy-demo #hint {
+  padding-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+#fuzzy-demo #search-bar-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+#fuzzy-demo #search-bar-div #search-bar {
+  width: 100%;
+  font-size: 110%;
+  height: 2em;
+  padding: 0em 0.5em;
+}
+#fuzzy-demo #search-bar-div #query-duration {
+  width: 9em;
+  padding: 1em;
+  text-align: right;
+}
+#fuzzy-demo #name-container .script-div {
+  margin-bottom: 0.5em;
+}
+#fuzzy-demo #name-container .locales-for-script {
+  margin-bottom: 1em;
+}
+#fuzzy-demo #name-container #locale-selection {
+  margin-bottom: 1em;
+}
+#fuzzy-demo #matches-container {
+  margin-bottom: 1em;
+  position: relative;
+}
+#fuzzy-demo #matches-container tr:hover td {
+  background-color: #f4f5f8;
+}
+#fuzzy-demo #matches-container #matches-table {
+  table-layout: fixed;
+}
+#fuzzy-demo #matches-container th:first-child,
+#fuzzy-demo #matches-container td:first-child {
+  width: 4em;
+}
+#fuzzy-demo #matches-container th:nth-child(2),
+#fuzzy-demo #matches-container td:nth-child(2) {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 50%;
+}
+#fuzzy-demo #matches-container th:nth-child(3),
+#fuzzy-demo #matches-container td:nth-child(3) {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 50%;
+}
+#fuzzy-demo #matches-container th:last-child,
+#fuzzy-demo #matches-container td:last-child {
+  width: 7em;
+}
+#fuzzy-demo #matches-container th,
+#fuzzy-demo #matches-container td {
+  /* padding: 5px 10px; */
+  text-align: left;
+}
+#fuzzy-demo #matches-container .modal {
+  background-color: #f4f5f8;
+  box-shadow: 5px 5px 10px dimgray;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 1.2em;
+  background-color: white;
+  padding: 2em;
+  position: absolute;
+  z-index: 1;
+  left: 10%;
+  width: 80%;
+  overflow: auto;
+}
+#fuzzy-demo #matches-container .modal .entity-properties {
+  margin-bottom: 1.5em;
+}
+#fuzzy-demo #matches-container .modal button {
+  margin-bottom: 0em;
+}
+#fuzzy-demo #matches-container .modal #edit-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+#fuzzy-demo #matches-container .modal #edit-buttons button {
+  width: 8em;
+}
+#fuzzy-demo #matches-container .modal #add-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+#fuzzy-demo #matches-container .modal #add-buttons button {
+  width: 6em;
+}
+#fuzzy-demo #matches-container #edit-modal {
+  top: 10%;
+}
+#fuzzy-demo #matches-container #add-modal {
+  bottom: 0%;
+}
+#fuzzy-demo #data-preview-container #reindex-button,
+#fuzzy-demo #data-preview-container #reindex-cancel-button {
+  margin-bottom: 0em;
+}
+#fuzzy-demo #add-container p {
+  margin-top: 0em;
+  margin-bottom: 1em;
+}
+#fuzzy-demo textarea {
+  display: block;
+  margin-bottom: 1em;
+  line-height: 1.4em;
+}
+#fuzzy-demo .parameters {
+  display: flex;
+  flex-direction: column;
+}
+#fuzzy-demo .parameters label,
+#fuzzy-demo .parameters input {
+  display: flex;
+  flex-direction: column;
+}
+#fuzzy-demo .parameters input {
+  margin-bottom: 1em;
+  width: 10em;
+}
+#fuzzy-demo .parameter-error {
+  color: #ed4933;
+  display: inline-block;
+}/*# sourceMappingURL=main.css.map */

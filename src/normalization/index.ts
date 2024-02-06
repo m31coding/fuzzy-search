@@ -1,0 +1,9 @@
+export { DefaultNormalizer } from './default-normalizer';
+export { GenericNormalizer } from './generic-normalizer';
+export { LatinReplacements } from './latin-replacements';
+export { MultiNormalizer } from './multi-normalizer';
+export { NgramNormalizer } from './ngram-normalizer';
+export { NormalizationResult } from './normalization-result';
+export { NormalizerConfig } from './normalizer-config';
+export { SanitizingNormalizer } from './sanitizing-normalizer';
+export { VariationNormalizer } from './variation-normalizer';

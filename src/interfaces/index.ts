@@ -1,0 +1,10 @@
+export { DynamicSearcher } from './dynamic-searcher';
+export { EntityMatch } from './entity-match';
+export { EntityResult } from './entity-result';
+export { EntitySearcher } from './entity-searcher';
+export { Memento } from './memento';
+export { MementoSerializable } from './memento-serializable';
+export { Meta } from './meta';
+export { Normalizer } from './normalizer';
+export { Query } from './query';
+export { StringSearcher } from './string-searcher';

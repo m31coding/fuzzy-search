@@ -1,0 +1,314 @@
+$border-color: #dfdfdf;
+$background-light: #f4f5f8;
+$color-okay: #1b998b;
+$color-error: #ed4933;
+
+.center {
+  text-align: center;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+button {
+  height: 2em;
+  background-color: $background-light;
+  border: 1px solid black;
+  padding: 0em 1em;
+  margin-bottom: 1em;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: darken($background-light, 5%);
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  width: 100%;
+
+  tbody {
+    tr {
+      border: solid 1px $border-color;
+      border-left: 0;
+      border-right: 0;
+    }
+  }
+
+  td {
+    padding: 0.75em 0.75em;
+  }
+
+  th {
+    font-weight: bold;
+    padding: 0 0.75em 0.75em 0.75em;
+    text-align: left;
+  }
+
+  thead {
+    border-bottom: solid 2px $border-color;
+  }
+
+  tfoot {
+    border-top: solid 2px $border-color;
+  }
+}
+
+@mixin card-style {
+  background-color: $background-light;
+  box-shadow: 5px 5px 10px dimgray;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 1.2em;
+}
+
+@mixin clickable-card-style {
+  @include card-style();
+
+  &:hover {
+    box-shadow: 7px 7px 12px 2px dimgray;
+    cursor: pointer;
+  }
+}
+
+#fuzzy-demo {
+  width: 80%;
+  margin: auto;
+
+  #dataset-header {
+    margin: 4em 0 2em 0;
+  }
+
+  #data-selection {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: flex-start;
+    justify-content: space-between;
+    gap: 1em;
+    margin-bottom: 2em;
+  }
+
+  .data-card {
+    @include clickable-card-style();
+    width: calc(50% - 0.5em);
+
+    .data-description {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  #index-status,
+  #reindex-status {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-bottom: 1em;
+    gap: 1em;
+  }
+
+  #index-status-text,
+  #reindex-status-text {
+    color: $color-okay;
+  }
+
+  #cancel-button {
+    margin-bottom: 0em;
+  }
+
+  #performance-test input {
+    width: 10em;
+    padding-left: 0.5em;
+    padding-right: 0px;
+  }
+
+  details > summary {
+    margin-bottom: 1em;
+  }
+
+  details > div {
+    margin-left: 2em;
+    margin-bottom: 1em;
+  }
+
+  #hint {
+    padding-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  #search-bar-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2em;
+
+    #search-bar {
+      width: 100%;
+      font-size: 110%;
+      height: 2em;
+      padding: 0em 0.5em;
+    }
+
+    #query-duration {
+      width: 9em;
+      padding: 1em;
+      text-align: right;
+    }
+  }
+
+  #name-container {
+    .script-div {
+      margin-bottom: 0.5em;
+    }
+
+    .locales-for-script {
+      margin-bottom: 1em;
+    }
+
+    #locale-selection {
+      margin-bottom: 1em;
+    }
+  }
+
+  #matches-container {
+    margin-bottom: 1em;
+    position: relative;
+
+    tr:hover td {
+      background-color: $background-light;
+    }
+
+    #matches-table {
+      table-layout: fixed;
+    }
+
+    th:first-child,
+    td:first-child {
+      width: 4em;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 50%;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3) {
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 50%;
+    }
+
+    th:last-child,
+    td:last-child {
+      width: 7em;
+    }
+
+    th,
+    td {
+      /* padding: 5px 10px; */
+      text-align: left;
+    }
+
+    .modal {
+      @include card-style();
+      background-color: white;
+      padding: 2em;
+      position: absolute;
+      z-index: 1;
+      left: 10%;
+      width: 80%;
+      overflow: auto;
+
+      .entity-properties {
+        margin-bottom: 1.5em;
+      }
+
+      button {
+        margin-bottom: 0em;
+      }
+
+      #edit-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+
+        button {
+          width: 8em;
+        }
+      }
+
+      #add-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+
+        button {
+          width: 6em;
+        }
+      }
+    }
+
+    #edit-modal {
+      top: 10%;
+    }
+
+    #add-modal {
+      bottom: 0%;
+    }
+  }
+
+  #data-preview-container {
+    #reindex-button,
+    #reindex-cancel-button {
+      margin-bottom: 0em;
+    }
+  }
+
+  #add-container p {
+    margin-top: 0em;
+    margin-bottom: 1em;
+  }
+
+  textarea {
+    display: block;
+    margin-bottom: 1em;
+    line-height: 1.4em;
+  }
+
+  .parameters {
+    display: flex;
+    flex-direction: column;
+
+    label,
+    input {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      margin-bottom: 1em;
+      width: 10em;
+    }
+  }
+
+  .parameter-error {
+    color: $color-error;
+    display: inline-block;
+  }
+}
