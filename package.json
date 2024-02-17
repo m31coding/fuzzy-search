@@ -1,6 +1,6 @@
 {
   "name": "@m31coding/fuzzy-search",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "A fast, accurate and multilingual fuzzy search library.",
   "homepage": "https://github.com/m31coding/fuzzy-search",
