@@ -26,8 +26,8 @@
   "types": "./dist/fuzzy-search.d.ts",
   "exports": {
     "require": "./dist/fuzzy-search.cjs",
-    "default": "./dist/fuzzy-search.modern.js",
-    "types": "./dist/fuzzy-search.d.ts"
+    "types": "./dist/fuzzy-search.d.ts",
+    "default": "./dist/fuzzy-search.modern.js"
   },
   "scripts": {
     "test": "jest --coverage",
