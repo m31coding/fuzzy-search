@@ -8,7 +8,7 @@ export class Query {
   public readonly string: string;
 
   /**
-   * The maximum number of matches to return. If undefined, all matches will be returned.
+   * The maximum number of matches to return. Provide Infinity to return all matches.
    */
   public readonly topN: number;
 
