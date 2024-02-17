@@ -509,7 +509,7 @@ function renderMatches(matches, searchDataConfig) {
 }
 
 function fillTableWithMatches(matches, searchDataConfig) {
-  for (let i = 0; i < matches.length; i++) {
+  for (let i = 0; i < Math.min(matches.length, 10); i++) {
     let row = tableBody.children[i];
     row.match = matches[i];
     row.children[1].textContent = searchDataConfig.getEntityString(matches[i].entity);
