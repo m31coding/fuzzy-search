@@ -25,17 +25,34 @@
   "unpkg": "./dist/fuzzy-search.umd.js",
   "types": "./dist/fuzzy-search.d.ts",
   "exports": {
-    "require": "./dist/fuzzy-search.cjs",
-    "types": "./dist/fuzzy-search.d.ts",
-    "default": "./dist/fuzzy-search.modern.js"
+    ".": {
+      "module-sync": {
+        "types": "./dist/fuzzy-search.d.ts",
+        "default": "./dist/fuzzy-search.modern.js"
+      },
+      "module": {
+        "types": "./dist/fuzzy-search.d.ts",
+        "default": "./dist/fuzzy-search.modern.js"
+      },
+      "import": {
+        "types": "./dist/fuzzy-search.d.ts",
+        "default": "./dist/fuzzy-search.modern.js"
+      },
+      "default": {
+        "types": "./dist/fuzzy-search.d.cts",
+        "default": "./dist/fuzzy-search.cjs"
+      }
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "test": "jest --coverage",
     "dev": "microbundle watch",
-    "build": "microbundle",
+    "build": "microbundle && cp dist/fuzzy-search.d.ts ./dist/fuzzy-search.d.cts",
     "prettier": "prettier --config .prettierrc.json . --write",
     "eslint": "eslint --ext .ts src",
-    "typedoc": "typedoc src/fuzzy-search.ts"
+    "typedoc": "typedoc src/fuzzy-search.ts",
+    "prepack": "npm run build"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
