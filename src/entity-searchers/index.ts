@@ -1,2 +1,2 @@
-export { DefaultEntitySearcher } from './default-entity-searcher';
-export { EntitySearcherFactory } from './entity-searcher-factory';
+export { DefaultEntitySearcher } from './default-entity-searcher.js';
+export { EntitySearcherFactory } from './entity-searcher-factory.js';

@@ -1,7 +1,7 @@
-import { EntityResult } from './entity-result';
-import { MementoSerializable } from './memento-serializable';
-import { Meta } from './meta';
-import { Query } from './query';
+import { EntityResult } from './entity-result.js';
+import { MementoSerializable } from './memento-serializable.js';
+import { Meta } from './meta.js';
+import { Query } from './query.js';
 
 /**
  * An entity searcher for indexing entities and retrieving matches.

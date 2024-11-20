@@ -1,10 +1,10 @@
-import { HashUtilities } from '../commons/hash-utilities';
-import { Match } from './match';
-import { Memento } from '../interfaces/memento';
-import { Meta } from '../interfaces/meta';
-import { Query } from '../interfaces/query';
-import { Result } from './result';
-import { StringSearcher } from '../interfaces/string-searcher';
+import { HashUtilities } from '../commons/hash-utilities.js';
+import { Match } from './match.js';
+import { Memento } from '../interfaces/memento.js';
+import { Meta } from '../interfaces/meta.js';
+import { Query } from '../interfaces/query.js';
+import { Result } from './result.js';
+import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
  * A string searcher that penalizes matches that are unequal to the query string. More precisely, in order to safe

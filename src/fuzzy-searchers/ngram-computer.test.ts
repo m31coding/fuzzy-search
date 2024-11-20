@@ -1,5 +1,5 @@
-import { NgramComputer } from './ngram-computer';
-import { NgramComputerConfig } from './ngram-computer-config';
+import { NgramComputer } from './ngram-computer.js';
+import { NgramComputerConfig } from './ngram-computer-config.js';
 
 // Common n-grams.
 const commonNgramComputerConfig = new NgramComputerConfig(3);

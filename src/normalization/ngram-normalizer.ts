@@ -1,8 +1,8 @@
-import { Meta } from '../interfaces/meta';
-import { NormalizationResult } from './normalization-result';
-import { Normalizer } from '../interfaces/normalizer';
-import { NormalizerConfig } from './normalizer-config';
-import { StringUtilities } from '../commons/string-utilities';
+import { Meta } from '../interfaces/meta.js';
+import { NormalizationResult } from './normalization-result.js';
+import { Normalizer } from '../interfaces/normalizer.js';
+import { NormalizerConfig } from './normalizer-config.js';
+import { StringUtilities } from '../commons/string-utilities.js';
 
 /**
  * Normalization for creating proper n-grams.

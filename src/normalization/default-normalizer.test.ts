@@ -1,5 +1,5 @@
-import { DefaultNormalizer } from './default-normalizer';
-import { NormalizerConfig } from './normalizer-config';
+import { DefaultNormalizer } from './default-normalizer.js';
+import { NormalizerConfig } from './normalizer-config.js';
 
 const normalizer = DefaultNormalizer.create(NormalizerConfig.createDefaultConfig());
 

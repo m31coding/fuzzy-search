@@ -1,14 +1,14 @@
-import { Config } from '../config';
-import { DefaultEntitySearcher } from './default-entity-searcher';
-import { DefaultNormalizer } from '../normalization/default-normalizer';
-import { DistinctSearcher } from '../string-searchers/distinct-searcher';
-import { FuzzySearcher } from '../fuzzy-searchers/fuzzy-searcher';
-import { InequalityPenalizingSearcher } from '../string-searchers/inequality-penalizing-searcher';
-import { NgramComputer } from '../fuzzy-searchers/ngram-computer';
-import { Normalizer } from '../interfaces/normalizer';
-import { NormalizingSearcher } from '../string-searchers/normalizing-searcher';
-import { SortingSearcher } from '../string-searchers/sorting-searcher';
-import { StringSearcher } from '../interfaces/string-searcher';
+import { Config } from '../config.js';
+import { DefaultEntitySearcher } from './default-entity-searcher.js';
+import { DefaultNormalizer } from '../normalization/default-normalizer.js';
+import { DistinctSearcher } from '../string-searchers/distinct-searcher.js';
+import { FuzzySearcher } from '../fuzzy-searchers/fuzzy-searcher.js';
+import { InequalityPenalizingSearcher } from '../string-searchers/inequality-penalizing-searcher.js';
+import { NgramComputer } from '../fuzzy-searchers/ngram-computer.js';
+import { Normalizer } from '../interfaces/normalizer.js';
+import { NormalizingSearcher } from '../string-searchers/normalizing-searcher.js';
+import { SortingSearcher } from '../string-searchers/sorting-searcher.js';
+import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
  * Factory for creating entity searchers.

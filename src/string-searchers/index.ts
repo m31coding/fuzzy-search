@@ -1,7 +1,7 @@
-export { DistinctSearcher } from './distinct-searcher';
-export { InequalityPenalizingSearcher } from './inequality-penalizing-searcher';
-export { LiteralSearcher } from './literal-searcher';
-export { Match } from './match';
-export { NormalizingSearcher } from './normalizing-searcher';
-export { Result } from './result';
-export { SortingSearcher } from './sorting-searcher';
+export { DistinctSearcher } from './distinct-searcher.js';
+export { InequalityPenalizingSearcher } from './inequality-penalizing-searcher.js';
+export { LiteralSearcher } from './literal-searcher.js';
+export { Match } from './match.js';
+export { NormalizingSearcher } from './normalizing-searcher.js';
+export { Result } from './result.js';
+export { SortingSearcher } from './sorting-searcher.js';

@@ -1,6 +1,6 @@
-import { EntitySearcher } from './entity-searcher';
-import { Meta } from './meta';
-import { RemovalResult } from '../dynamic-searchers/removal-result';
+import { EntitySearcher } from './entity-searcher.js';
+import { Meta } from './meta.js';
+import { RemovalResult } from '../dynamic-searchers/removal-result.js';
 
 /**
  * A dynamic searcher that, in addition to indexing and searching, can also remove and upsert entities.

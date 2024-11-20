@@ -1,5 +1,5 @@
-import { NgramNormalizer } from './ngram-normalizer';
-import { NormalizerConfig } from './normalizer-config';
+import { NgramNormalizer } from './ngram-normalizer.js';
+import { NormalizerConfig } from './normalizer-config.js';
 
 const config = NormalizerConfig.createDefaultConfig();
 config.paddingLeft = '$$';

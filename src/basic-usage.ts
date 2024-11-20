@@ -1,6 +1,6 @@
 // import { Config } from './config';
-import { Query } from './interfaces/query';
-import { SearcherFactory } from './searcher-factory';
+import { Query } from './interfaces/query.js';
+import { SearcherFactory } from './searcher-factory.js';
 
 class Person {
   constructor(

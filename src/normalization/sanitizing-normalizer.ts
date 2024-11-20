@@ -1,6 +1,6 @@
-import { Meta } from '../interfaces/meta';
-import { NormalizationResult } from './normalization-result';
-import { Normalizer } from '../interfaces/normalizer';
+import { Meta } from '../interfaces/meta.js';
+import { NormalizationResult } from './normalization-result.js';
+import { Normalizer } from '../interfaces/normalizer.js';
 
 /**
  * Replaces null and undefined with empty strings.

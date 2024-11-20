@@ -1,13 +1,13 @@
-import { InvertedIndex } from './inverted-index';
-import { Match } from '../string-searchers/match';
-import { Memento } from '../interfaces/memento';
-import { Meta } from '../interfaces/meta';
-import { NgramComputer } from './ngram-computer';
-import { QualityComputer } from './quality-computer';
-import { Query } from '../interfaces/query';
-import { Result } from '../string-searchers/result';
-import { StringSearcher } from '../interfaces/string-searcher';
-import { TermIds } from './term-ids';
+import { InvertedIndex } from './inverted-index.js';
+import { Match } from '../string-searchers/match.js';
+import { Memento } from '../interfaces/memento.js';
+import { Meta } from '../interfaces/meta.js';
+import { NgramComputer } from './ngram-computer.js';
+import { QualityComputer } from './quality-computer.js';
+import { Query } from '../interfaces/query.js';
+import { Result } from '../string-searchers/result.js';
+import { StringSearcher } from '../interfaces/string-searcher.js';
+import { TermIds } from './term-ids.js';
 
 /**
  * Uses n-grams to find approximate matches.

@@ -1,9 +1,9 @@
-import { Match } from './match';
-import { Memento } from '../interfaces/memento';
-import { Meta } from '../interfaces/meta';
-import { Query } from '../interfaces/query';
-import { Result } from './result';
-import { SortingSearcher } from './sorting-searcher';
+import { Match } from './match.js';
+import { Memento } from '../interfaces/memento.js';
+import { Meta } from '../interfaces/meta.js';
+import { Query } from '../interfaces/query.js';
+import { Result } from './result.js';
+import { SortingSearcher } from './sorting-searcher.js';
 
 const stringSearcher = {
   index: (_terms: string[]): Meta => new Meta(),

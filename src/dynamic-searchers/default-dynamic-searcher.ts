@@ -1,11 +1,11 @@
-import { DefaultEntitySearcher } from '../entity-searchers/default-entity-searcher';
-import { DynamicSearcher } from '../interfaces/dynamic-searcher';
-import { EntityResult } from '../interfaces/entity-result';
-import { Memento } from '../interfaces/memento';
-import { Meta } from '../interfaces/meta';
-import { Query } from '../interfaces/query';
-import { RemovalResult } from './removal-result';
-import { ResultMerger } from './result-merger';
+import { DefaultEntitySearcher } from '../entity-searchers/default-entity-searcher.js';
+import { DynamicSearcher } from '../interfaces/dynamic-searcher.js';
+import { EntityResult } from '../interfaces/entity-result.js';
+import { Memento } from '../interfaces/memento.js';
+import { Meta } from '../interfaces/meta.js';
+import { Query } from '../interfaces/query.js';
+import { RemovalResult } from './removal-result.js';
+import { ResultMerger } from './result-merger.js';
 
 /**
  * The default implementation of the DynamicSearcher interface.

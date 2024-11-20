@@ -1,4 +1,4 @@
-export { PerformanceTest } from './performance-test';
-export { Report } from './report';
-export { TestRunParameters } from './test-run-parameters';
-export { TimedQuery } from './timed-query';
+export { PerformanceTest } from './performance-test.js';
+export { Report } from './report.js';
+export { TestRunParameters } from './test-run-parameters.js';
+export { TimedQuery } from './timed-query.js';

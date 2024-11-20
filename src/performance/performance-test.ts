@@ -1,8 +1,8 @@
-import { DynamicSearcher } from '../interfaces/dynamic-searcher';
-import { Query } from '../interfaces/query';
-import { Report } from './report';
-import { TestRunParameters } from './test-run-parameters';
-import { TimedQuery } from './timed-query';
+import { DynamicSearcher } from '../interfaces/dynamic-searcher.js';
+import { Query } from '../interfaces/query.js';
+import { Report } from './report.js';
+import { TestRunParameters } from './test-run-parameters.js';
+import { TimedQuery } from './timed-query.js';
 
 /**
  * A performance test for an entity searcher.

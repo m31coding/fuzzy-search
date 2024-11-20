@@ -1,7 +1,7 @@
-import { DynamicSearcher } from '../interfaces/dynamic-searcher';
-import { EntityMatch } from '../interfaces/entity-match';
-import { Query } from '../interfaces/query';
-import { SearcherFactory } from '../searcher-factory';
+import { DynamicSearcher } from '../interfaces/dynamic-searcher.js';
+import { EntityMatch } from '../interfaces/entity-match.js';
+import { Query } from '../interfaces/query.js';
+import { SearcherFactory } from '../searcher-factory.js';
 
 class Person {
   public constructor(

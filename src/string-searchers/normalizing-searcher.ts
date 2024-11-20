@@ -1,9 +1,9 @@
-import { Memento } from '../interfaces/memento';
-import { Meta } from '../interfaces/meta';
-import { Normalizer } from '../interfaces/normalizer';
-import { Query } from '../interfaces/query';
-import { Result } from './result';
-import { StringSearcher } from '../interfaces/string-searcher';
+import { Memento } from '../interfaces/memento.js';
+import { Meta } from '../interfaces/meta.js';
+import { Normalizer } from '../interfaces/normalizer.js';
+import { Query } from '../interfaces/query.js';
+import { Result } from './result.js';
+import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
  * A string searcher that normalizes the query string and the indexed strings before searching.

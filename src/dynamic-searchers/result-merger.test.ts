@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { EntityMatch } from '../interfaces/entity-match';
-import { EntityResult } from '../interfaces/entity-result';
-import { Meta } from '../interfaces/meta';
-import { Query } from '../interfaces/query';
-import { ResultMerger } from './result-merger';
+import { EntityMatch } from '../interfaces/entity-match.js';
+import { EntityResult } from '../interfaces/entity-result.js';
+import { Meta } from '../interfaces/meta.js';
+import { Query } from '../interfaces/query.js';
+import { ResultMerger } from './result-merger.js';
 
 test('can merge empty results', () => {
   const result1 = new EntityResult([], new Query('Sarah'), new Meta(new Map<string, any>()));

@@ -1,8 +1,8 @@
-import { Config } from './config';
-import { DefaultDynamicSearcher } from './dynamic-searchers/default-dynamic-searcher';
-import { DynamicSearcher } from './interfaces/dynamic-searcher';
-import { EntitySearcherFactory } from './entity-searchers/entity-searcher-factory';
-import { TimingDynamicSearcher } from './dynamic-searchers/timing-dynamic-searcher';
+import { Config } from './config.js';
+import { DefaultDynamicSearcher } from './dynamic-searchers/default-dynamic-searcher.js';
+import { DynamicSearcher } from './interfaces/dynamic-searcher.js';
+import { EntitySearcherFactory } from './entity-searchers/entity-searcher-factory.js';
+import { TimingDynamicSearcher } from './dynamic-searchers/timing-dynamic-searcher.js';
 
 /**
  * Factory for creating dynamic searchers.

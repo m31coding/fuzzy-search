@@ -1,9 +1,9 @@
-import { DefaultEntitySearcher } from './default-entity-searcher';
-import { EntityMatch } from '../interfaces/entity-match';
-import { EntitySearcher } from '../interfaces/entity-searcher';
-import { LiteralSearcher } from '../string-searchers/literal-searcher';
-import { Query } from '../interfaces/query';
-import { StringSearcher } from '../interfaces/string-searcher';
+import { DefaultEntitySearcher } from './default-entity-searcher.js';
+import { EntityMatch } from '../interfaces/entity-match.js';
+import { EntitySearcher } from '../interfaces/entity-searcher.js';
+import { LiteralSearcher } from '../string-searchers/literal-searcher.js';
+import { Query } from '../interfaces/query.js';
+import { StringSearcher } from '../interfaces/string-searcher.js';
 
 const literalSearcher: StringSearcher = new LiteralSearcher();
 const entitySearcher: EntitySearcher<{ id: number; name: string }, number> = new DefaultEntitySearcher(literalSearcher);
