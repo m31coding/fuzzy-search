@@ -11,20 +11,6 @@
         "isDefault": true
       },
       "label": "tsc: watch - tsconfig.json"
-    },
-    {
-      "label": "Fix ES Imports",
-      "type": "shell",
-      "command": "npx",
-      "args": ["fix-tsc-es-imports", "-y"],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "reveal": "silent",
-        "panel": "shared"
-      },
-      "problemMatcher": []
     }
   ]
 }

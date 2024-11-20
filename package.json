@@ -62,7 +62,6 @@
     "@typescript-eslint/parser": "^6.19.1",
     "eslint": "^8.56.0",
     "file-saver": "^2.0.5",
-    "fix-tsc-es-imports": "^0.1.6",
     "jest": "^29.7.0",
     "microbundle": "^0.15.1",
     "prettier": "^3.1.1",

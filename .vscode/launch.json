@@ -7,8 +7,7 @@
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/dist/basic-usage.js",
-      "outFiles": ["${workspaceFolder}/**/*.js"],
-      "preLaunchTask": "Fix ES Imports"
+      "outFiles": ["${workspaceFolder}/**/*.js"]
     }
   ]
 }
