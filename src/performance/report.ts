@@ -1,5 +1,5 @@
-import { TestRunParameters } from './test-run-parameters';
-import { TimedQuery } from './timed-query';
+import { TestRunParameters } from './test-run-parameters.js';
+import { TimedQuery } from './timed-query.js';
 
 /**
  * The outcome of a performance test run.

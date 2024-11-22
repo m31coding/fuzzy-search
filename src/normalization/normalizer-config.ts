@@ -1,5 +1,5 @@
-import { LatinReplacements } from './latin-replacements';
-import { StringUtilities } from '../commons/string-utilities';
+import { LatinReplacements } from './latin-replacements.js';
+import { StringUtilities } from '../commons/string-utilities.js';
 
 /**
  * Holds configuration values for the default normalizer.

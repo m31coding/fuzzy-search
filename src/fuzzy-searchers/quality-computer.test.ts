@@ -1,4 +1,4 @@
-import { QualityComputer } from './quality-computer';
+import { QualityComputer } from './quality-computer.js';
 
 test('can compute Jaccard coefficient test 1', () => {
   expect(QualityComputer.ComputeJaccardCoefficient(3, 5, 0)).toEqual(0);

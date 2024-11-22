@@ -1,7 +1,7 @@
-import { MementoSerializable } from './memento-serializable';
-import { Meta } from './meta';
-import { Query } from './query';
-import { Result } from '../string-searchers/result';
+import { MementoSerializable } from './memento-serializable.js';
+import { Meta } from './meta.js';
+import { Query } from './query.js';
+import { Result } from '../string-searchers/result.js';
 
 /**
  * A string searcher for indexing strings and retrieving matches.

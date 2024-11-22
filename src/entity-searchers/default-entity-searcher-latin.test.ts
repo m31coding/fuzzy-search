@@ -1,9 +1,9 @@
-import { Config } from '../config';
-import { EntityMatch } from '../interfaces/entity-match';
-import { EntitySearcher } from '../interfaces/entity-searcher';
-import { EntitySearcherFactory } from './entity-searcher-factory';
-import { Query } from '../interfaces/query';
-import { TestData } from '../commons/test-data';
+import { Config } from '../config.js';
+import { EntityMatch } from '../interfaces/entity-match.js';
+import { EntitySearcher } from '../interfaces/entity-searcher.js';
+import { EntitySearcherFactory } from './entity-searcher-factory.js';
+import { Query } from '../interfaces/query.js';
+import { TestData } from '../commons/test-data.js';
 
 const persons = TestData.persons.concat(TestData.emptyPersons);
 

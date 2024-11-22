@@ -1,8 +1,8 @@
-import { DistinctSearcher } from './distinct-searcher';
-import { LiteralSearcher } from './literal-searcher';
-import { Match } from './match';
-import { Query } from '../interfaces/query';
-import { StringSearcher } from '../interfaces/string-searcher';
+import { DistinctSearcher } from './distinct-searcher.js';
+import { LiteralSearcher } from './literal-searcher.js';
+import { Match } from './match.js';
+import { Query } from '../interfaces/query.js';
+import { StringSearcher } from '../interfaces/string-searcher.js';
 
 const literalSearcher: StringSearcher = new LiteralSearcher();
 const distinctSearcher = new DistinctSearcher(literalSearcher);

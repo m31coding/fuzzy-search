@@ -1,4 +1,4 @@
-import { Meta } from '../interfaces/meta';
+import { Meta } from '../interfaces/meta.js';
 
 /**
  * Represents a result from a bulk normalization.

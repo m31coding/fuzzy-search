@@ -1,4 +1,4 @@
-import { Meta } from '../interfaces/meta';
+import { Meta } from '../interfaces/meta.js';
 
 /**
  * Represents the result of a removal operation.

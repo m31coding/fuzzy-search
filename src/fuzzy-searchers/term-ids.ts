@@ -1,6 +1,6 @@
-import { ArrayUtilities } from '../commons/array-utilities';
-import { Memento } from '../interfaces/memento';
-import { MementoSerializable } from '../interfaces/memento-serializable';
+import { ArrayUtilities } from '../commons/array-utilities.js';
+import { Memento } from '../interfaces/memento.js';
+import { MementoSerializable } from '../interfaces/memento-serializable.js';
 
 /**
  * Stores term ids and their frequencies. Used in the inverted index.

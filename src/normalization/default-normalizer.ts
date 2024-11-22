@@ -1,10 +1,10 @@
-import { GenericNormalizer } from './generic-normalizer';
-import { MultiNormalizer } from './multi-normalizer';
-import { NgramNormalizer } from './ngram-normalizer';
-import { Normalizer } from '../interfaces/normalizer';
-import { NormalizerConfig } from './normalizer-config';
-import { SanitizingNormalizer } from './sanitizing-normalizer';
-import { VariationNormalizer } from './variation-normalizer';
+import { GenericNormalizer } from './generic-normalizer.js';
+import { MultiNormalizer } from './multi-normalizer.js';
+import { NgramNormalizer } from './ngram-normalizer.js';
+import { Normalizer } from '../interfaces/normalizer.js';
+import { NormalizerConfig } from './normalizer-config.js';
+import { SanitizingNormalizer } from './sanitizing-normalizer.js';
+import { VariationNormalizer } from './variation-normalizer.js';
 
 /**
  * Factory for creating the default normalizer.

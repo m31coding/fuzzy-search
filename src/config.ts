@@ -1,5 +1,5 @@
-import { NgramComputerConfig } from './fuzzy-searchers/ngram-computer-config';
-import { NormalizerConfig } from './normalization/normalizer-config';
+import { NgramComputerConfig } from './fuzzy-searchers/ngram-computer-config.js';
+import { NormalizerConfig } from './normalization/normalizer-config.js';
 
 /**
  * Holds configuration values for the searcher.

@@ -1,4 +1,4 @@
-import { NormalizationResult } from '../normalization/normalization-result';
+import { NormalizationResult } from '../normalization/normalization-result.js';
 
 /**
  * Normalizes query strings and data strings.

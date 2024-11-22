@@ -1,4 +1,4 @@
-import { Memento } from './memento';
+import { Memento } from './memento.js';
 
 /**
  * Interface for objects that can be saved and loaded from a memento.

@@ -1,8 +1,8 @@
-import { DynamicSearcher } from '../interfaces/dynamic-searcher';
-import { Memento } from '../interfaces/memento';
-import { Query } from '../interfaces/query';
-import { SearcherFactory } from '../searcher-factory';
-import { TestData } from '../commons/test-data';
+import { DynamicSearcher } from '../interfaces/dynamic-searcher.js';
+import { Memento } from '../interfaces/memento.js';
+import { Query } from '../interfaces/query.js';
+import { SearcherFactory } from '../searcher-factory.js';
+import { TestData } from '../commons/test-data.js';
 
 function createSearcher(): DynamicSearcher<
   { firstName: string; lastName: string },

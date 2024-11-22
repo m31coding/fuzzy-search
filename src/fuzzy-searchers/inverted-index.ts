@@ -1,6 +1,6 @@
-import { Memento } from '../interfaces/memento';
-import { MementoSerializable } from '../interfaces/memento-serializable';
-import { TermIds } from './term-ids';
+import { Memento } from '../interfaces/memento.js';
+import { MementoSerializable } from '../interfaces/memento-serializable.js';
+import { TermIds } from './term-ids.js';
 
 /**
  * Stores for every n-gram the ids of the terms that contain the n-gram.

@@ -1,6 +1,6 @@
-import { EntityMatch } from './entity-match';
-import { Meta } from './meta';
-import { Query } from './query';
+import { EntityMatch } from './entity-match.js';
+import { Meta } from './meta.js';
+import { Query } from './query.js';
 
 /**
  * Represents a result from an entity search.

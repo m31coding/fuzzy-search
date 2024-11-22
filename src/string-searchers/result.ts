@@ -1,6 +1,6 @@
-import { Match } from './match';
-import { Meta } from '../interfaces/meta';
-import { Query } from '../interfaces/query';
+import { Match } from './match.js';
+import { Meta } from '../interfaces/meta.js';
+import { Query } from '../interfaces/query.js';
 
 /**
  * A string searcher result.

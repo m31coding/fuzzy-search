@@ -1,10 +1,10 @@
-import { LiteralSearcher } from './literal-searcher';
-import { Match } from './match';
-import { NgramNormalizer } from '../normalization/ngram-normalizer';
-import { NormalizerConfig } from '../normalization/normalizer-config';
-import { NormalizingSearcher } from './normalizing-searcher';
-import { Query } from '../interfaces/query';
-import { StringSearcher } from '../interfaces/string-searcher';
+import { LiteralSearcher } from './literal-searcher.js';
+import { Match } from './match.js';
+import { NgramNormalizer } from '../normalization/ngram-normalizer.js';
+import { NormalizerConfig } from '../normalization/normalizer-config.js';
+import { NormalizingSearcher } from './normalizing-searcher.js';
+import { Query } from '../interfaces/query.js';
+import { StringSearcher } from '../interfaces/string-searcher.js';
 
 const config = NormalizerConfig.createDefaultConfig();
 config.paddingLeft = '$$';

@@ -1,12 +1,12 @@
-import { ArrayUtilities } from '../commons/array-utilities';
-import { EntityMatch } from '../interfaces/entity-match';
-import { EntityResult } from '../interfaces/entity-result';
-import { EntitySearcher } from '../interfaces/entity-searcher';
-import { Memento } from '../interfaces/memento';
-import { Meta } from '../interfaces/meta';
-import { Query } from '../interfaces/query';
-import { Result } from '../string-searchers/result';
-import { StringSearcher } from '../interfaces/string-searcher';
+import { ArrayUtilities } from '../commons/array-utilities.js';
+import { EntityMatch } from '../interfaces/entity-match.js';
+import { EntityResult } from '../interfaces/entity-result.js';
+import { EntitySearcher } from '../interfaces/entity-searcher.js';
+import { Memento } from '../interfaces/memento.js';
+import { Meta } from '../interfaces/meta.js';
+import { Query } from '../interfaces/query.js';
+import { Result } from '../string-searchers/result.js';
+import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
  * A searcher that indexes and retrieves entities.

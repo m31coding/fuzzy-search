@@ -1,4 +1,4 @@
-import { NgramComputerConfig } from './ngram-computer-config';
+import { NgramComputerConfig } from './ngram-computer-config.js';
 
 /**
  * Computes the n-grams of a string.
