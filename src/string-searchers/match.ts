@@ -11,7 +11,5 @@ export class Match {
     public readonly index: number,
     public quality: number
   ) {
-    this.index = index;
-    this.quality = quality;
   }
 }
