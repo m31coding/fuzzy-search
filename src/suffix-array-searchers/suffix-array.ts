@@ -1,6 +1,8 @@
+import { StringComparison } from './string-comparison.js';
+
 export class SuffixArray {
 
-    private readonly eoc: number = Number.MAX_SAFE_INTEGER;
+    private readonly eoc: number = 2147483647;
     private m_str: string;
     private m_sa: Int32Array;
     private m_isa: Int32Array;
@@ -9,15 +11,22 @@ export class SuffixArray {
     private m_subChains: Chain[] = [];
     private m_nextRank: number = 1;
 
-    public constructor(private readonly str: string) {
+    public static Create(str: string): Int32Array {
+        if (str == null) {
+            throw new Error('Input string cannot be null.');
+        }
+        const suffixArray: SuffixArray = new SuffixArray(str);
+        suffixArray.FormInitialChains();
+        suffixArray.BuildSufixArray();
+        return suffixArray.m_sa;
+    }
+
+    private constructor(private readonly str: string) {
         const l = str.length;
         this.m_str = str;
         this.m_sa = new Int32Array(l);
         this.m_isa = new Int32Array(l);
         this.m_chainHeadsDict = new Map<number, number>();
-
-        this.FormInitialChains();
-        this.BuildSufixArray();
     }
 
     private FormInitialChains(): void {
@@ -114,7 +123,11 @@ export class SuffixArray {
     }
 
     private SortAndPushSubchains(): void {
-        this.m_subChains.sort();
+        this.m_subChains.sort((c1: Chain, c2: Chain): number => {
+            const len = Math.min(c1.length, c2.length);
+            return StringComparison.compareSubstringsOrdinal(this.m_str, c1.head, this.m_str, c2.head, len);
+
+        });
         for (let i = this.m_subChains.length - 1; i >= 0; i--) {
             this.m_chainStack.push(this.m_subChains[i]);
         }
