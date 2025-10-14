@@ -17,7 +17,7 @@ export class NormalizingSearcher implements StringSearcher {
   public constructor(
     private readonly stringSearcher: StringSearcher,
     private readonly normalizer: Normalizer
-  ) {}
+  ) { }
 
   /**
    * {@inheritDoc StringSearcher.index}
