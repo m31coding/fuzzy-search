@@ -13,8 +13,8 @@ export class Query {
   public readonly topN: number;
 
   /**
-   * The minimum quality of matches to return. Increasing this value will increase the performance but make
-   * the searcher less fuzzy. The value must be between 0 and 1.
+   * The minimum quality of matches to return. Increasing this value will increase the performance but reduce the 
+   * number of matches. The value must be between 0 and 1.
    */
   public readonly minQuality: number;
 
@@ -23,7 +23,7 @@ export class Query {
    * @param string The query string.
    * @param topN The maximum number of matches to return. Provide Infinity to return all matches.
    * @param minQuality The minimum quality of matches to return. Increasing this value will increase the
-   * performance but make the searcher less fuzzy. The value must be between 0 and 1; lower or larger values will be
+   * performance but reduce the number of matches. The value must be between 0 and 1; lower or larger values will be
    * clamped.
    */
   public constructor(string: string, topN: number = 10, minQuality: number = 0.3) {

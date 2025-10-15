@@ -1,13 +1,117 @@
 import { Memento, Meta, Query, Result } from '../fuzzy-search.js';
+import { Match } from '../string-searchers/match.js';
+import { StringComparison } from './string-comparison.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
+import { SuffixArray } from './suffix-array.js';
+
+// todo: make sure the terms don't have the separating character. Move to a suffix array config.
 
 export class SuffixArraySearcher implements StringSearcher {
+
+    private readonly separator = 'µ';
+    private str: string;
+    private suffixArray: Int32Array;
+    private indexToTermIndex: Int32Array;
+    private termLengths: Int32Array;
+
+    public constructor() {
+        this.str = '';
+        this.suffixArray = new Int32Array(0);
+        this.indexToTermIndex = new Int32Array(0);
+        this.termLengths = new Int32Array(0);
+    }
+
     index(terms: string[]): Meta {
-        throw new Error('Method not implemented.');
+        const start = performance.now();
+        this.str = this.separator + terms.join(this.separator) + this.separator;
+        this.suffixArray = SuffixArray.create(this.str);
+        this.indexToTermIndex = new Int32Array(this.suffixArray.length);
+        this.termLengths = new Int32Array(terms.length);
+
+        let i = 0;
+        for (let j = 0; j < terms.length; j++) {
+            this.termLengths[j] = terms[j].length;
+            for (let k = 0; k <= terms[j].length; k++) {
+                this.indexToTermIndex[i++] = j;
+            }
+        }
+
+        this.indexToTermIndex[i++] = -1;
+        const duration = Math.round(performance.now() - start);
+
+        const meta = new Meta();
+        meta.add('suffixArraySearcherIndexing', duration);
+        return meta;
     }
+
     getMatches(query: Query): Result {
-        throw new Error('Method not implemented.');
+        if (query.string == null || query.string === '') {
+            return new Result([], query, new Meta());
+        }
+
+        // todo prefix: pass query.string modified
+        const [start, end] = this.GetPositionsInSuffixArray(query.string);
+        const matchedTermIds = new Int32Array(end - start);
+
+        let i = 0;
+        for (let j = start; j < end; j++) {
+            const termIndex = this.indexToTermIndex[this.suffixArray[j]];
+            matchedTermIds[i++] = termIndex;
+        }
+
+        const matches: Match[] = [];
+
+        let quality = 0;
+        for (let k = 0; k < matchedTermIds.length; k++) {
+            quality = this.computeQuality(query.string.length, this.termLengths[matchedTermIds[k]]);
+            if (quality > query.minQuality) {
+                matches.push(new Match(matchedTermIds[k], quality));
+            }
+        }
+
+        // todo: remove duplicate matches, measure performance
+        return new Result(matches, query, new Meta());
     }
+
+    private computeQuality(queryLength: number, termLength: number): number {
+        return queryLength / termLength;
+    }
+
+    private GetPositionsInSuffixArray(substring: string): number[] {
+        let left = 0;
+        let right = this.suffixArray.length;
+        let middle = 0;
+
+        while (left < right) {
+            middle = Math.floor((left + right) / 2);
+
+            if (StringComparison.compareOrdinal(
+                this.str, this.suffixArray[middle], substring, 0, substring.length) < 0) {
+                left = middle + 1;
+            }
+            else {
+                right = middle;
+            }
+        }
+
+        const start = left;
+        right = this.suffixArray.length;
+
+        while (left < right) {
+            middle = Math.floor((left + right) / 2);
+            if (StringComparison.compareOrdinal(
+                this.str, this.suffixArray[middle], substring, 0, substring.length) <= 0) {
+                left = middle + 1;
+            }
+            else {
+                right = middle;
+            }
+        }
+
+        return [start, right];
+    }
+
+
     save(memento: Memento): void {
         throw new Error('Method not implemented.');
     }

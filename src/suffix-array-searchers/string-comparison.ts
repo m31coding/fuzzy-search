@@ -1,7 +1,7 @@
 
 export class StringComparison {
 
-    public static compareSubstringsOrdinal(
+    public static compareOrdinal(
         strA: string,
         indexA: number,
         strB: string,

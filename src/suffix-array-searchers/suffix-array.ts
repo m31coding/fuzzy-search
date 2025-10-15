@@ -11,7 +11,7 @@ export class SuffixArray {
     private m_subChains: Chain[] = [];
     private m_nextRank: number = 1;
 
-    public static Create(str: string): Int32Array {
+    public static create(str: string): Int32Array {
         if (str == null) {
             throw new Error('Input string cannot be null.');
         }
@@ -125,7 +125,7 @@ export class SuffixArray {
     private SortAndPushSubchains(): void {
         this.m_subChains.sort((c1: Chain, c2: Chain): number => {
             const len = Math.min(c1.length, c2.length);
-            return StringComparison.compareSubstringsOrdinal(this.m_str, c1.head, this.m_str, c2.head, len);
+            return StringComparison.compareOrdinal(this.m_str, c1.head, this.m_str, c2.head, len);
 
         });
         for (let i = this.m_subChains.length - 1; i >= 0; i--) {
