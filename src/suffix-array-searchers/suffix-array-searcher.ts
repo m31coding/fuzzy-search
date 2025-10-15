@@ -79,37 +79,37 @@ export class SuffixArraySearcher implements StringSearcher {
     }
 
     private GetPositionsInSuffixArray(substring: string): number[] {
-        let left = 0;
-        let right = this.suffixArray.length;
-        let middle = 0;
+        let l = 0;
+        let r = this.suffixArray.length;
+        let mid = 0;
 
-        while (left < right) {
-            middle = Math.floor((left + right) / 2);
+        while (l < r) {
+            mid = Math.floor((l + r) / 2);
 
             if (StringComparison.compareOrdinal(
-                this.str, this.suffixArray[middle], substring, 0, substring.length) < 0) {
-                left = middle + 1;
+                substring, 0, this.str, this.suffixArray[mid], substring.length) > 0) {
+                l = mid + 1;
             }
             else {
-                right = middle;
+                r = mid;
             }
         }
 
-        const start = left;
-        right = this.suffixArray.length;
+        const start = l;
+        r = this.suffixArray.length;
 
-        while (left < right) {
-            middle = Math.floor((left + right) / 2);
+        while (l < r) {
+            mid = Math.floor((l + r) / 2);
             if (StringComparison.compareOrdinal(
-                this.str, this.suffixArray[middle], substring, 0, substring.length) <= 0) {
-                left = middle + 1;
+                substring, 0, this.str, this.suffixArray[mid], substring.length) == 0) {
+                l = mid + 1;
             }
             else {
-                right = middle;
+                r = mid;
             }
         }
 
-        return [start, right];
+        return [start, r];
     }
 
 
