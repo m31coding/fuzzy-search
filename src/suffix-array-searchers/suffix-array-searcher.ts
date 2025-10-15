@@ -51,6 +51,7 @@ export class SuffixArraySearcher implements StringSearcher {
 
         // todo prefix: pass query.string modified
         const [start, end] = this.GetPositionsInSuffixArray(query.string);
+        // todo: refactor such that end is included.
         const matchedTermIds = new Int32Array(end - start);
 
         let i = 0;
