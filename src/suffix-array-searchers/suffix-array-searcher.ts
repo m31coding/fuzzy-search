@@ -1,5 +1,8 @@
-import { Memento, Meta, Query, Result } from '../fuzzy-search.js';
 import { Match } from '../string-searchers/match.js';
+import { Memento } from '../interfaces/memento.js';
+import { Meta } from '../interfaces/meta.js';
+import { Query } from '../interfaces/query.js';
+import { Result } from '../string-searchers/result.js';
 import { StringComparison } from './string-comparison.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 import { SuffixArray } from './suffix-array.js';
@@ -116,6 +119,7 @@ export class SuffixArraySearcher implements StringSearcher {
     save(memento: Memento): void {
         throw new Error('Method not implemented.');
     }
+
     load(memento: Memento): void {
         throw new Error('Method not implemented.');
     }
