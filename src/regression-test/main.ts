@@ -3,6 +3,7 @@
 */
 
 import { readFileSync, writeFileSync } from 'fs';
+import { Config } from '../config.js';
 import { EntityMatch } from '../interfaces/entity-match.js';
 import { EntityResult } from '../interfaces/entity-result.js';
 import { Meta } from '../interfaces/meta.js';
@@ -16,11 +17,13 @@ interface GeoEntity {
 
 const outputPath = './src/regression-test/output';
 const outputColumnWidth = 40;
-const text = readFileSync('./data/world-ctvs.txt', 'utf-8');
+const text = readFileSync('./data/world-ctvs.txt', 'utf8');
 const lines = text.split('\n').slice(1);
 const entities = lines.map((l, index) => ({ id: index, name: l }));
 
-const searcher = SearcherFactory.createDefaultSearcher<GeoEntity, number>();
+const config = Config.createDefaultConfig();
+config.normalizerConfig.allowCharacter = (_) => true;
+const searcher = SearcherFactory.createSearcher<GeoEntity, number>(config);
 
 console.log(`Indexing ${entities.length} entities...`);
 const indexingMeta: Meta = searcher.indexEntities(
@@ -52,6 +55,7 @@ console.log("Finished.")
 function runQuery(queryName: string, queryString: string) {
     const query: Query = new Query(queryString);
     const result: EntityResult<GeoEntity> = searcher.getMatches(query);
+    console.log(`'${queryString}' (${queryName}): ${result.matches.length} matches.`);
     const queryJson = JSON.stringify(query, null, 2);
     const metaJson = metaToJson(result.meta);
     const matchesString = matchesToString(result.matches);
