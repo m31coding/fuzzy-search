@@ -1,0 +1,22 @@
+{
+  "string": "sonne",
+  "topN": 10,
+  "minQuality": 0.3
+}
+
+{
+  "queryDuration": 2
+}
+
+Rank    Entity                                  Matched String                          Quality 
+
+1       Sonnen                                  Sonnen                                  0.81    
+2       Sonene                                  Sonene                                  0.68    
+3       Sonna                                   Sonna                                   0.67    
+4       Sonna                                   Sonna                                   0.67    
+5       Sone                                    Sone                                    0.63    
+6       Sonon                                   Sonon                                   0.63    
+7       Sone                                    Sone                                    0.63    
+8       Sone                                    Sone                                    0.63    
+9       Sonnega                                 Sonnega                                 0.59    
+10      Sonnar                                  Sonnar                                  0.54    

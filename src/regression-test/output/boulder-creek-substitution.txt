@@ -1,0 +1,22 @@
+{
+  "string": "boulder creak",
+  "topN": 10,
+  "minQuality": 0.3
+}
+
+{
+  "queryDuration": 2
+}
+
+Rank    Entity                                  Matched String                          Quality 
+
+1       Boulder Creek                           Boulder Creek                           0.75    
+2       Boulder City                            Boulder City                            0.61    
+3       Boulder                                 Boulder                                 0.54    
+4       Bouldercombe                            Bouldercombe                            0.54    
+5       South Boulder                           South Boulder                           0.54    
+6       Boulder                                 Boulder                                 0.54    
+7       Boulder Hill                            Boulder Hill                            0.54    
+8       The Boulders                            The Boulders                            0.47    
+9       Boulders                                Boulders                                0.47    
+10      Boulder Junction                        Boulder Junction                        0.45    
