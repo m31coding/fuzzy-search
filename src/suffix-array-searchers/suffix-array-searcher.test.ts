@@ -52,6 +52,10 @@ test('can find infix matches test 3', () => {
   expect(getMatches('l')).toEqual([new Match(0, 1 / 5), new Match(2, 1 / 6), new Match(3, 1 / 5), new Match(4, 1 / 7)]);
 });
 
+test('no matches for non-existing substring', () => {
+  expect(getMatches('xyz')).toEqual([]);
+});
+
 test('empty query returns no matches', () => {
   expect(getMatches('')).toEqual([]);
 });
@@ -63,5 +67,3 @@ test('null query returns no matches', () => {
 test('undefined query returns no matches', () => {
   expect(getMatches(undefined!)).toEqual([]);
 });
-
-// todo: test substring that is not present
