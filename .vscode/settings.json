@@ -5,9 +5,14 @@
     "editor.formatOnSave": false
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.rulers": [120],
+  "editor.rulers": [
+    120
+  ],
   "liveServer.settings.port": 5501,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "[plaintext]": {
+    "editor.renderControlCharacters": false
+  },
 }
