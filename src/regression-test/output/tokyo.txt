@@ -1,0 +1,13 @@
+{
+  "string": "東京都",
+  "topN": 10,
+  "minQuality": 0.3
+}
+
+{
+  "queryDuration": 2
+}
+
+Rank    Entity                                  Matched String                          Quality 
+
+1       東京都                                     東京都                                     1.00    
