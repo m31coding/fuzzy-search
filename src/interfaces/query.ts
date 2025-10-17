@@ -13,7 +13,7 @@ export class Query {
   public readonly topN: number;
 
   /**
-   * The minimum quality of matches to return. Increasing this value will increase the performance but reduce the 
+   * The minimum quality of matches to return. Increasing this value will increase the performance but reduce the
    * number of matches. The value must be between 0 and 1.
    */
   public readonly minQuality: number;
