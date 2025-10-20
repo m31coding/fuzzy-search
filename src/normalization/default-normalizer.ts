@@ -1,6 +1,6 @@
+import { CharacterNormalizer } from './character-normalizer.js';
 import { GenericNormalizer } from './generic-normalizer.js';
 import { MultiNormalizer } from './multi-normalizer.js';
-import { NgramNormalizer } from './ngram-normalizer.js';
 import { Normalizer } from '../interfaces/normalizer.js';
 import { NormalizerConfig } from './normalizer-config.js';
 import { SanitizingNormalizer } from './sanitizing-normalizer.js';
@@ -21,7 +21,8 @@ export class DefaultNormalizer {
       variation.toLowerCase().normalize('NFKC')
     );
     const normalizer3 = new GenericNormalizer((input: string): string => input.normalize('NFKD'));
-    const normalizer4 = new NgramNormalizer(normalizerConfig);
+    const normalizer4 = new CharacterNormalizer(
+      normalizerConfig.treatCharacterAsSpace, normalizerConfig.allowCharacter);
     const multiNormalizer = new MultiNormalizer([normalizer1, normalizer2, normalizer3, normalizer4]);
     return multiNormalizer;
   }

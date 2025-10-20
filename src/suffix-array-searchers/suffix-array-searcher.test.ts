@@ -2,7 +2,7 @@ import { Match } from '../string-searchers/match.js';
 import { Query } from '../interfaces/query.js';
 import { SuffixArraySearcher } from './suffix-array-searcher.js';
 
-const suffixArraySearcher: SuffixArraySearcher = new SuffixArraySearcher();
+const suffixArraySearcher: SuffixArraySearcher = new SuffixArraySearcher('$');
 suffixArraySearcher.index(['Alice', 'Bob', 'Carlos', 'Carol', 'Charlie']);
 
 function getMatches(queryString: string): Match[] {

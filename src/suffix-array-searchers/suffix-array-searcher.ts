@@ -10,13 +10,14 @@ import { SuffixArray } from './suffix-array.js';
 // todo: make sure the terms don't have the separating character. Move to a suffix array config.
 
 export class SuffixArraySearcher implements StringSearcher {
-  private readonly separator = 'µ';
+  private separator: string;
   private str: string;
   private suffixArray: Int32Array;
   private indexToTermIndex: Int32Array;
   private termLengths: Int32Array;
 
-  public constructor() {
+  public constructor(separator: string) {
+    this.separator = separator;
     this.str = '';
     this.suffixArray = new Int32Array(0);
     this.indexToTermIndex = new Int32Array(0);
@@ -111,10 +112,16 @@ export class SuffixArraySearcher implements StringSearcher {
   }
 
   save(memento: Memento): void {
-    throw new Error('Method not implemented.');
+    memento.add(this.str);
+    memento.add(this.suffixArray);
+    memento.add(this.indexToTermIndex);
+    memento.add(this.termLengths);
   }
 
   load(memento: Memento): void {
-    throw new Error('Method not implemented.');
+    this.str = memento.get();
+    this.suffixArray = memento.get();
+    this.indexToTermIndex = memento.get();
+    this.termLengths = memento.get();
   }
 }

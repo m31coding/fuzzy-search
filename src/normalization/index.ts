@@ -1,3 +1,4 @@
+export { CharacterNormalizer } from './character-normalizer.js';
 export { DefaultNormalizer } from './default-normalizer.js';
 export { GenericNormalizer } from './generic-normalizer.js';
 export { LatinReplacements } from './latin-replacements.js';
