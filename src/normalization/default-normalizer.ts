@@ -22,7 +22,9 @@ export class DefaultNormalizer {
     );
     const normalizer3 = new GenericNormalizer((input: string): string => input.normalize('NFKD'));
     const normalizer4 = new CharacterNormalizer(
-      normalizerConfig.treatCharacterAsSpace, normalizerConfig.allowCharacter);
+      normalizerConfig.treatCharacterAsSpace,
+      normalizerConfig.allowCharacter
+    );
     const multiNormalizer = new MultiNormalizer([normalizer1, normalizer2, normalizer3, normalizer4]);
     return multiNormalizer;
   }

@@ -9,8 +9,8 @@ const sortedNgramComputer = new NgramComputer(3, (ngram) => ngram.split('').sort
 // Default n-grams: remove n-grams that end with $, sort n-grams that don't contain $.
 const defaultNgramComputer = new NgramComputer(3, (ngram) =>
   ngram.endsWith('$') ? null
-    : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
-      : ngram
+  : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
+  : ngram
 );
 
 test('can compute n-grams of empty string', () => {

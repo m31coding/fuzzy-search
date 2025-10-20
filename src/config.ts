@@ -14,8 +14,8 @@ export class Config {
   public constructor(
     public normalizerConfig: NormalizerConfig,
     public maxQueryLength: number,
-    public fuzzySearchConfig: FuzzySearchConfig,
-  ) { }
+    public fuzzySearchConfig: FuzzySearchConfig
+  ) {}
 
   /**
    * Creates an opinionated default configuration.

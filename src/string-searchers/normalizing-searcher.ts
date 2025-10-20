@@ -19,7 +19,7 @@ export class NormalizingSearcher implements StringSearcher {
     private readonly stringSearcher: StringSearcher,
     private readonly normalizer: Normalizer,
     private readonly normalizationDurationMetaKey: string = 'normalizationDuration'
-  ) { }
+  ) {}
 
   /**
    * {@inheritDoc StringSearcher.index}

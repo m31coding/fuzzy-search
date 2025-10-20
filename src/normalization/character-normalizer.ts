@@ -27,10 +27,7 @@ export class CharacterNormalizer implements Normalizer {
    * @param treatCharacterAsSpace A function that determines whether a character is treated as a space.
    * @param allowCharacter A function that determines whether a character is allowed.
    */
-  public constructor(
-    treatCharacterAsSpace: (c: string) => boolean,
-    allowCharacter: (c: string) => boolean) {
-
+  public constructor(treatCharacterAsSpace: (c: string) => boolean, allowCharacter: (c: string) => boolean) {
     this.treatCharacterAsSpace = treatCharacterAsSpace;
     this.allowCharacter = allowCharacter;
   }

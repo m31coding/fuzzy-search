@@ -6,7 +6,6 @@ import { Normalizer } from '../interfaces/normalizer.js';
  * Normalization for creating proper n-grams.
  */
 export class NgramNormalizer implements Normalizer {
-
   /**
    * Creates a new instance of the NgramNormalizer class.
    * @param paddingLeft The string that is appended to the left of the input string.
@@ -16,8 +15,8 @@ export class NgramNormalizer implements Normalizer {
   public constructor(
     public readonly paddingLeft: string,
     public readonly paddingRight: string,
-    public readonly paddingMiddle: string) {
-  }
+    public readonly paddingMiddle: string
+  ) {}
 
   /**
    * {@inheritDoc Normalizer.normalize}

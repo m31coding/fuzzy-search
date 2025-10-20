@@ -46,4 +46,3 @@ test('normalization test 9', () => {
 test('normalization test 10', () => {
   expect(normalizer.normalize('Thiên Duyên Tô')).toBe('$$thien!$$duyen!$$to!');
 });
-

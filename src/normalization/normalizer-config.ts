@@ -10,14 +10,14 @@ export class NormalizerConfig {
    * @param replacements A list of replacement maps. Each map maps from the variation character to the base
    * character(s).
    * @param treatCharacterAsSpace A function that determines whether a character is treated as a space.
-   * @param allowCharacter A function that determines whether a character is allowed. Surrogate characters are 
+   * @param allowCharacter A function that determines whether a character is allowed. Surrogate characters are
    * disallowed by default.
    */
   public constructor(
     public replacements: Map<string, string[]>[],
     public treatCharacterAsSpace: (c: string) => boolean,
     public allowCharacter: (c: string) => boolean
-  ) { }
+  ) {}
 
   /**
    * Creates an opinionated default normalizer config. Applies latin replacements and filters out non-alphanumeric
@@ -32,12 +32,6 @@ export class NormalizerConfig {
       return StringUtilities.isAlphanumeric(c);
     };
 
-    return new NormalizerConfig(
-      [LatinReplacements.Value],
-      (c) => spaceEquivalentCharacters.has(c),
-      allowCharacter
-    );
+    return new NormalizerConfig([LatinReplacements.Value], (c) => spaceEquivalentCharacters.has(c), allowCharacter);
   }
 }
-
-

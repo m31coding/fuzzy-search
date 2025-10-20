@@ -15,7 +15,7 @@ export class NgramComputer {
   /**
    * Creates a new instance of the NgramComputer class.
    * @param ngramN The number of characters in each n-gram.
-   * @param transformNgram A function for transforming each n-gram. N-grams that are transformed to null will be 
+   * @param transformNgram A function for transforming each n-gram. N-grams that are transformed to null will be
    * removed.
    */
   public constructor(ngramN: number, transformNgram?: (ngram: string) => string | null) {

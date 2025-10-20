@@ -3,7 +3,9 @@ import { StringUtilities } from '../commons/string-utilities.js';
 
 const spaceEquivalentCharacters = new Set(['_', '-', '–', '/', ',', '\t']);
 const normalizer = new CharacterNormalizer(
-  c => spaceEquivalentCharacters.has(c), c => StringUtilities.isAlphanumeric(c));
+  (c) => spaceEquivalentCharacters.has(c),
+  (c) => StringUtilities.isAlphanumeric(c)
+);
 
 test('can normalize empty string', () => {
   expect(normalizer.normalize('')).toBe('');
