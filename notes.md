@@ -81,7 +81,6 @@ Attribution (Chat GPT)
 Todo
 ====
 
-Test empty term.
 Test second suffix array implementation.
 
 First:
