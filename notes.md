@@ -82,3 +82,19 @@ Todo
 ====
 
 Test empty term.
+Test second suffix array implementation.
+
+First:
+suffixArraySearcherIndexing: 3663
+suffixArraySearcherIndexing: 3638
+suffixArraySearcherIndexing: 3655
+
+
+Changelog:
+
+paddingLeft, paddingRight and paddingMiddle were moved from the NormalizerConfig to the
+NgramNormalizerConfig.
+
+// '$$',
+//   '!',
+//   '!$$',
