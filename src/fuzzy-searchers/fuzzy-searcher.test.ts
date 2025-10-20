@@ -1,12 +1,10 @@
 import { FuzzySearcher } from './fuzzy-searcher.js';
 import { Match } from '../string-searchers/match.js';
 import { NgramComputer } from './ngram-computer.js';
-import { NgramComputerConfig } from './ngram-computer-config.js';
 import { Query } from '../interfaces/query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
-const commonNgramComputerConfig = new NgramComputerConfig(3);
-const commonNgramComputer = new NgramComputer(commonNgramComputerConfig);
+const commonNgramComputer = new NgramComputer(3);
 const fuzzySearcher: StringSearcher = new FuzzySearcher(commonNgramComputer);
 fuzzySearcher.index(['Alice', 'Bob', 'Carol', 'Charlie']);
 

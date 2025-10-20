@@ -1,7 +1,7 @@
 import { Meta } from '../interfaces/meta.js';
 import { NormalizationResult } from './normalization-result.js';
 import { Normalizer } from '../interfaces/normalizer.js';
-
+// todo: move to fuzzy-searchers
 /**
  * Normalization for creating proper n-grams.
  */
@@ -36,14 +36,5 @@ export class NgramNormalizer implements Normalizer {
     const normalized = input.map((s) => this.normalize(s));
     const meta = new Meta();
     return new NormalizationResult(normalized, meta);
-  }
-
-  /** 
-   * Creates an opinionated n-gram normalizer. Strings are padded with '$$' on the left, '!' on the right, and '!$$' in 
-   * the middle.
-   * @returns An opinionated default n-gram normalizer.
-   */
-  public static createDefault(): NgramNormalizer {
-    return new NgramNormalizer('$$', '!', '!$$');
   }
 }

@@ -1,4 +1,4 @@
-import { NgramComputerConfig } from './fuzzy-searchers/ngram-computer-config.js';
+import { FuzzySearchConfig } from './fuzzy-searchers/fuzzy-search-config.js';
 import { NormalizerConfig } from './normalization/normalizer-config.js';
 
 /**
@@ -8,16 +8,14 @@ export class Config {
   /**
    * Creates a new instance of the Config class.
    * @param normalizerConfig The configuration for the default normalizer.
-   * @param ngramComputerConfig The configuration for the n-gram computer.
    * @param maxQueryLength The maximum query length.
-   * @param inequalityPenalty The inequality penalty.
+   * @param fuzzySearchConfig The fuzzy search configuration.
    */
   public constructor(
     public normalizerConfig: NormalizerConfig,
-    public ngramComputerConfig: NgramComputerConfig,
     public maxQueryLength: number,
-    public inequalityPenalty: number
-  ) {}
+    public fuzzySearchConfig: FuzzySearchConfig,
+  ) { }
 
   /**
    * Creates an opinionated default configuration.
@@ -25,7 +23,7 @@ export class Config {
    */
   public static createDefaultConfig(): Config {
     const normalizerConfig = NormalizerConfig.createDefaultConfig();
-    const ngramComputerConfig = NgramComputerConfig.createDefaultConfig();
-    return new Config(normalizerConfig, ngramComputerConfig, 150, 0.05);
+    const fuzzySearchConfig = FuzzySearchConfig.createDefaultConfig();
+    return new Config(normalizerConfig, 150, fuzzySearchConfig);
   }
 }

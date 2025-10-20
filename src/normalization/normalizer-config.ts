@@ -23,7 +23,7 @@ export class NormalizerConfig {
    * Creates an opinionated default normalizer config. Applies latin replacements and filters out non-alphanumeric
    * characters. The full normalization pipeline is built in the class DefaultNormalizer and includes a lowercasing and
    * an NFKD normalization step.
-   * @returns The opiniated default normalizer config.
+   * @returns The default normalizer config.
    */
   public static createDefaultConfig(): NormalizerConfig {
     const spaceEquivalentCharacters = new Set(['_', '-', '–', '/', ',', '\t']);

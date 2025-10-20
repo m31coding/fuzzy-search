@@ -4,7 +4,7 @@ import { NgramNormalizer } from './ngram-normalizer.js';
 import { NormalizerConfig } from './normalizer-config.js';
 
 const defaultNormalizer = DefaultNormalizer.create(NormalizerConfig.createDefaultConfig());
-const ngramNormalizer = NgramNormalizer.createDefault();
+const ngramNormalizer = new NgramNormalizer('$$', '!', '!$$');
 const normalizer = new MultiNormalizer([defaultNormalizer, ngramNormalizer]);
 
 test('normalization test 1', () => {

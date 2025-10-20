@@ -13,11 +13,13 @@ export class NormalizingSearcher implements StringSearcher {
    * Creates a new instance of the NormalizingStringSearcher class.
    * @param stringSearcher The string searcher to use.
    * @param normalizer The normalizer to use.
+   * @param normalizationDurationMetaKey The meta key under which the normalization duration is reported.
    */
   public constructor(
     private readonly stringSearcher: StringSearcher,
-    private readonly normalizer: Normalizer
-  ) {}
+    private readonly normalizer: Normalizer,
+    private readonly normalizationDurationMetaKey: string = 'normalizationDuration'
+  ) { }
 
   /**
    * {@inheritDoc StringSearcher.index}
@@ -27,7 +29,7 @@ export class NormalizingSearcher implements StringSearcher {
     const result = this.normalizer.normalizeBulk(terms);
     const duration = Math.round(performance.now() - start);
     const meta = this.stringSearcher.index(result.strings);
-    meta.add('normalizationDuration', duration);
+    meta.add(this.normalizationDurationMetaKey, duration);
     for (const entry of result.meta.allEntries) {
       meta.add(entry[0], entry[1]);
     }

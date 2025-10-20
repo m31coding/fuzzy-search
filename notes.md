@@ -83,6 +83,8 @@ Todo
 
 Test second suffix array implementation.
 
+Check todos.
+
 First:
 suffixArraySearcherIndexing: 3663
 suffixArraySearcherIndexing: 3638
