@@ -28,7 +28,7 @@ export class PrefixSearcher implements StringSearcher {
         }
         const modifiedQueryString = this.modifyQueryString(query.string);
         const modifiedQuery = new Query(modifiedQueryString, query.topN, query.minQuality);
-        return this.suffixArraySearcher.getMatches(modifiedQuery);
+        return this.suffixArraySearcher.getMatches(modifiedQuery, query.string.length);
     }
 
     private modifyQueryString(original: string): string {

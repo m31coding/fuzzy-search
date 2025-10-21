@@ -53,7 +53,7 @@ export class SuffixArraySearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  getMatches(query: Query): Result {
+  getMatches(query: Query, queryLength?: number): Result {
     if (!query.string) {
       return new Result([], query, new Meta());
     }
@@ -71,9 +71,10 @@ export class SuffixArraySearcher implements StringSearcher {
 
     const matches: Match[] = [];
 
+    queryLength = queryLength ?? query.string.length;
     let quality = 0;
     for (let k = 0; k < matchedTermIds.length; k++) {
-      quality = this.computeQuality(query.string.length, this.termLengths[matchedTermIds[k]]);
+      quality = this.computeQuality(queryLength, this.termLengths[matchedTermIds[k]]);
       if (quality > query.minQuality) {
         matches.push(new Match(matchedTermIds[k], quality));
       }
