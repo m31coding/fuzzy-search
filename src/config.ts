@@ -1,4 +1,4 @@
-import { FuzzySearchConfig } from './fuzzy-search.js';
+import { FuzzySearchConfig } from './fuzzy-searchers/fuzzy-search-config.js';
 import { NormalizerConfig } from './normalization/normalizer-config.js';
 import { SubstringSearchConfig } from './suffix-array-searchers/substring-search-config.js';
 

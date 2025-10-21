@@ -85,10 +85,14 @@ Test second suffix array implementation.
 
 Check todos.
 
+Adjust usage examples to new config structure.
+
 First:
 suffixArraySearcherIndexing: 3663
 suffixArraySearcherIndexing: 3638
 suffixArraySearcherIndexing: 3655
+
+Check if doc comments are complete for the new files.
 
 
 Changelog:
@@ -99,3 +103,4 @@ NgramNormalizerConfig.
 // '$$',
 //   '!',
 //   '!$$',
+

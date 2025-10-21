@@ -41,7 +41,7 @@ writeFileSync(`${outputPath}/_indexing-meta.txt`, metaToJson(indexingMeta), { en
 console.log('Running queries...');
 
 runQuery('carcassonne-prefix', 'carcasso');
-runQuery('carcassonne-infix', 'cassonn');
+runQuery('carcassonne-substring', 'cassonn');
 runQuery('carcassonne-suffix', 'sonne');
 runQuery('munich-insertion', 'muniich');
 runQuery('boston-deletion', 'bostn');

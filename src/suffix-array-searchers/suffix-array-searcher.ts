@@ -10,7 +10,7 @@ import { SuffixArray } from './suffix-array.js';
 // todo: make sure the terms don't have the separating character. Move to a suffix array config.
 
 export class SuffixArraySearcher implements StringSearcher {
-  private separator: string;
+  public readonly separator: string;
   private str: string;
   private suffixArray: Int32Array;
   private indexToTermIndex: Int32Array;
@@ -24,6 +24,9 @@ export class SuffixArraySearcher implements StringSearcher {
     this.termLengths = new Int32Array(0);
   }
 
+  /**
+   * {@inheritDoc StringSearcher.index}
+   */
   index(terms: string[]): Meta {
     const start = performance.now();
     this.str = this.separator + terms.join(this.separator) + this.separator;
@@ -47,8 +50,11 @@ export class SuffixArraySearcher implements StringSearcher {
     return meta;
   }
 
+  /**
+   * {@inheritDoc StringSearcher.getMatches}
+   */
   getMatches(query: Query): Result {
-    if (query.string == null || query.string === '') {
+    if (!query.string) {
       return new Result([], query, new Meta());
     }
 
@@ -111,6 +117,9 @@ export class SuffixArraySearcher implements StringSearcher {
     return [start, r];
   }
 
+  /**
+   * {@inheritDoc StringSearcher.save}
+   */
   save(memento: Memento): void {
     memento.add(this.str);
     memento.add(this.suffixArray);
@@ -118,6 +127,9 @@ export class SuffixArraySearcher implements StringSearcher {
     memento.add(this.termLengths);
   }
 
+  /**
+   * {@inheritDoc StringSearcher.load}
+   */
   load(memento: Memento): void {
     this.str = memento.get();
     this.suffixArray = memento.get();

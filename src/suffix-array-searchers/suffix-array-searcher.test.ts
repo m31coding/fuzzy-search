@@ -40,15 +40,15 @@ test('can find suffix matches test 2', () => {
   expect(getMatches('ol')).toEqual([new Match(3, 2 / 5)]);
 });
 
-test('can find infix matches test 1', () => {
+test('can find substring matches test 1', () => {
   expect(getMatches('arl')).toEqual([new Match(2, 3 / 6), new Match(4, 3 / 7)]);
 });
 
-test('can find infix matches test 2', () => {
+test('can find substring matches test 2', () => {
   expect(getMatches('li')).toEqual([new Match(0, 2 / 5), new Match(4, 2 / 7)]);
 });
 
-test('can find infix matches test 3', () => {
+test('can find substring matches test 3', () => {
   expect(getMatches('l')).toEqual([new Match(0, 1 / 5), new Match(2, 1 / 6), new Match(3, 1 / 5), new Match(4, 1 / 7)]);
 });
 
