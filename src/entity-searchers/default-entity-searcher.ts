@@ -93,8 +93,8 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    * {@inheritDoc EntitySearcher.getMatches}
    */
   public getMatches(query: Query): EntityResult<TEntity> {
-    query = new Query(query.string, Infinity, query.minQuality, [SearcherType.Fuzzy]);
-    const result = this.stringSearcher.getMatches(query);
+    const stringSearcherQuery: Query = new Query(query.string, Infinity, query.minQuality, [SearcherType.Fuzzy]);
+    const result = this.stringSearcher.getMatches(stringSearcherQuery);
     const matches: EntityMatch<TEntity>[] = this.getMatchesFromResult(result, query.topN);
     return new EntityResult(matches, query, result.meta);
   }
