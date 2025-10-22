@@ -114,8 +114,7 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
       }
     }
     this.removeEntities(idsToRemove);
-    // todo: check
-    return entities.length > 0 ? this.reindexSecondarySearcher(entitiesToInsert, getId, getTerms) : new Meta();
+    return entitiesToInsert.length > 0 ? this.reindexSecondarySearcher(entitiesToInsert, getId, getTerms) : new Meta();
   }
 
   /**
