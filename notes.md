@@ -94,11 +94,14 @@ suffixArraySearcherIndexing: 3655
 
 Check if doc comments are complete for the new files.
 
+Readme: mention that matches are sorted by their internal index. 
 
 Changelog:
 
 paddingLeft, paddingRight and paddingMiddle were moved from the NormalizerConfig to the
 NgramNormalizerConfig.
+
+check what happens for unknown enum values.
 
 // '$$',
 //   '!',
