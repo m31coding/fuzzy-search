@@ -169,9 +169,7 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
   }
 
   /**
-   * Removes the entity with the given id.
-   * @param id The id of the entity to remove.
-   * @returns True if the entity was present, false otherwise.
+   * {@inheritDoc EntitySearcher.removeEntity}
    */
   public removeEntity(id: TId): boolean {
     const index = this.idToIndex.get(id);
@@ -184,11 +182,7 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
   }
 
   /**
-   * Replaces the entity with the given id. The terms of the entity are not updated.
-   * @param id The id of the entity to replace.
-   * @param newEntity The new entity.
-   * @param newEntityId The id of the new entity.
-   * @returns True if the id to replace was present, false otherwise.
+   * {@inheritDoc EntitySearcher.replaceEntity}
    */
   public replaceEntity(id: TId, newEntity: TEntity, newEntityId: TId): boolean {
     const index = this.idToIndex.get(id);

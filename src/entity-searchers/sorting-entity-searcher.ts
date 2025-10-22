@@ -114,4 +114,18 @@ export class SortingEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
     public load(memento: Memento): void {
         this.entitySearcher.load(memento);
     }
+
+    /**
+     * {@inheritDoc EntitySearcher.removeEntity}
+     */
+    removeEntity(id: TId): boolean {
+        return this.entitySearcher.removeEntity(id);
+    }
+
+    /**
+     * {@inheritDoc EntitySearcher.replaceEntity}
+     */
+    replaceEntity(id: TId, newEntity: TEntity, newEntityId: TId): boolean {
+        return this.entitySearcher.replaceEntity(id, newEntity, newEntityId);
+    }
 }

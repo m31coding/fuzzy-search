@@ -4,7 +4,7 @@ import { Meta } from './meta.js';
 import { Query } from './query.js';
 
 /**
- * An entity searcher for indexing entities and retrieving matches.
+ * An entity searcher for indexing entities and retrieving matches. Can also remove and replace single entities.
  * @typeParam TEntity The type of the entities.
  * @typeParam TId The type of the entity ids.
  */
@@ -50,4 +50,20 @@ export interface EntitySearcher<TEntity, TId> extends MementoSerializable {
    * @returns The terms of the entities.
    */
   getTerms(): string[];
+
+  /**
+   * Removes the entity with the given id.
+   * @param id The id of the entity to remove.
+   * @returns True if the entity was present, false otherwise.
+   */
+  removeEntity(id: TId): boolean;
+
+  /**
+   * Replaces the entity with the given id. The terms of the entity are not updated.
+   * @param id The id of the entity to replace.
+   * @param newEntity The new entity.
+   * @param newEntityId The id of the new entity.
+   * @returns True if the id to replace was present, false otherwise.
+   */
+  replaceEntity(id: TId, newEntity: TEntity, newEntityId: TId): boolean;
 }
