@@ -5,17 +5,17 @@
 }
 
 {
-  "queryDuration": 4
+  "queryDuration": 5
 }
 
 Rank    Entity                                  Matched String                          Quality 
 
 1       Cassone                                 Cassone                                 0.75    
 2       Casson                                  Casson                                  0.71    
-3       Cassou                                  Cassou                                  0.59    
+3       Canossa                                 Canossa                                 0.59    
 4       Cassola                                 Cassola                                 0.59    
 5       Cassop                                  Cassop                                  0.59    
-6       Canossa                                 Canossa                                 0.59    
+6       Cassou                                  Cassou                                  0.59    
 7       Cassoneca                               Cassoneca                               0.57    
 8       Cassongue                               Cassongue                               0.57    
 9       Carcassonne                             Carcassonne                             0.55    

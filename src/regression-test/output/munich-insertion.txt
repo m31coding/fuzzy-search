@@ -5,7 +5,7 @@
 }
 
 {
-  "queryDuration": 2
+  "queryDuration": 3
 }
 
 Rank    Entity                                  Matched String                          Quality 
@@ -14,9 +14,9 @@ Rank    Entity                                  Matched String                  
 2       Munini                                  Munini                                  0.59    
 3       Munichis                                Munichis                                0.53    
 4       New Munich                              New Munich                              0.52    
-5       Mutuini                                 Mutuini                                 0.47    
-6       Muniene                                 Muniene                                 0.47    
-7       Mumuni                                  Mumuni                                  0.47    
-8       Muninga                                 Muninga                                 0.47    
-9       Munichoco                               Munichoco                               0.47    
-10      Munhini                                 Munhini                                 0.47    
+5       Mumuni                                  Mumuni                                  0.47    
+6       Munhini                                 Munhini                                 0.47    
+7       Munichoco                               Munichoco                               0.47    
+8       Muniene                                 Muniene                                 0.47    
+9       Muninga                                 Muninga                                 0.47    
+10      Mutuini                                 Mutuini                                 0.47    

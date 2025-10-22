@@ -5,7 +5,7 @@
 }
 
 {
-  "queryDuration": 2
+  "queryDuration": 3
 }
 
 Rank    Entity                                  Matched String                          Quality 
@@ -15,8 +15,8 @@ Rank    Entity                                  Matched String                  
 3       Sonna                                   Sonna                                   0.67    
 4       Sonna                                   Sonna                                   0.67    
 5       Sone                                    Sone                                    0.63    
-6       Sonon                                   Sonon                                   0.63    
+6       Sone                                    Sone                                    0.63    
 7       Sone                                    Sone                                    0.63    
-8       Sone                                    Sone                                    0.63    
+8       Sonon                                   Sonon                                   0.63    
 9       Sonnega                                 Sonnega                                 0.59    
 10      Sonnar                                  Sonnar                                  0.54    
