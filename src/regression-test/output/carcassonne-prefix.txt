@@ -10,17 +10,17 @@
 }
 
 {
-  "queryDuration": 8
+  "queryDuration": 9
 }
 
 Rank    Entity                                  Matched String                          Quality 
 
-1       Carcasse                                Carcasse                                0.74    
-2       Carasso                                 Carasso                                 0.63    
-3       Carcas                                  Carcas                                  0.63    
-4       Carcasi                                 Carcasi                                 0.63    
-5       Carcasí                                 Carcasí                                 0.63    
-6       Carcassonne                             Carcassonne                             0.63    
+1       Carcassonne                             Carcassonne                             2.73    
+2       Carcasse                                Carcasse                                0.74    
+3       Carasso                                 Carasso                                 0.63    
+4       Carcas                                  Carcas                                  0.63    
+5       Carcasi                                 Carcasi                                 0.63    
+6       Carcasí                                 Carcasí                                 0.63    
 7       Carcaboso                               Carcaboso                               0.57    
 8       Casaracra                               Casaracra                               0.57    
 9       Caracase                                Caracase                                0.53    

@@ -15,4 +15,4 @@
 
 Rank    Entity                                  Matched String                          Quality 
 
-1       東京都                                     東京都                                     1.00    
+1       東京都                                     東京都                                     3.00    
