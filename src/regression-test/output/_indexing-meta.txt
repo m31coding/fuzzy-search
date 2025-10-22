@@ -1,10 +1,11 @@
 {
   "numberOfInvalidTerms": 1,
-  "ngramNormalizationDuration": 290,
+  "ngramNormalizationDuration": 276,
+  "suffixArraySearcherIndexing": 2757,
   "numberOfDistinctTerms": 1190185,
-  "defaultNormalizationDuration": 1445,
+  "defaultNormalizationDuration": 1288,
   "numberOfSurrogateCharacters": 46,
   "numberOfEntities": 1237154,
   "numberOfTerms": 1237486,
-  "indexingDuration": 7022
+  "indexingDuration": 9406
 }

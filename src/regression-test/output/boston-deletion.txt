@@ -1,11 +1,16 @@
 {
   "string": "bostn",
   "topN": 10,
-  "minQuality": 0.3
+  "minQuality": 0.3,
+  "searcherTypes": [
+    "prefix",
+    "substring",
+    "fuzzy"
+  ]
 }
 
 {
-  "queryDuration": 3
+  "queryDuration": 2
 }
 
 Rank    Entity                                  Matched String                          Quality 

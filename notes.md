@@ -92,6 +92,8 @@ suffixArraySearcherIndexing: 3663
 suffixArraySearcherIndexing: 3638
 suffixArraySearcherIndexing: 3655
 
+revert basic-usage.ts
+
 Check if doc comments are complete for the new files.
 
 Readme: mention that matches are sorted by their internal index. 

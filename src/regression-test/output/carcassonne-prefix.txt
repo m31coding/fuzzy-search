@@ -1,7 +1,12 @@
 {
   "string": "carcasso",
   "topN": 10,
-  "minQuality": 0.3
+  "minQuality": 0.3,
+  "searcherTypes": [
+    "prefix",
+    "substring",
+    "fuzzy"
+  ]
 }
 
 {
