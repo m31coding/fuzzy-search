@@ -19,7 +19,7 @@ export class NormalizingSearcher implements StringSearcher {
     private readonly stringSearcher: StringSearcher,
     private readonly normalizer: Normalizer,
     private readonly normalizationDurationMetaKey: string = 'normalizationDuration'
-  ) {}
+  ) { }
 
   /**
    * {@inheritDoc StringSearcher.index}
@@ -40,7 +40,8 @@ export class NormalizingSearcher implements StringSearcher {
    * {@inheritDoc StringSearcher.getMatches}
    */
   public getMatches(query: Query): Result {
-    const normalizedQuery = new Query(this.normalizer.normalize(query.string), query.topN, query.minQuality);
+    const normalizedQuery = new Query(
+      this.normalizer.normalize(query.string), query.topN, query.minQuality, query.searcherTypes);
     const result = this.stringSearcher.getMatches(normalizedQuery);
     return new Result(result.matches, query, result.meta);
   }

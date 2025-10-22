@@ -6,6 +6,7 @@ import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
 import { Query } from '../interfaces/query.js';
 import { Result } from '../string-searchers/result.js';
+import { SearcherType } from '../interfaces/searcher-type.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
@@ -92,8 +93,8 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    * {@inheritDoc EntitySearcher.getMatches}
    */
   public getMatches(query: Query): EntityResult<TEntity> {
-    const stringSearcherQuery: Query = new Query(query.string, Infinity, query.minQuality);
-    const result = this.stringSearcher.getMatches(stringSearcherQuery);
+    query = new Query(query.string, Infinity, query.minQuality, [SearcherType.Fuzzy]);
+    const result = this.stringSearcher.getMatches(query);
     const matches: EntityMatch<TEntity>[] = this.getMatchesFromResult(result, query.topN);
     return new EntityResult(matches, query, result.meta);
   }

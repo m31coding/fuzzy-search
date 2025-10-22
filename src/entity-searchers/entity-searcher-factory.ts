@@ -2,6 +2,7 @@ import { Config } from '../config.js';
 import { DefaultEntitySearcher } from './default-entity-searcher.js';
 import { DefaultNormalizer } from '../normalization/default-normalizer.js';
 import { DistinctSearcher } from '../string-searchers/distinct-searcher.js';
+import { EntitySearcher } from '../interfaces/entity-searcher.js';
 import { FuzzySearchConfig } from '../fuzzy-search.js';
 import { FuzzySearcher } from '../fuzzy-searchers/fuzzy-searcher.js';
 import { InequalityPenalizingSearcher } from '../string-searchers/inequality-penalizing-searcher.js';
@@ -11,6 +12,8 @@ import { Normalizer } from '../interfaces/normalizer.js';
 import { NormalizerConfig } from '../normalization/normalizer-config.js';
 import { NormalizingSearcher } from '../string-searchers/normalizing-searcher.js';
 import { PrefixSearcher } from '../suffix-array-searchers/prefix-searcher.js';
+import { SearcherSwitch } from '../string-searchers/searcher-switch.js';
+import { SortingEntitySearcher } from './sorting-entity-searcher.js';
 import { SortingSearcher } from '../string-searchers/sorting-searcher.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 import { SubstringSearchConfig } from '../suffix-array-searchers/substring-search-config.js';
@@ -21,34 +24,40 @@ import { SuffixArraySearcher } from '../suffix-array-searchers/suffix-array-sear
  */
 export class EntitySearcherFactory {
   /**
-   * Creates a new default entity searcher.
+   * Creates a new entity searcher.
    * @typeParam TEntity The type of the entities.
    * @typeParam TId The type of the entity ids.
    * @param config The config to use.
-   * @returns The default entity searcher.
+   * @returns The entity searcher.
    */
-  public static createSearcher<TEntity, TId>(config: Config): DefaultEntitySearcher<TEntity, TId> {
+  public static createSearcher<TEntity, TId>(config: Config): EntitySearcher<TEntity, TId> {
     const defaultNormalizer: Normalizer = this.createDefaultNormalizer(config);
 
-    // let stringSearcher: StringSearcher = new SuffixArraySearcher('$');
-    // let stringSearcher: StringSearcher = this.createFuzzySearcher(config.fuzzySearchConfig);
+    const fuzzySearcher: StringSearcher = this.createFuzzySearcher(config.fuzzySearchConfig);
     const suffixArraySearcher: SuffixArraySearcher = this.createSubstringSearcher(config.substringSearchConfig);
-    // todo: searcher switch.
-    let stringSearcher = this.createPrefixSearcher(suffixArraySearcher);
+    const prefixSearcher = this.createPrefixSearcher(suffixArraySearcher);
+
+    let stringSearcher: StringSearcher = new SearcherSwitch(
+      prefixSearcher,
+      suffixArraySearcher,
+      fuzzySearcher
+    );
 
     stringSearcher = new DistinctSearcher(stringSearcher);
     stringSearcher = new SortingSearcher(stringSearcher);
     stringSearcher = new NormalizingSearcher(stringSearcher, defaultNormalizer, 'defaultNormalizationDuration');
-    return new DefaultEntitySearcher<TEntity, TId>(stringSearcher);
+    let entitySearcher: EntitySearcher<TEntity, TId> = new DefaultEntitySearcher<TEntity, TId>(stringSearcher);
+    entitySearcher = new SortingEntitySearcher<TEntity, TId>(config.sortOrder, entitySearcher);
+    return entitySearcher;
   }
 
   private static createDefaultNormalizer(config: Config): Normalizer {
-    // todo: suffix array separator.
     const forbiddenCharacters = new Set(
       [
         config.fuzzySearchConfig.paddingLeft.split(''),
         config.fuzzySearchConfig.paddingRight.split(''),
-        config.fuzzySearchConfig.paddingMiddle.split('')
+        config.fuzzySearchConfig.paddingMiddle.split(''),
+        config.substringSearchConfig.suffixArraySeparator.split(''),
       ].flat()
     );
 

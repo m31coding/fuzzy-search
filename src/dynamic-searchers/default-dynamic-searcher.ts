@@ -47,7 +47,8 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
       return new EntityResult([], query, new Meta());
     }
     if (query.string.length > this.maxQueryLength) {
-      query = new Query(query.string.substring(0, this.maxQueryLength), query.topN, query.minQuality);
+      query = new Query(
+        query.string.substring(0, this.maxQueryLength), query.topN, query.minQuality, query.searcherTypes);
     }
     return ResultMerger.mergeResults(this.mainSearcher.getMatches(query), this.secondarySearcher.getMatches(query));
   }

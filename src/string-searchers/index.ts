@@ -4,4 +4,5 @@ export { LiteralSearcher } from './literal-searcher.js';
 export { Match } from './match.js';
 export { NormalizingSearcher } from './normalizing-searcher.js';
 export { Result } from './result.js';
+export { SearcherSwitch } from './searcher-switch.js';
 export { SortingSearcher } from './sorting-searcher.js';
