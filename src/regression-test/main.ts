@@ -1,6 +1,6 @@
-/*
-    Regression tests. Run this file and check the git diff of the output files to see what changed.
-*/
+/**
+ * Regression tests. Run this file and check the git diff of the output files to see what changed.
+ */
 
 import { readFileSync, writeFileSync } from 'fs';
 import { Config } from '../config.js';
@@ -36,7 +36,9 @@ const indexingMeta: Meta = searcher.indexEntities(
   (e) => e.id,
   (e) => e.name.split(';')
 );
-writeFileSync(`${outputPath}/_indexing-meta.txt`, metaToJson(indexingMeta), { encoding: 'utf8' });
+const metaJson = metaToJson(indexingMeta);
+writeFileSync(`${outputPath}/_indexing-meta.txt`, metaJson, { encoding: 'utf8' });
+console.log(metaJson);
 
 console.log('Running queries...');
 
