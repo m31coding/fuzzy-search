@@ -5,12 +5,21 @@
       "type": "typescript",
       "tsconfig": "tsconfig.json",
       "option": "watch",
-      "problemMatcher": ["$tsc-watch"],
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
       "group": {
         "kind": "build",
         "isDefault": true
       },
       "label": "tsc: watch - tsconfig.json"
+    },
+    {
+      "label": "Performance Test",
+      "type": "shell",
+      "command": "node dist/performance-test/main.js",
+      "problemMatcher": [],
+      "group": "test"
     }
   ]
 }

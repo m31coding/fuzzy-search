@@ -1,5 +1,6 @@
 import { DynamicSearcher } from '../interfaces/dynamic-searcher.js';
 import { Query } from '../interfaces/query.js';
+import { QueryCounts } from './query-counts.js';
 import { Report } from './report.js';
 import { TestRunParameters } from './test-run-parameters.js';
 import { TimedQuery } from './timed-query.js';
@@ -19,12 +20,18 @@ export class PerformanceTest<TEntity, TId> {
   private random: () => number;
 
   /**
+   * The query counts.
+   */
+  private queryCounts: QueryCounts;
+
+  /**
    * Creates a new instance of the PerformanceTest class.
    * @param dynamicSearcher The searcher to test.
    */
   public constructor(public readonly dynamicSearcher: DynamicSearcher<TEntity, TId>) {
     this.terms = [];
     this.random = this.mulberry32(0);
+    this.queryCounts = new QueryCounts();
   }
 
   /**
@@ -36,6 +43,7 @@ export class PerformanceTest<TEntity, TId> {
     const measurements: TimedQuery[] = [];
     this.terms = this.dynamicSearcher.getTerms().filter((t) => t);
     this.random = this.mulberry32(parameters.testSeed);
+    this.queryCounts = new QueryCounts();
     const numberOfQueries = this.terms.length === 0 ? 0 : parameters.numberOfQueries;
 
     for (let i = 0, l = numberOfQueries; i < l; i++) {
@@ -49,6 +57,7 @@ export class PerformanceTest<TEntity, TId> {
 
     return Report.Create(
       new TestRunParameters(parameters.testSeed, numberOfQueries, parameters.topN, parameters.minQuality),
+      this.queryCounts,
       measurements
     );
   }
@@ -60,8 +69,34 @@ export class PerformanceTest<TEntity, TId> {
    */
   private GetRandomQueryString(): string {
     const term: string = this.GetRandomTerm();
-    const length: number = this.getRandomInteger(1, term.length);
-    return term.substring(0, length);
+    let start: number;
+
+    if (this.RollPercentage(0.5)) {
+      start = 0;
+      this.queryCounts.prefixQueries++;
+    }
+    else {
+      start = this.getRandomInteger(0, term.length);
+      this.queryCounts.substringQueries++;
+    }
+
+    const end = this.getRandomInteger(start + 1, term.length + 1);
+    const substring: string = term.substring(start, end);
+
+    if (substring.length < 2 || this.RollPercentage(0.8)) {
+      return substring;
+    }
+
+    const errorPosition = this.getRandomInteger(0, substring.length - 1);
+    this.queryCounts.transpositionErrors++;
+    return substring.substring(0, errorPosition)
+      + substring[errorPosition + 1]
+      + substring[errorPosition]
+      + substring.substring(errorPosition + 2);
+  }
+
+  private RollPercentage(chance: number): boolean {
+    return this.random() < chance;
   }
 
   /**

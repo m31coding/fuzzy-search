@@ -1,3 +1,4 @@
+import { QueryCounts } from './query-counts.js';
 import { TestRunParameters } from './test-run-parameters.js';
 import { TimedQuery } from './timed-query.js';
 
@@ -8,6 +9,7 @@ export class Report {
   /**
    * Creates a new instance of the Report class.
    * @param testParameters The parameters of the test run.
+   * @param queryCounts Counts of the generated and run queries.
    * @param totalDuration The total duration of all queries in milliseconds.
    * @param averageDuration The average duration of a query in milliseconds.
    * @param standardDeviation The standard deviation of the query durations in milliseconds.
@@ -17,24 +19,30 @@ export class Report {
    */
   public constructor(
     public readonly testParameters: TestRunParameters,
+    public readonly queryCounts: QueryCounts,
     public readonly totalDuration: number,
     public readonly averageDuration: number,
     public readonly standardDeviation: number,
     public readonly fastest: TimedQuery,
     public readonly slowest: TimedQuery,
     public readonly longest: TimedQuery
-  ) {}
+  ) { }
 
   /**
    * Creates a report from the timed queries.
    * @param testRunParameters The parameters of the test run.
+   * @param queryCounts Counts of the generated and run queries.
    * @param measurements The timed queries.
    * @returns The performance report.
    */
-  public static Create(testRunParameters: TestRunParameters, measurements: TimedQuery[]): Report {
+  public static Create(
+    testRunParameters: TestRunParameters,
+    queryCounts: QueryCounts,
+    measurements: TimedQuery[]): Report {
     if (measurements.length === 0) {
       return new Report(
         testRunParameters,
+        queryCounts,
         0,
         0,
         0,
@@ -52,7 +60,8 @@ export class Report {
     const fastest: TimedQuery = measurements.reduce((prev, cur) => (prev.duration < cur.duration ? prev : cur));
     const slowest: TimedQuery = measurements.reduce((prev, cur) => (prev.duration > cur.duration ? prev : cur));
     const longest: TimedQuery = measurements.reduce((prev, cur) => (prev.query.length > cur.query.length ? prev : cur));
-    return new Report(testRunParameters, totalDuration, averageDuration, standardDeviation, fastest, slowest, longest);
+    return new Report(
+      testRunParameters, queryCounts, totalDuration, averageDuration, standardDeviation, fastest, slowest, longest);
   }
 
   /**
