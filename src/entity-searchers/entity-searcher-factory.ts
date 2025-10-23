@@ -3,6 +3,7 @@ import { DefaultEntitySearcher } from './default-entity-searcher.js';
 import { DefaultNormalizer } from '../normalization/default-normalizer.js';
 import { DistinctSearcher } from '../string-searchers/distinct-searcher.js';
 import { EntitySearcher } from '../interfaces/entity-searcher.js';
+import { FastEntitySearcher } from '../entity-searchers/fast-entity-searcher.js';
 import { FuzzySearchConfig } from '../fuzzy-search.js';
 import { FuzzySearcher } from '../fuzzy-searchers/fuzzy-searcher.js';
 import { InequalityPenalizingSearcher } from '../string-searchers/inequality-penalizing-searcher.js';
@@ -47,10 +48,16 @@ export class EntitySearcherFactory {
     stringSearcher = new SortingSearcher(stringSearcher);
     stringSearcher = new NormalizingSearcher(stringSearcher, defaultNormalizer, 'defaultNormalizationDuration');
     let entitySearcher: EntitySearcher<TEntity, TId> = new DefaultEntitySearcher<TEntity, TId>(stringSearcher);
+    entitySearcher = new FastEntitySearcher<TEntity, TId>(entitySearcher);
     entitySearcher = new SortingEntitySearcher<TEntity, TId>(config.sortOrder, entitySearcher);
     return entitySearcher;
   }
 
+  /**
+   * Creates the default normalizer.
+   * @param config The searcher configuration.
+   * @returns The default normalizer.
+   */
   private static createDefaultNormalizer(config: Config): Normalizer {
     const forbiddenCharacters = new Set(
       [
@@ -73,6 +80,7 @@ export class EntitySearcherFactory {
   }
 
   /**
+   * Creates the fuzzy string searcher.
    * @param config The fuzzy search configuration.
    * @returns The fuzzy string searcher.
    */
@@ -90,11 +98,21 @@ export class EntitySearcherFactory {
     return fuzzySearcher;
   }
 
+  /**
+   * Creates the substring searcher.
+   * @param config The substring search configuration.
+   * @returns The substring searcher.
+   */
   private static createSubstringSearcher(config: SubstringSearchConfig): SuffixArraySearcher {
     const substringSearcher = new SuffixArraySearcher(config.suffixArraySeparator);
     return substringSearcher;
   }
 
+  /**
+   * Creates the prefix searcher.
+   * @param suffixArraySearcher The suffix array searcher to use.
+   * @returns The prefix searcher.
+   */
   private static createPrefixSearcher(suffixArraySearcher: SuffixArraySearcher): StringSearcher {
     return new PrefixSearcher(suffixArraySearcher);
   }

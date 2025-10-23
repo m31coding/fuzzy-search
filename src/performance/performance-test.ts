@@ -50,7 +50,7 @@ export class PerformanceTest<TEntity, TId> {
       const queryString = this.GetRandomQueryString();
       const query = new Query(queryString, parameters.topN, parameters.minQuality);
       const start = performance.now();
-      const _result = this.dynamicSearcher.getMatches(query);
+      const _ = this.dynamicSearcher.getMatches(query);
       const duration = performance.now() - start;
       measurements.push(new TimedQuery(queryString, duration));
     }

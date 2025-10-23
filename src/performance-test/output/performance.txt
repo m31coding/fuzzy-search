@@ -1,28 +1,28 @@
 {
   "testParameters": {
     "testSeed": 0,
-    "numberOfQueries": 1000,
+    "numberOfQueries": 2000,
     "topN": 10,
     "minQuality": 0
   },
   "queryCounts": {
-    "prefixQueries": 483,
-    "substringQueries": 517,
-    "transpositionErrors": 143
+    "prefixQueries": 1003,
+    "substringQueries": 997,
+    "transpositionErrors": 299
   },
-  "totalDuration": 11835.207838999999,
-  "averageDuration": 11.835207838999999,
-  "standardDeviation": 21.88322318933828,
+  "totalDuration": 2274.5138099999676,
+  "averageDuration": 1.1372569049999839,
+  "standardDeviation": 5.465560304604728,
   "fastest": {
-    "query": "eo",
-    "duration": 0.014999999999417923
+    "query": "村",
+    "duration": 0.012208000000100583
   },
   "slowest": {
     "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
-    "duration": 211.47399999999834
+    "duration": 220.9579589999994
   },
   "longest": {
     "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
-    "duration": 211.47399999999834
+    "duration": 220.9579589999994
   }
 }
