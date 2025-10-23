@@ -206,11 +206,7 @@ async function downloadAndIndexOsmData() {
     return;
   }
 
-  const data = {
-    entities: entities,
-    kind: 'osm-places',
-    latinOnly: false
-  };
+  const data = { entities: entities, kind: 'osm-places', latinOnly: false };
 
   indexingRequest.data = data;
   indexingRequest.searchDataConfig = self.getSearchDataConfig(data.kind);
@@ -272,11 +268,7 @@ function generateAndIndexPersonDataPart2(indexingRequest, numberOfNames, randomS
 
   const latinOnly = personData.scripts.size === 1 && personData.scripts.has('Latn');
 
-  const data = {
-    entities: entities,
-    kind: 'persons',
-    latinOnly: latinOnly
-  };
+  const data = { entities: entities, kind: 'persons', latinOnly: latinOnly };
 
   indexingRequest.data = data;
   indexingRequest.searchDataConfig = self.getSearchDataConfig(data.kind);
