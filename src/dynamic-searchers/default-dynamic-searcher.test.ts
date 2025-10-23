@@ -8,7 +8,7 @@ class Person {
     public id: number,
     public name: string,
     public favoriteHobby: string
-  ) {}
+  ) { }
 }
 
 function createSearcher(): DynamicSearcher<Person, number> {
@@ -57,8 +57,8 @@ test('can remove entities', () => {
   expect(searcher.tryGetEntity(5823)).toEqual(null);
   expect(searcher.getEntities()).toEqual(entities.filter((e) => e.id !== 23501 && e.id !== 5823));
   expect(searcher.getTerms()).toEqual(['Bob', 'Charlie']);
-  expect(searcher.getMatches(new Query('Carol')).matches).toEqual([]);
-  expect(searcher.getMatches(new Query('Bob')).matches[0]).toEqual(
+  expect(searcher.getMatches(new Query('Carol', 10, 0.3)).matches).toEqual([]);
+  expect(searcher.getMatches(new Query('Bob', 10, 0.3)).matches[0]).toEqual(
     new EntityMatch(entities.find((e) => e.name === 'Bob')!, 1, 'Bob')
   );
 });

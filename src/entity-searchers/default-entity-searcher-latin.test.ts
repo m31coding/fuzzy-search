@@ -100,7 +100,7 @@ test('can find persons with approximate match test3', () => {
 });
 
 test("don't return results below min quality", () => {
-  const matches = searcher.getMatches(new Query('Sar')).matches;
+  const matches = searcher.getMatches(new Query('Sar', 10, 0.3)).matches;
   expect(matches.filter((m) => m.quality < 0.3)).toEqual([]);
 });
 
