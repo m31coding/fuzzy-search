@@ -46,7 +46,7 @@ export class EntitySearcherFactory {
 
     stringSearcher = new DistinctSearcher(stringSearcher);
     stringSearcher = new SortingSearcher(stringSearcher);
-    stringSearcher = new NormalizingSearcher(stringSearcher, defaultNormalizer, 'defaultNormalizationDuration');
+    stringSearcher = new NormalizingSearcher(stringSearcher, defaultNormalizer, 'normalizationDurationDefault');
     let entitySearcher: EntitySearcher<TEntity, TId> = new DefaultEntitySearcher<TEntity, TId>(stringSearcher);
     entitySearcher = new FastEntitySearcher<TEntity, TId>(entitySearcher);
     entitySearcher = new SortingEntitySearcher<TEntity, TId>(config.sortOrder, entitySearcher);
@@ -94,7 +94,7 @@ export class EntitySearcherFactory {
 
     let fuzzySearcher: StringSearcher = new FuzzySearcher(ngramComputer);
     fuzzySearcher = new InequalityPenalizingSearcher(fuzzySearcher, config.inequalityPenalty);
-    fuzzySearcher = new NormalizingSearcher(fuzzySearcher, ngramNormalizer, 'ngramNormalizationDuration');
+    fuzzySearcher = new NormalizingSearcher(fuzzySearcher, ngramNormalizer, 'normalizationDurationNgrams');
     return fuzzySearcher;
   }
 

@@ -56,7 +56,7 @@ export class TimingDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEnt
     const start = performance.now();
     const meta = this.dynamicSearcher.indexEntities(entities, getId, getTerms);
     const duration = Math.round(performance.now() - start);
-    meta.add('indexingDuration', duration);
+    meta.add('indexingDurationTotal', duration);
     return meta;
   }
 
