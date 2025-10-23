@@ -1,0 +1,1 @@
+Run the performance test via the 'Run Task' command in VS Code.

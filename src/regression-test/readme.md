@@ -1,0 +1,1 @@
+Run the regression test via the 'Run and Debug' action on the left sidebar in VS Code.
