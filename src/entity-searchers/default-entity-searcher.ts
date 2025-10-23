@@ -4,8 +4,10 @@ import { EntityResult } from '../interfaces/entity-result.js';
 import { EntitySearcher } from '../interfaces/entity-searcher.js';
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
+import { MetaMerger } from '../commons/meta-merger.js';
 import { Query } from '../interfaces/query.js';
 import { Result } from '../string-searchers/result.js';
+import { SearchState } from './search-state.js';
 import { SearcherType } from '../interfaces/searcher-type.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
@@ -44,6 +46,15 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    * Mapping between entity indexes and the index of their first term.
    */
   private entityIndexToFirstTermIndex: Int32Array;
+
+  /**
+   * The ordered searchers and their quality offsets.
+   */
+  private readonly searchersAndQualityOffsets: { searcherType: SearcherType; qualityOffset: number }[] = [
+    { searcherType: SearcherType.Prefix, qualityOffset: 2 },
+    { searcherType: SearcherType.Substring, qualityOffset: 1 },
+    { searcherType: SearcherType.Fuzzy, qualityOffset: 0 }
+  ];
 
   /**
    * Creates a new instance of the DefaultEntitySearcher class.
@@ -93,38 +104,68 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    * {@inheritDoc EntitySearcher.getMatches}
    */
   public getMatches(query: Query): EntityResult<TEntity> {
-    const stringSearcherQuery: Query = new Query(query.string, Infinity, query.minQuality, [SearcherType.Fuzzy]);
-    const result = this.stringSearcher.getMatches(stringSearcherQuery);
-    const matches: EntityMatch<TEntity>[] = this.getMatchesFromResult(result, query.topN);
-    return new EntityResult(matches, query, result.meta);
+    const searchState: SearchState<TEntity> = new SearchState<TEntity>(query);
+
+    for (const { searcherType, qualityOffset } of this.searchersAndQualityOffsets) {
+      if (query.topN == searchState.matches.length) {
+        break;
+      }
+
+      if (!query.searcherTypes.includes(searcherType)) {
+        continue;
+      }
+
+      this.addMatchesFromSearcher(searchState, searcherType, qualityOffset);
+    }
+
+
+    const mergedMeta = MetaMerger.mergeMeta(searchState.meta);
+    return new EntityResult(searchState.matches, query, mergedMeta);
   }
 
   /**
-   * Creates entity matches from the string searcher result.
-   * @param result The string searcher result.
-   * @param topN The maximum number of matches to return.
-   * @returns The entity matches.
+   * Adds matches from a specific searcher to the search state.
+   * @param searchState The current search state.
+   * @param searcherType The type of the searcher.
+   * @param qualityOffset The quality offset to apply.
    */
-  private getMatchesFromResult(result: Result, topN: number): EntityMatch<TEntity>[] {
-    if (topN === 0) {
-      return [];
-    }
-    const matchedIndexes: Set<number> = new Set<number>();
-    const matches: EntityMatch<TEntity>[] = [];
+  private addMatchesFromSearcher(
+    searchState: SearchState<TEntity>,
+    searcherType: SearcherType,
+    qualityOffset: number
+  ): void {
+    const stringSearcherQuery: Query = new Query(
+      searchState.query.string, Infinity, searchState.query.minQuality, [searcherType]);
+    const result: Result = this.stringSearcher.getMatches(stringSearcherQuery);
+    this.addMatchesFromResult(searchState, result, qualityOffset);
+  }
 
+  /**
+   * Add entity matches from the string searcher result to the search state.
+   * @param searchState The current search state.
+   * @param result The string searcher result.
+   * @param qualityOffset The quality offset that is added.
+   */
+  private addMatchesFromResult(
+    searchState: SearchState<TEntity>,
+    result: Result,
+    qualityOffset: number
+  ): void {
+    if (searchState.query.topN === 0) {
+      return;
+    }
     for (let i = 0, l = result.matches.length; i < l; i++) {
       const match = result.matches[i];
       const entityIndex: number = this.termIndexToEntityIndex[match.index];
-      if (!matchedIndexes.has(entityIndex) && this.entities[entityIndex] !== null) {
-        matchedIndexes.add(entityIndex);
-        matches.push(new EntityMatch(this.entities[entityIndex] as TEntity, match.quality, this.terms[match.index]));
-        if (matches.length === topN) {
+      if (!searchState.matchedIndexes.has(entityIndex) && this.entities[entityIndex] !== null) {
+        searchState.matchedIndexes.add(entityIndex);
+        searchState.matches.push(new EntityMatch(
+          this.entities[entityIndex] as TEntity, match.quality + qualityOffset, this.terms[match.index]));
+        if (searchState.matches.length === searchState.query.topN) {
           break;
         }
       }
     }
-
-    return matches;
   }
 
   /**
