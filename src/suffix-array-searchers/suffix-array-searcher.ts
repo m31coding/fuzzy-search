@@ -46,7 +46,7 @@ export class SuffixArraySearcher implements StringSearcher {
     const duration = Math.round(performance.now() - start);
 
     const meta = new Meta();
-    meta.add('suffixArraySearcherIndexing', duration);
+    meta.add('indexingDurationSuffixArraySearcher', duration);
     return meta;
   }
 

@@ -10,19 +10,19 @@
     "substringQueries": 517,
     "transpositionErrors": 143
   },
-  "totalDuration": 11896.186388000013,
-  "averageDuration": 11.896186388000013,
-  "standardDeviation": 22.0089920110702,
+  "totalDuration": 11835.207838999999,
+  "averageDuration": 11.835207838999999,
+  "standardDeviation": 21.88322318933828,
   "fastest": {
-    "query": "nkh",
-    "duration": 0.015542000001005363
+    "query": "eo",
+    "duration": 0.014999999999417923
   },
   "slowest": {
     "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
-    "duration": 211.1774170000026
+    "duration": 211.47399999999834
   },
   "longest": {
     "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
-    "duration": 211.1774170000026
+    "duration": 211.47399999999834
   }
 }

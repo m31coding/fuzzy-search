@@ -42,10 +42,10 @@ export class FuzzySearcher implements StringSearcher {
    * {@inheritDoc StringSearcher.index}
    */
   public index(terms: string[]): Meta {
+    const start = performance.now();
     this.invertedIndex = new InvertedIndex();
     this.commonNgramCounts = new Int32Array(terms.length);
     this.numberOfNgrams = new Int32Array(terms.length);
-    const meta = new Meta();
     let nofInvalidTerms = 0;
 
     for (let i = 0, l = terms.length; i < l; i++) {
@@ -66,7 +66,12 @@ export class FuzzySearcher implements StringSearcher {
     }
 
     this.invertedIndex.seal();
+
+    const duration = Math.round(performance.now() - start);
+
+    const meta = new Meta();
     meta.add('numberOfInvalidTerms', nofInvalidTerms);
+    meta.add('indexingDurationFuzzySearcher', duration);
     return meta;
   }
 
