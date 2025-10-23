@@ -1,15 +1,52 @@
+/**
+ * Original: https://github.com/eranmeir/Sufa-Suffix-Array-Csharp
+ * Copyright (c) 2012 Eran Meir
+ * SPDX-License-Identifier: MIT
+ *
+ * Translation to TypeScript, modifications and refactoring
+ * (c) 2025 Kevin Schaal
+ */
+
 import { StringComparison } from './string-comparison.js';
 
+/**
+ * Creates a suffix array for a given string.
+ */
 export class SuffixArray {
+  /**
+   * The end-of-chain marker.
+   */
   private readonly eoc: number = 2147483647;
-  private m_str: string;
-  private m_sa: Int32Array;
-  private m_isa: Int32Array;
-  private m_chainHeadsDict: Map<number, number>;
-  private m_chainStack: Chain[] = [];
-  private m_subChains: Chain[] = [];
-  private m_nextRank: number = 1;
+  /**
+   * The suffix array.
+   */
+  private sa: Int32Array;
+  /**
+   * The inverse suffix array.
+   */
+  private isa: Int32Array;
+  /**
+   * The chain heads dictionary.
+   */
+  private chainHeadsDict: Map<number, number>;
+  /**
+   * The chain stack.
+   */
+  private chainStack: Chain[] = [];
+  /**
+   * The sub-chains.
+   */
+  private subChains: Chain[] = [];
+  /**
+   * The next rank to assign.
+   */
+  private nextRank: number = 1;
 
+  /**
+   * Creates the suffix array for the given string.
+   * @param str The input string.
+   * @returns The suffix array.
+   */
   public static create(str: string): Int32Array {
     if (str == null) {
       throw new Error('Input string cannot be null.');
@@ -17,45 +54,57 @@ export class SuffixArray {
     const suffixArray: SuffixArray = new SuffixArray(str);
     suffixArray.FormInitialChains();
     suffixArray.BuildSufixArray();
-    return suffixArray.m_sa;
+    return suffixArray.sa;
   }
 
-  private constructor(private readonly str: string) {
-    const l = str.length;
-    this.m_str = str;
-    this.m_sa = new Int32Array(l);
-    this.m_isa = new Int32Array(l);
-    this.m_chainHeadsDict = new Map<number, number>();
+  /**
+   * Creates a new instance of the SuffixArray class.
+   * @param inputString The input string.
+   */
+  private constructor(private readonly inputString: string) {
+    const length = inputString.length;
+    this.sa = new Int32Array(length);
+    this.isa = new Int32Array(length);
+    this.chainHeadsDict = new Map<number, number>();
   }
 
+  /**
+   * Forms the initial chains.
+   */
   private FormInitialChains(): void {
     this.FindInitialChains();
     this.SortAndPushSubchains();
   }
 
+  /**
+   * Finds the initial chains.
+   */
   private FindInitialChains(): void {
-    for (let i = 0; i < this.m_str.length; i++) {
-      const char_code = this.m_str.charCodeAt(i);
-      const chain_head_index = this.m_chainHeadsDict.get(char_code);
+    for (let i = 0; i < this.inputString.length; i++) {
+      const char_code = this.inputString.charCodeAt(i);
+      const chain_head_index = this.chainHeadsDict.get(char_code);
       if (chain_head_index !== undefined) {
-        this.m_isa[i] = chain_head_index;
+        this.isa[i] = chain_head_index;
       } else {
-        this.m_isa[i] = this.eoc;
+        this.isa[i] = this.eoc;
       }
-      this.m_chainHeadsDict.set(char_code, i);
+      this.chainHeadsDict.set(char_code, i);
     }
 
-    for (const headIndex of this.m_chainHeadsDict.values()) {
-      const newChain = new Chain(this.m_str, headIndex, 1);
-      this.m_subChains.push(newChain);
+    for (const headIndex of this.chainHeadsDict.values()) {
+      const newChain = new Chain(headIndex, 1);
+      this.subChains.push(newChain);
     }
   }
 
+  /**
+   * Builds the suffix array.
+   */
   private BuildSufixArray(): void {
-    while (this.m_chainStack.length > 0) {
-      const chain: Chain = this.m_chainStack.pop() as Chain;
+    while (this.chainStack.length > 0) {
+      const chain: Chain = this.chainStack.pop() as Chain;
 
-      if (this.m_isa[chain.head] === this.eoc) {
+      if (this.isa[chain.head] === this.eoc) {
         this.RankSuffix(chain.head);
       } else {
         this.RefineChainWithInductionSorting(chain);
@@ -63,23 +112,31 @@ export class SuffixArray {
     }
   }
 
+  /**
+   * Ranks the suffix at the given index.
+   * @param index The index of the suffix to rank.
+   */
   private RankSuffix(index: number): void {
-    this.m_isa[index] = -this.m_nextRank;
-    this.m_sa[this.m_nextRank - 1] = index;
-    this.m_nextRank++;
+    this.isa[index] = -this.nextRank;
+    this.sa[this.nextRank - 1] = index;
+    this.nextRank++;
   }
 
+  /**
+   * Refines the given chain with induction sorting.
+   * @param chain The chain to refine.
+   */
   private RefineChainWithInductionSorting(chain: Chain): void {
     const notedSuffixes: SuffixRank[] = [];
-    this.m_chainHeadsDict.clear();
-    this.m_subChains = [];
+    this.chainHeadsDict.clear();
+    this.subChains = [];
 
     while (chain.head !== this.eoc) {
-      const nextIndex: number = this.m_isa[chain.head];
-      if (chain.head + chain.length > this.m_str.length - 1) {
+      const nextIndex: number = this.isa[chain.head];
+      if (chain.head + chain.length > this.inputString.length - 1) {
         this.RankSuffix(chain.head);
-      } else if (this.m_isa[chain.head + chain.length] < 0) {
-        const sr: SuffixRank = new SuffixRank(chain.head, -this.m_isa[chain.head + chain.length]);
+      } else if (this.isa[chain.head + chain.length] < 0) {
+        const sr: SuffixRank = new SuffixRank(chain.head, -this.isa[chain.head + chain.length]);
         notedSuffixes.push(sr);
       } else {
         this.ExtendChain(chain);
@@ -91,20 +148,28 @@ export class SuffixArray {
     this.SortAndRankNotedSuffixes(notedSuffixes);
   }
 
+  /**
+   * Extends the given chain.
+   * @param chain The chain to extend.
+   */
   private ExtendChain(chain: Chain): void {
-    const sym: number = this.m_str.charCodeAt(chain.head + chain.length);
-    if (this.m_chainHeadsDict.has(sym)) {
-      this.m_isa[this.m_chainHeadsDict.get(sym) as number] = chain.head;
-      this.m_isa[chain.head] = this.eoc;
+    const sym: number = this.inputString.charCodeAt(chain.head + chain.length);
+    if (this.chainHeadsDict.has(sym)) {
+      this.isa[this.chainHeadsDict.get(sym) as number] = chain.head;
+      this.isa[chain.head] = this.eoc;
     } else {
-      this.m_isa[chain.head] = this.eoc;
-      const newChain: Chain = new Chain(this.m_str, chain.head, chain.length + 1);
-      this.m_subChains.push(newChain);
+      this.isa[chain.head] = this.eoc;
+      const newChain: Chain = new Chain(chain.head, chain.length + 1);
+      this.subChains.push(newChain);
     }
 
-    this.m_chainHeadsDict.set(sym, chain.head);
+    this.chainHeadsDict.set(sym, chain.head);
   }
 
+  /**
+   * Sorts and ranks the noted suffixes.
+   * @param notedSuffixes The noted suffixes to sort and rank.
+   */
   private SortAndRankNotedSuffixes(notedSuffixes: SuffixRank[]): void {
     notedSuffixes.sort((a, b) => {
       return a.rank - b.rank;
@@ -115,32 +180,44 @@ export class SuffixArray {
     }
   }
 
+  /**
+   * Sorts and pushes the sub-chains onto the chain stack.
+   */
   private SortAndPushSubchains(): void {
-    this.m_subChains.sort((c1: Chain, c2: Chain): number => {
+    this.subChains.sort((c1: Chain, c2: Chain): number => {
       const len = Math.min(c1.length, c2.length);
-      return StringComparison.compareOrdinal(this.m_str, c1.head, this.m_str, c2.head, len);
+      return StringComparison.compareOrdinal(this.inputString, c1.head, this.inputString, c2.head, len);
     });
-    for (let i = this.m_subChains.length - 1; i >= 0; i--) {
-      this.m_chainStack.push(this.m_subChains[i]);
+    for (let i = this.subChains.length - 1; i >= 0; i--) {
+      this.chainStack.push(this.subChains[i]);
     }
   }
 }
 
+/**
+ * Represents a suffix and its rank.
+ */
 class SuffixRank {
+  /**
+   * Creates a new instance of the SuffixRank class.
+   * @param head The head index of the suffix.
+   * @param rank The rank of the suffix.
+   */
   public constructor(
     public readonly head: number,
     public readonly rank: number
-  ) {}
+  ) { }
 }
 
+/**
+ * Represents a chain of suffixes.
+ */
 class Chain {
-  public readonly m_str: string;
-  public head: number;
-  public length: number;
-
-  public constructor(m_str: string, head: number, length: number) {
-    this.m_str = m_str;
-    this.head = head;
-    this.length = length;
+  /**
+   * Creates a new instance of the Chain class. 
+   * @param head The head index of the chain.
+   * @param length The length of the chain.
+   */
+  public constructor(public head: number, public readonly length: number) {
   }
 }
