@@ -2,33 +2,56 @@
 
 import { Meta } from '../interfaces/meta.js';
 
+/**
+ * Merges {@link Meta} objects.
+ */
 export class MetaMerger {
   /**
-   * Merges two {@link Meta} objects into a new {@link Meta} object.
-   * @param meta1 The first meta object.
-   * @param meta2 The second meta object.
-   * @returns The merged meta object.
-   */
-  public static mergeMeta(meta1: Meta, meta2: Meta): Meta {
-    const newMetaEntries: Map<string, any> = new Map<string, any>();
-
-    for (const [key, value] of meta1.allEntries) {
-      newMetaEntries.set(key, value);
+  * Merges {@link Meta} objects into a new {@link Meta} object. Numbers for the same key are summed up, other values 
+  * are stored with an index suffix.
+  * @param metas The meta objects to merge.
+  * @returns The merged meta object.
+  */
+  public static mergeMeta(metas: Meta[]): Meta {
+    if (metas.length === 0) {
+      return new Meta();
     }
 
-    for (const [key, value] of meta2.allEntries) {
-      const presentValue = newMetaEntries.get(key);
-      if (presentValue === undefined) {
-        newMetaEntries.set(key, value);
+    if (metas.length === 1) {
+      return metas[0];
+    }
+
+    const metaLists: Map<string, any[]> = new Map<string, any[]>();
+
+    for (const meta of metas) {
+      for (const [key, value] of meta.allEntries) {
+        const present = metaLists.get(key);
+        if (present === undefined) {
+          metaLists.set(key, [value]);
+        }
+        else {
+          present.push(value);
+        }
+      }
+    }
+
+    const newMetaEntries: Map<string, any> = new Map<string, any>();
+
+    for (const [key, values] of metaLists) {
+      if (values.length === 1) {
+        newMetaEntries.set(key, values[0]);
         continue;
       }
-      if (typeof presentValue === 'number' && typeof value === 'number') {
-        newMetaEntries.set(key, presentValue + value);
+
+      if (values.every(v => typeof v === 'number')) {
+        const sum = values.reduce((acc, val) => acc + val, 0);
+        newMetaEntries.set(key, sum);
         continue;
       }
-      newMetaEntries.delete(key);
-      newMetaEntries.set(`${key}_0`, presentValue);
-      newMetaEntries.set(`${key}_1`, value);
+
+      for (let i = 0; i < values.length; i++) {
+        newMetaEntries.set(`${key}_${i}`, values[i]);
+      }
     }
 
     return new Meta(newMetaEntries);

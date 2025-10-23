@@ -32,7 +32,7 @@ export class SearcherSwitch implements StringSearcher {
     index(terms: string[]): Meta {
         const substringSearcherMeta = this.substringSearcher.index(terms);
         const fuzzySearcherMeta = this.fuzzySearcher.index(terms);
-        return MetaMerger.mergeMeta(fuzzySearcherMeta, substringSearcherMeta);
+        return MetaMerger.mergeMeta([fuzzySearcherMeta, substringSearcherMeta]);
     }
 
     /**

@@ -21,7 +21,7 @@ export class ResultMerger {
   ): EntityResult<TEntity> {
     const query: Query = result1.query;
     const newMatches = this.mergeMatches(result1.matches, result2.matches, query.topN);
-    const newMeta: Meta = MetaMerger.mergeMeta(result1.meta, result2.meta);
+    const newMeta: Meta = MetaMerger.mergeMeta([result1.meta, result2.meta]);
     return new EntityResult(newMatches, query, newMeta);
   }
 
@@ -47,8 +47,8 @@ export class ResultMerger {
     const newMatches = [...matches1, ...matches2];
     newMatches.sort((m1, m2) =>
       m1.quality > m2.quality ? -1
-      : m1.quality < m2.quality ? 1
-      : 0
+        : m1.quality < m2.quality ? 1
+          : 0
     );
     return newMatches.length <= topN ? newMatches : newMatches.slice(0, topN);
   }

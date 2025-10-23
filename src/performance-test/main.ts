@@ -12,7 +12,7 @@ import { TestRunParameters } from '../performance/test-run-parameters.js';
 
 const outputPath = './src/performance-test/output';
 const seed = 0;
-const numberOfQueries = 1_000;
+const numberOfQueries = 2_000;
 const topN = 10;
 const minQuality = 0;
 
