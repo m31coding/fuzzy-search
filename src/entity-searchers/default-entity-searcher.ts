@@ -23,6 +23,11 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
   private readonly stringSearcher: StringSearcher;
 
   /**
+   * The types of searchers to use.
+   */
+  private readonly searcherTypes: SearcherType[];
+
+  /**
    * The indexed entities.
    */
   private entities: (TEntity | null)[];
@@ -61,9 +66,11 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    * @typeParam TEntity The type of the entities.
    * @typeParam TId The type of the entity ids.
    * @param stringSearcher The string searcher to use.
+   * 
    */
-  public constructor(stringSearcher: StringSearcher) {
+  public constructor(stringSearcher: StringSearcher, searcherTypes: SearcherType[]) {
     this.stringSearcher = stringSearcher;
+    this.searcherTypes = searcherTypes;
     this.entities = [];
     this.idToIndex = new Map<TId, number>();
     this.terms = [];
@@ -112,6 +119,10 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
       }
 
       if (!query.searcherTypes.includes(searcherType)) {
+        continue;
+      }
+
+      if (!this.searcherTypes.includes(searcherType)) {
         continue;
       }
 

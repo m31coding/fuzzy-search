@@ -3,9 +3,11 @@ import { EntityMatch } from '../interfaces/entity-match.js';
 import { EntitySearcher } from '../interfaces/entity-searcher.js';
 import { EntitySearcherFactory } from './entity-searcher-factory.js';
 import { Query } from '../interfaces/query.js';
+import { SearcherType } from '../interfaces/searcher-type.js';
 import { TestData } from '../commons/test-data.js';
 
 const config: Config = Config.createDefaultConfig();
+config.searcherTypes = [SearcherType.Fuzzy];
 config.normalizerConfig.allowCharacter = (_c: string) => true;
 const searcher: EntitySearcher<{ firstName: string; lastName: string }, { firstName: string; lastName: string }> =
   EntitySearcherFactory.createSearcher(config);

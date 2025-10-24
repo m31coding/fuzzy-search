@@ -3,12 +3,16 @@ import { EntityMatch } from '../interfaces/entity-match.js';
 import { EntitySearcher } from '../interfaces/entity-searcher.js';
 import { EntitySearcherFactory } from './entity-searcher-factory.js';
 import { Query } from '../interfaces/query.js';
+import { SearcherType } from '../interfaces/searcher-type.js';
 import { TestData } from '../commons/test-data.js';
 
 const persons = TestData.persons.concat(TestData.emptyPersons);
 
+const config = Config.createDefaultConfig();
+config.searcherTypes = [SearcherType.Fuzzy];
+
 const emptySearcher: EntitySearcher<{ firstName: string; lastName: string }, { firstName: string; lastName: string }> =
-  EntitySearcherFactory.createSearcher(Config.createDefaultConfig());
+  EntitySearcherFactory.createSearcher(config);
 
 test('empty searcher returns zero matches for empty query', () => {
   expect(emptySearcher.getMatches(new Query('')).matches).toEqual([]);
@@ -19,7 +23,7 @@ test('empty searcher returns zero matches', () => {
 });
 
 const searcher: EntitySearcher<{ firstName: string; lastName: string }, { firstName: string; lastName: string }> =
-  EntitySearcherFactory.createSearcher(Config.createDefaultConfig());
+  EntitySearcherFactory.createSearcher(config);
 searcher.indexEntities(
   persons,
   (person) => person,
@@ -113,7 +117,7 @@ test('every entity is returned only once', () => {
 const reindexedSearcher: EntitySearcher<
   { firstName: string; lastName: string },
   { firstName: string; lastName: string }
-> = EntitySearcherFactory.createSearcher(Config.createDefaultConfig());
+> = EntitySearcherFactory.createSearcher(config);
 reindexedSearcher.indexEntities(
   TestData.personsNonLatin,
   (person) => person,

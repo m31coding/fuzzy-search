@@ -48,7 +48,8 @@ export class EntitySearcherFactory {
     stringSearcher = new DistinctSearcher(stringSearcher);
     stringSearcher = new SortingSearcher(stringSearcher);
     stringSearcher = new NormalizingSearcher(stringSearcher, defaultNormalizer, 'normalizationDurationDefault');
-    let entitySearcher: EntitySearcher<TEntity, TId> = new DefaultEntitySearcher<TEntity, TId>(stringSearcher);
+    let entitySearcher: EntitySearcher<TEntity, TId> =
+      new DefaultEntitySearcher<TEntity, TId>(stringSearcher, config.searcherTypes);
     entitySearcher = new FastEntitySearcher<TEntity, TId>(entitySearcher);
     entitySearcher = new SortingEntitySearcher<TEntity, TId>(config.sortOrder, entitySearcher);
     return entitySearcher;
