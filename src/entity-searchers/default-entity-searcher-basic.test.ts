@@ -21,7 +21,7 @@ entitySearcher.indexEntities(
 
 test('can match entity', () => {
   expect(entitySearcher.getMatches(new Query('Alice')).matches).toEqual([
-    new EntityMatch<{ id: number; name: string }>(entities[0], 1.0, 'Alice')
+    new EntityMatch<{ id: number; name: string }>(entities[0], 3, 'Alice')
   ]);
 });
 
@@ -34,7 +34,7 @@ class Person {
     public id: number,
     public name: string,
     public job: string
-  ) {}
+  ) { }
 }
 
 const literalSearcher2: StringSearcher = new LiteralSearcher();
@@ -53,13 +53,13 @@ entitySearcher2.indexEntities(
 
 test('can match entity with first term', () => {
   expect(entitySearcher2.getMatches(new Query('Alice')).matches).toEqual([
-    new EntityMatch<Person>(entities2[0], 1.0, 'Alice')
+    new EntityMatch<Person>(entities2[0], 3, 'Alice')
   ]);
 });
 
 test('can match entity with second term', () => {
   expect(entitySearcher2.getMatches(new Query('Programmer')).matches).toEqual([
-    new EntityMatch<{ id: number; name: string; job: string }>(entities2[0], 1.0, 'Programmer')
+    new EntityMatch<{ id: number; name: string; job: string }>(entities2[0], 3, 'Programmer')
   ]);
 });
 
