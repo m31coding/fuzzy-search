@@ -40,7 +40,7 @@ test('can index and query dynamic searcher', () => {
   expect(searcher.tryGetTerms(11923)).toEqual(['Charlie']);
   expect(searcher.getTerms()).toEqual(['Alice', 'Bob', 'Carol', 'Charlie']);
   expect(searcher.getMatches(new Query('Carol')).matches[0]).toEqual(
-    new EntityMatch(entities.find((e) => e.name === 'Carol')!, 1, 'Carol')
+    new EntityMatch(entities.find((e) => e.name === 'Carol')!, 3, 'Carol')
   );
 });
 
@@ -59,7 +59,7 @@ test('can remove entities', () => {
   expect(searcher.getTerms()).toEqual(['Bob', 'Charlie']);
   expect(searcher.getMatches(new Query('Carol', 10, 0.3)).matches).toEqual([]);
   expect(searcher.getMatches(new Query('Bob', 10, 0.3)).matches[0]).toEqual(
-    new EntityMatch(entities.find((e) => e.name === 'Bob')!, 1, 'Bob')
+    new EntityMatch(entities.find((e) => e.name === 'Bob')!, 3, 'Bob')
   );
 });
 
@@ -82,8 +82,8 @@ test('can update non-indexed properties.', () => {
   expect(searcher.tryGetEntity(23501)).toEqual(alice);
   expect(searcher.tryGetEntity(bob.id)).toEqual(bob);
   expect(searcher.getEntities()).toEqual([alice, bob, entities[2], entities[3]]);
-  expect(searcher.getMatches(new Query('Alice')).matches[0]).toEqual(new EntityMatch(alice, 1, 'Alice'));
-  expect(searcher.getMatches(new Query('Bob')).matches[0]).toEqual(new EntityMatch(bob, 1, 'Bob'));
+  expect(searcher.getMatches(new Query('Alice')).matches[0]).toEqual(new EntityMatch(alice, 3, 'Alice'));
+  expect(searcher.getMatches(new Query('Bob')).matches[0]).toEqual(new EntityMatch(bob, 3, 'Bob'));
 });
 
 test('can update indexed properties.', () => {
@@ -107,6 +107,6 @@ test('can update indexed properties.', () => {
   expect(searcher.getEntities().sort((e1, e2) => e1.id - e2.id)).toEqual(
     [alice, bob, entities[2], entities[3]].sort((e1, e2) => e1.id - e2.id)
   );
-  expect(searcher.getMatches(new Query('Alice Queen')).matches[0]).toEqual(new EntityMatch(alice, 1, 'Alice Queen'));
-  expect(searcher.getMatches(new Query('Bob Bishop')).matches[0]).toEqual(new EntityMatch(bob, 1, 'Bob Bishop'));
+  expect(searcher.getMatches(new Query('Alice Queen')).matches[0]).toEqual(new EntityMatch(alice, 3, 'Alice Queen'));
+  expect(searcher.getMatches(new Query('Bob Bishop')).matches[0]).toEqual(new EntityMatch(bob, 3, 'Bob Bishop'));
 });
