@@ -14,6 +14,7 @@ import { NormalizerConfig } from '../normalization/normalizer-config.js';
 import { NormalizingSearcher } from '../string-searchers/normalizing-searcher.js';
 import { PrefixSearcher } from '../suffix-array-searchers/prefix-searcher.js';
 import { SearcherSwitch } from '../string-searchers/searcher-switch.js';
+import { SearcherType } from '../interfaces/searcher-type.js';
 import { SortingEntitySearcher } from './sorting-entity-searcher.js';
 import { SortingSearcher } from '../string-searchers/sorting-searcher.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
@@ -34,9 +35,9 @@ export class EntitySearcherFactory {
   public static createSearcher<TEntity, TId>(config: Config): EntitySearcher<TEntity, TId> {
     const defaultNormalizer: Normalizer = this.createDefaultNormalizer(config);
 
-    const fuzzySearcher: StringSearcher = this.createFuzzySearcher(config.fuzzySearchConfig);
-    const suffixArraySearcher: SuffixArraySearcher = this.createSubstringSearcher(config.substringSearchConfig);
-    const prefixSearcher = this.createPrefixSearcher(suffixArraySearcher);
+    const fuzzySearcher: StringSearcher | null = this.tryCreateFuzzySearcher(config);
+    const suffixArraySearcher: SuffixArraySearcher | null = this.tryCreateSubstringSearcher(config);
+    const prefixSearcher: StringSearcher | null = this.tryCreatePrefixSearcher(config, suffixArraySearcher);
 
     let stringSearcher: StringSearcher = new SearcherSwitch(
       prefixSearcher,
@@ -59,14 +60,17 @@ export class EntitySearcherFactory {
    * @returns The default normalizer.
    */
   private static createDefaultNormalizer(config: Config): Normalizer {
-    const forbiddenCharacters = new Set(
-      [
-        config.fuzzySearchConfig.paddingLeft.split(''),
-        config.fuzzySearchConfig.paddingRight.split(''),
-        config.fuzzySearchConfig.paddingMiddle.split(''),
-        config.substringSearchConfig.suffixArraySeparator.split(''),
-      ].flat()
-    );
+    const forbiddenCharacters = new Set();
+
+    if (config.fuzzySearchConfig) {
+      config.fuzzySearchConfig.paddingLeft.split('').forEach(c => forbiddenCharacters.add(c));
+      config.fuzzySearchConfig.paddingRight.split('').forEach(c => forbiddenCharacters.add(c));
+      config.fuzzySearchConfig.paddingMiddle.split('').forEach(c => forbiddenCharacters.add(c));
+    }
+
+    if (config.substringSearchConfig) {
+      config.substringSearchConfig.suffixArraySeparator.split('').forEach(c => forbiddenCharacters.add(c));
+    }
 
     const allowCharacter: (c: string) => boolean = (c) =>
       config.normalizerConfig.allowCharacter(c) && !forbiddenCharacters.has(c);
@@ -80,8 +84,23 @@ export class EntitySearcherFactory {
   }
 
   /**
+   * Creates the fuzzy string searcher if configured.
+   * @param config The searcher configuration.
+   * @returns The fuzzy string searcher or null.
+   */
+  private static tryCreateFuzzySearcher(config: Config): StringSearcher | null {
+    if (!config.searcherTypes.includes(SearcherType.Fuzzy)) {
+      return null;
+    }
+    if (config.fuzzySearchConfig === undefined) {
+      throw new Error('Unable to create fuzzy searcher: No fuzzy search config provided.');
+    }
+    return this.createFuzzySearcher(config.fuzzySearchConfig);
+  }
+
+  /**
    * Creates the fuzzy string searcher.
-   * @param config The fuzzy search configuration.
+   * @param config The fuzzy searcher configuration.
    * @returns The fuzzy string searcher.
    */
   private static createFuzzySearcher(config: FuzzySearchConfig): StringSearcher {
@@ -99,21 +118,62 @@ export class EntitySearcherFactory {
   }
 
   /**
+   * Creates the substring searcher if configured.
+   * @param config The searcher configuration.
+   * @returns The substring searcher or null.
+   */
+  private static tryCreateSubstringSearcher(config: Config): SuffixArraySearcher | null {
+    if (!config.searcherTypes.includes(SearcherType.Substring)) {
+      return null;
+    }
+    if (config.substringSearchConfig === undefined) {
+      throw new Error('Unable to create substring searcher: No substring search config provided.');
+    }
+    return this.createSubstringSearcher(config.substringSearchConfig);
+  }
+
+  /**
    * Creates the substring searcher.
-   * @param config The substring search configuration.
+   * @param config The substring search config.
    * @returns The substring searcher.
    */
   private static createSubstringSearcher(config: SubstringSearchConfig): SuffixArraySearcher {
-    const substringSearcher = new SuffixArraySearcher(config.suffixArraySeparator);
-    return substringSearcher;
+    return new SuffixArraySearcher(config.suffixArraySeparator);
+  }
+
+  /**
+   * Creates the prefix searcher if configured.
+   * @param config The searcher configuration.
+   * @param suffixArraySearcher The suffix array searcher to use.
+   * @returns The prefix searcher or null.
+   */
+  private static tryCreatePrefixSearcher(
+    config: Config,
+    suffixArraySearcher: SuffixArraySearcher | null
+  ): StringSearcher | null {
+    if (!config.searcherTypes.includes(SearcherType.Prefix)) {
+      return null;
+    }
+    if (config.substringSearchConfig === undefined) {
+      throw new Error('Unable to create prefix searcher: No substring search config provided.');
+    }
+
+    return this.createPrefixSearcher(config.substringSearchConfig, suffixArraySearcher);
   }
 
   /**
    * Creates the prefix searcher.
+   * @param config The substring search configuration.
    * @param suffixArraySearcher The suffix array searcher to use.
    * @returns The prefix searcher.
    */
-  private static createPrefixSearcher(suffixArraySearcher: SuffixArraySearcher): StringSearcher {
+  private static createPrefixSearcher(
+    config: SubstringSearchConfig,
+    suffixArraySearcher: SuffixArraySearcher | null
+  ): StringSearcher {
+    if (suffixArraySearcher === null) {
+      suffixArraySearcher = this.createSubstringSearcher(config);
+    }
     return new PrefixSearcher(suffixArraySearcher);
   }
 }

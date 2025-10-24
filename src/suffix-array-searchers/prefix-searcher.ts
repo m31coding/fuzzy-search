@@ -16,7 +16,6 @@ export class PrefixSearcher implements StringSearcher {
      * {@inheritDoc StringSearcher.index}
      */
     index(terms: string[]): Meta {
-        console.warn('PrefixSearcher.index was called. Call SuffixArraySearcher.index instead.');
         return this.suffixArraySearcher.index(terms);
     }
 
@@ -40,7 +39,6 @@ export class PrefixSearcher implements StringSearcher {
      * {@inheritDoc StringSearcher.save}
      */
     save(memento: Memento): void {
-        console.warn('PrefixSearcher.save was called. Call SuffixArraySearcher.save instead.');
         this.suffixArraySearcher.save(memento);
     }
 
@@ -48,7 +46,6 @@ export class PrefixSearcher implements StringSearcher {
      * {@inheritDoc StringSearcher.load}
      */
     load(memento: Memento): void {
-        console.warn('PrefixSearcher.load was called. Call SuffixArraySearcher.load instead.');
         this.suffixArraySearcher.load(memento);
     }
 
