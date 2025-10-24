@@ -10,19 +10,19 @@
     "substringQueries": 997,
     "transpositionErrors": 299
   },
-  "totalDuration": 2274.5138099999676,
-  "averageDuration": 1.1372569049999839,
-  "standardDeviation": 5.465560304604728,
+  "totalDuration": 2283.272619000032,
+  "averageDuration": 1.1416363095000162,
+  "standardDeviation": 5.4463019800609365,
   "fastest": {
     "query": "村",
-    "duration": 0.012208000000100583
+    "duration": 0.012666999999055406
   },
   "slowest": {
     "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
-    "duration": 220.9579589999994
+    "duration": 219.31754200000069
   },
   "longest": {
     "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
-    "duration": 220.9579589999994
+    "duration": 219.31754200000069
   }
 }

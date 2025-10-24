@@ -1,11 +1,11 @@
 {
   "string": "مدينة الكويت",
   "topN": 10,
-  "minQuality": 0.3,
+  "minQuality": 0,
   "searcherTypes": [
-    "prefix",
+    "fuzzy",
     "substring",
-    "fuzzy"
+    "prefix"
   ]
 }
 
