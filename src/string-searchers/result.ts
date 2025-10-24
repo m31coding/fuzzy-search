@@ -1,6 +1,6 @@
 import { Match } from './match.js';
 import { Meta } from '../interfaces/meta.js';
-import { Query } from '../interfaces/query.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 
 /**
  * A string searcher result.
@@ -14,7 +14,7 @@ export class Result {
    */
   public constructor(
     public readonly matches: Match[],
-    public readonly query: Query,
+    public readonly query: StringSearchQuery,
     public readonly meta: Meta
-  ) {}
+  ) { }
 }

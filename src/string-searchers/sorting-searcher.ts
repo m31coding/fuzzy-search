@@ -1,8 +1,8 @@
 import { Match } from './match.js';
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from './result.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
@@ -14,7 +14,7 @@ export class SortingSearcher implements StringSearcher {
    * Creates a new instance of the SortingSearcher class.
    * @param stringSearcher The string searcher to use.
    */
-  public constructor(private readonly stringSearcher: StringSearcher) {}
+  public constructor(private readonly stringSearcher: StringSearcher) { }
 
   /**
    * {@inheritDoc StringSearcher.index}
@@ -26,7 +26,7 @@ export class SortingSearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  public getMatches(query: Query): Result {
+  public getMatches(query: StringSearchQuery): Result {
     const result: Result = this.stringSearcher.getMatches(query);
     result.matches.sort(this.compareMatchesByQualityAndIndex);
     return result;
@@ -43,10 +43,10 @@ export class SortingSearcher implements StringSearcher {
   private compareMatchesByQualityAndIndex(m1: Match, m2: Match): number {
     return (
       m1.quality > m2.quality ? -1
-      : m1.quality < m2.quality ? 1
-      : m1.index < m2.index ? -1
-      : m1.index > m2.index ? 1
-      : 0
+        : m1.quality < m2.quality ? 1
+          : m1.index < m2.index ? -1
+            : m1.index > m2.index ? 1
+              : 0
     );
   }
 

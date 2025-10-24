@@ -6,6 +6,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { Config } from '../config.js';
 import { Meta } from '../interfaces/meta.js';
 import { PerformanceTest } from '../performance/performance-test.js';
+import { Query } from '../interfaces/query.js';
 import { Report } from '../performance/report.js';
 import { SearcherFactory } from '../searcher-factory.js';
 import { TestRunParameters } from '../performance/test-run-parameters.js';
@@ -14,7 +15,6 @@ const outputPath = './src/performance-test/output';
 const seed = 0;
 const numberOfQueries = 2_000;
 const topN = 10;
-const minQuality = 0;
 
 const text = readFileSync('./data/world-ctvs.txt', 'utf8');
 const lines = text.split('\n').slice(1);
@@ -41,7 +41,7 @@ console.log(metaJson);
 
 const performanceTest: PerformanceTest<GeoEntity, number> = new PerformanceTest<GeoEntity, number>(searcher);
 const testRunParameters: TestRunParameters =
-  new TestRunParameters(seed, numberOfQueries, topN, minQuality);
+  new TestRunParameters(seed, numberOfQueries, topN, new Query('').searchers);
 
 console.log('Running performance test...');
 const report: Report = performanceTest.run(testRunParameters);

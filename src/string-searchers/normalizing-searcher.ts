@@ -1,8 +1,8 @@
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
 import { Normalizer } from '../interfaces/normalizer.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from './result.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
@@ -39,9 +39,9 @@ export class NormalizingSearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  public getMatches(query: Query): Result {
-    const normalizedQuery = new Query(
-      this.normalizer.normalize(query.string), query.topN, query.minQuality, query.searcherTypes);
+  public getMatches(query: StringSearchQuery): Result {
+    const normalizedQuery = new StringSearchQuery(
+      this.normalizer.normalize(query.string), query.minQuality, query.searcherType);
     const result = this.stringSearcher.getMatches(normalizedQuery);
     return new Result(result.matches, query, result.meta);
   }

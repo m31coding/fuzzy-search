@@ -4,8 +4,8 @@ import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
 import { NgramComputer } from './ngram-computer.js';
 import { QualityComputer } from './quality-computer.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from '../string-searchers/result.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 import { TermIds } from './term-ids.js';
 
@@ -87,7 +87,7 @@ export class FuzzySearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  public getMatches(query: Query): Result {
+  public getMatches(query: StringSearchQuery): Result {
     if (this.invertedIndex.size === 0) {
       return new Result([], query, new Meta());
     }

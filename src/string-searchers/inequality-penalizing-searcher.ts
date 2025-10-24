@@ -2,8 +2,8 @@ import { HashUtilities } from '../commons/hash-utilities.js';
 import { Match } from './match.js';
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from './result.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
@@ -50,7 +50,7 @@ export class InequalityPenalizingSearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  public getMatches(query: Query): Result {
+  public getMatches(query: StringSearchQuery): Result {
     const hashCodeQuery = HashUtilities.getHashCode(query.string);
     const result = this.stringSearcher.getMatches(query);
     const newMatches = result.matches

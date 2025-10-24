@@ -48,7 +48,7 @@ export class PerformanceTest<TEntity, TId> {
 
     for (let i = 0, l = numberOfQueries; i < l; i++) {
       const queryString = this.GetRandomQueryString();
-      const query = new Query(queryString, parameters.topN, parameters.minQuality);
+      const query = new Query(queryString, parameters.topN, [...parameters.searchers]);
       const start = performance.now();
       const _ = this.dynamicSearcher.getMatches(query);
       const duration = performance.now() - start;
@@ -56,7 +56,7 @@ export class PerformanceTest<TEntity, TId> {
     }
 
     return Report.Create(
-      new TestRunParameters(parameters.testSeed, numberOfQueries, parameters.topN, parameters.minQuality),
+      new TestRunParameters(parameters.testSeed, numberOfQueries, parameters.topN, parameters.searchers),
       this.queryCounts,
       measurements
     );

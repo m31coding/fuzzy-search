@@ -2,6 +2,7 @@ import { Config } from '../config.js';
 import { EntityMatch } from '../interfaces/entity-match.js';
 import { EntitySearcher } from '../interfaces/entity-searcher.js';
 import { EntitySearcherFactory } from './entity-searcher-factory.js';
+import { FuzzySearcher } from '../interfaces/searcher-spec.js';
 import { Query } from '../interfaces/query.js';
 import { SearcherType } from '../interfaces/searcher-type.js';
 import { TestData } from '../commons/test-data.js';
@@ -104,7 +105,7 @@ test('can find persons with approximate match test3', () => {
 });
 
 test("don't return results below min quality", () => {
-  const matches = searcher.getMatches(new Query('Sar', 10, 0.3)).matches;
+  const matches = searcher.getMatches(new Query('Sar', 10, [new FuzzySearcher(0.3)])).matches;
   expect(matches.filter((m) => m.quality < 0.3)).toEqual([]);
 });
 

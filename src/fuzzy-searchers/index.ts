@@ -1,4 +1,4 @@
-export { FuzzySearcher } from './fuzzy-searcher.js';
+export { FuzzySearcher as FuzzySearcherImpl } from './fuzzy-searcher.js';
 export { FuzzySearchConfig } from './fuzzy-search-config.js';
 export { InvertedIndex } from './inverted-index.js';
 export { NgramComputer } from './ngram-computer.js';

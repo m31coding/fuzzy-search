@@ -1,9 +1,9 @@
 import { Match } from '../string-searchers/match.js';
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from '../string-searchers/result.js';
 import { StringComparison } from './string-comparison.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 import { SuffixArray } from './suffix-array.js';
 
@@ -53,7 +53,7 @@ export class SuffixArraySearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  getMatches(query: Query, queryLength?: number): Result {
+  getMatches(query: StringSearchQuery, queryLength?: number): Result {
     if (!query.string) {
       return new Result([], query, new Meta());
     }

@@ -1,6 +1,6 @@
 import { Match } from '../string-searchers/match.js';
 import { PrefixSearcher } from './prefix-searcher.js';
-import { Query } from '../interfaces/query.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { SuffixArraySearcher } from './suffix-array-searcher.js';
 
 const suffixArraySearcher: SuffixArraySearcher = new SuffixArraySearcher('$');
@@ -8,7 +8,7 @@ suffixArraySearcher.index(['Alice', 'Bob', 'Carlos', 'Carol', 'Charlie']);
 const prefixSearcher: PrefixSearcher = new PrefixSearcher(suffixArraySearcher);
 
 function getMatches(queryString: string): Match[] {
-    const query = new Query(queryString, 10, 0);
+    const query = new StringSearchQuery(queryString, 0);
     const matches = prefixSearcher.getMatches(query).matches;
     matches.sort((m1, m2) => m1.index - m2.index);
     return matches;

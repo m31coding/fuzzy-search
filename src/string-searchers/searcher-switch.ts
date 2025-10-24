@@ -1,9 +1,9 @@
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
 import { MetaMerger } from '../commons/meta-merger.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from '../string-searchers/result.js';
 import { SearcherType } from '../interfaces/searcher-type.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
@@ -49,13 +49,13 @@ export class SearcherSwitch implements StringSearcher {
     /**
      * {@inheritDoc StringSearcher.getMatches}
      */
-    getMatches(query: Query): Result {
+    getMatches(query: StringSearchQuery): Result {
 
-        if (query.searcherTypes.length != 1) {
-            throw new Error('SearcherSwitch.getMatches only supports queries with a single searcher type.');
+        if (!query.searcherType) {
+            throw new Error('SearcherSwitch requires a searcher type.');
         }
 
-        switch (query.searcherTypes[0]) {
+        switch (query.searcherType) {
             case SearcherType.Prefix:
                 if (!this.prefixSearcher) {
                     throw new Error('No prefix searcher has been indexed.');
@@ -72,7 +72,7 @@ export class SearcherSwitch implements StringSearcher {
                 }
                 return this.fuzzySearcher.getMatches(query);
             default:
-                throw new Error(`Unknown searcher type: ${query.searcherTypes[0]}`);
+                throw new Error(`Unknown searcher type: ${query.searcherType}`);
         }
     }
 

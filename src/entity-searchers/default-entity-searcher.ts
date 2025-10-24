@@ -8,7 +8,9 @@ import { MetaMerger } from '../commons/meta-merger.js';
 import { Query } from '../interfaces/query.js';
 import { Result } from '../string-searchers/result.js';
 import { SearchState } from './search-state.js';
+import { SearcherSpec } from '../interfaces/searcher-spec.js';
 import { SearcherType } from '../interfaces/searcher-type.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
@@ -23,9 +25,9 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
   private readonly stringSearcher: StringSearcher;
 
   /**
-   * The types of searchers to use.
+   * The types of searchers that are available.
    */
-  private readonly searcherTypes: SearcherType[];
+  private readonly searcherTypes: Set<SearcherType>;
 
   /**
    * The indexed entities.
@@ -66,11 +68,12 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    * @typeParam TEntity The type of the entities.
    * @typeParam TId The type of the entity ids.
    * @param stringSearcher The string searcher to use.
+   * @param searcherTypes The types of searchers that are available.
    * 
    */
   public constructor(stringSearcher: StringSearcher, searcherTypes: SearcherType[]) {
     this.stringSearcher = stringSearcher;
-    this.searcherTypes = searcherTypes;
+    this.searcherTypes = new Set(searcherTypes);
     this.entities = [];
     this.idToIndex = new Map<TId, number>();
     this.terms = [];
@@ -112,21 +115,22 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    */
   public getMatches(query: Query): EntityResult<TEntity> {
     const searchState: SearchState<TEntity> = new SearchState<TEntity>(query);
+    const requestedSearchers = new Map(query.searchers.map(s => [s.type, s]));
 
     for (const { searcherType, qualityOffset } of this.searchersAndQualityOffsets) {
       if (query.topN == searchState.matches.length) {
         break;
       }
 
-      if (!query.searcherTypes.includes(searcherType)) {
+      if (!requestedSearchers.has(searcherType)) {
         continue;
       }
 
-      if (!this.searcherTypes.includes(searcherType)) {
+      if (!this.searcherTypes.has(searcherType)) {
         continue;
       }
 
-      this.addMatchesFromSearcher(searchState, searcherType, qualityOffset);
+      this.addMatchesFromSearcher(searchState, requestedSearchers.get(searcherType)!, qualityOffset);
     }
 
     const mergedMeta = MetaMerger.mergeMeta(searchState.meta);
@@ -136,17 +140,23 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
   /**
    * Adds matches from a specific searcher to the search state.
    * @param searchState The current search state.
-   * @param searcherType The type of the searcher.
+   * @param searcherSpec The searcher specification.
    * @param qualityOffset The quality offset to apply.
    */
   private addMatchesFromSearcher(
     searchState: SearchState<TEntity>,
-    searcherType: SearcherType,
+    searcherSpec: SearcherSpec,
     qualityOffset: number
   ): void {
-    const stringSearcherQuery: Query = new Query(
-      searchState.query.string, Infinity, searchState.query.minQuality, [searcherType]);
-    const result: Result = this.stringSearcher.getMatches(stringSearcherQuery);
+
+    const minQuality = Math.max(0, searcherSpec.minQuality - qualityOffset);
+    if (minQuality > 1) {
+      return;
+    }
+
+    const stringSearchQuery: StringSearchQuery = new StringSearchQuery(
+      searchState.query.string, minQuality, searcherSpec.type);
+    const result: Result = this.stringSearcher.getMatches(stringSearchQuery);
     this.addMatchesFromResult(searchState, result, qualityOffset);
   }
 

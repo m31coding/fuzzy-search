@@ -5,7 +5,7 @@ import { MultiNormalizer } from '../normalization/multi-normalizer.js';
 import { NgramNormalizer } from '../normalization/ngram-normalizer.js';
 import { NormalizerConfig } from '../normalization/normalizer-config.js';
 import { NormalizingSearcher } from './normalizing-searcher.js';
-import { Query } from '../interfaces/query.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 const defaultNormalizer = DefaultNormalizer.create(NormalizerConfig.createDefaultConfig());
@@ -16,9 +16,9 @@ const normalizingSearcher: StringSearcher = new NormalizingSearcher(literalSearc
 normalizingSearcher.index(['Hello world!']);
 
 test('can find matches normalized test 1', () => {
-  expect(normalizingSearcher.getMatches(new Query('HELLO-WORLD')).matches).toEqual([new Match(0, 1)]);
+  expect(normalizingSearcher.getMatches(new StringSearchQuery('HELLO-WORLD')).matches).toEqual([new Match(0, 1)]);
 });
 
 test('can find matches normalized test 2', () => {
-  expect(normalizingSearcher.getMatches(new Query('!hello! world!!!')).matches).toEqual([new Match(0, 1)]);
+  expect(normalizingSearcher.getMatches(new StringSearchQuery('!hello! world!!!')).matches).toEqual([new Match(0, 1)]);
 });
