@@ -118,7 +118,6 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
       this.addMatchesFromSearcher(searchState, searcherType, qualityOffset);
     }
 
-
     const mergedMeta = MetaMerger.mergeMeta(searchState.meta);
     return new EntityResult(searchState.matches, query, mergedMeta);
   }
@@ -151,6 +150,7 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
     result: Result,
     qualityOffset: number
   ): void {
+    searchState.meta.push(result.meta);
     if (searchState.query.topN === 0) {
       return;
     }

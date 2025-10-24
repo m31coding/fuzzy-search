@@ -37,7 +37,7 @@ export class Query {
     string: string,
     topN: number = 10,
     minQuality: number = 0,
-    searcherTypes: SearcherType[] = [SearcherType.Prefix, SearcherType.Substring, SearcherType.Fuzzy]) {
+    searcherTypes: SearcherType[] = [SearcherType.Fuzzy, SearcherType.Substring, SearcherType.Prefix]) {
     this.string = string;
     this.topN = Math.max(0, topN);
     this.minQuality = Math.max(0, Math.min(1, minQuality));
