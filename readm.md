@@ -169,7 +169,7 @@ The following parameters are available when creating a query:
 | --------- | ---- | ------- | ----------- |
 | string | string | - | The query string. |
 | topN | number | 10 | The maximum number of matches to return. Provide Infinity to return all matches. |
-| minQuality | number | 0.0 | The minimum quality of a match, ranging from 0 to 1. When set to zero, all terms that share at least one common n-gram with the query are considered a match. |
+| minQuality | number | 0.3 | The minimum quality of a match, ranging from 0 to 1. When set to zero, all terms that share at least one common n-gram with the query are considered a match. |
 
 If the data terms contain characters and strings in non-latin scripts (such as Arabic, Cyrillic, Greek, Han, ... see also [ISO 15924](https://en.wikipedia.org/wiki/ISO_15924)), the default configuration must be adjusted before creating the searcher:
 
