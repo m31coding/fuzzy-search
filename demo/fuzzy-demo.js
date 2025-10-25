@@ -257,7 +257,7 @@ async function generateAndIndexPersonData(reindex = false) {
 
 async function importFaker() {
   try {
-    return await import('../node_modules/@faker-js/faker/dist/esm/index.mjs');
+    return await import('../node_modules/@faker-js/faker/dist/index.js');
   } catch (e) {
     console.log(e);
     getIndexStatusTextElement().innerHTML += `Import error.`;
