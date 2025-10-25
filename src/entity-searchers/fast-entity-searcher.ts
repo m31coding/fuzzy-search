@@ -1,12 +1,11 @@
-// todo: remove: first shot: prefix searcher with given quality and substring searcher with higher quality if q < 0.2
-
+import { PrefixSearcher, SubstringSearcher } from "../interfaces/searcher-spec.js";
 import { EntityResult } from "../interfaces/entity-result.js";
 import { EntitySearcher } from "../interfaces/entity-searcher.js";
 import { Memento } from "../interfaces/memento.js";
 import { Meta } from "../interfaces/meta.js";
 import { Query } from "../interfaces/query.js";
 import { SearcherType } from "../interfaces/searcher-type.js";
-import { FuzzySearcher, PrefixSearcher, SearcherSpec, SubstringSearcher } from "../interfaces/searcher-spec.js";
+import { UsableSearchers } from "../commons/usable-searchers.js";
 
 /**
  * A entity searcher that tries to optimize performance by querying with limited searchers and an increased quality 
@@ -20,9 +19,12 @@ export class FastEntitySearcher<TEntity, TId> implements EntitySearcher<TEntity,
      * Creates a new instance of the FastEntitySearcher class.
      * @typeParam TEntity The type of the entities.
      * @typeParam TId The type of the entity ids.
-     * @param entitySearcher 
+     * @param entitySearcher The entity searcher.
+     * @param searcherTypes The available searcher types.
      */
-    public constructor(private readonly entitySearcher: EntitySearcher<TEntity, TId>) {
+    public constructor(
+        private readonly entitySearcher: EntitySearcher<TEntity, TId>,
+        private readonly searcherTypes: SearcherType[]) {
     }
 
     /**
@@ -36,16 +38,30 @@ export class FastEntitySearcher<TEntity, TId> implements EntitySearcher<TEntity,
      * {@inheritDoc EntitySearcher.getMatches}
      */
     getMatches(query: Query): EntityResult<TEntity> {
-        const searchers = new Map(query.searchers.map(s => [s.type, s]));
 
-        if (query.topN === Infinity) {
+        const usableSearchers = new UsableSearchers(this.searcherTypes, query.searchers);
+
+        if (query.topN > 200) {
             return this.entitySearcher.getMatches(query);
         }
 
+        // Make the prefix searcher faster for short queries.
         if (query.string.length <= 3 &&
-            searchers.has(SearcherType.Prefix) &&
-            searchers.get(SearcherType.Prefix)!.minQuality < 2.2) {
+            usableSearchers.has(SearcherType.Prefix) &&
+            usableSearchers.minQuality(SearcherType.Prefix) < 2.2) {
             const newQuery = new Query(query.string, query.topN, [new PrefixSearcher(2.3)]);
+            const result = this.entitySearcher.getMatches(newQuery);
+            if (result.matches.length == query.topN) {
+                return new EntityResult<TEntity>(result.matches, query, result.meta);
+            }
+        }
+
+        // If there is no prefix searcher, make the substring searcher faster for short queries.
+        if (query.string.length <= 3 &&
+            !usableSearchers.has(SearcherType.Prefix) &&
+            usableSearchers.has(SearcherType.Substring) &&
+            usableSearchers.minQuality(SearcherType.Substring) < 1.2) {
+            const newQuery = new Query(query.string, query.topN, [new SubstringSearcher(1.3)]);
             const result = this.entitySearcher.getMatches(newQuery);
             if (result.matches.length == query.topN) {
                 return new EntityResult<TEntity>(result.matches, query, result.meta);

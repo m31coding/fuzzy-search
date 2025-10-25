@@ -3,7 +3,7 @@ import { DefaultEntitySearcher } from './default-entity-searcher.js';
 import { DefaultNormalizer } from '../normalization/default-normalizer.js';
 import { DistinctSearcher } from '../string-searchers/distinct-searcher.js';
 import { EntitySearcher } from '../interfaces/entity-searcher.js';
-import { FastEntitySearcher } from '../entity-searchers/fast-entity-searcher.js'; // todo
+import { FastEntitySearcher } from '../entity-searchers/fast-entity-searcher.js';
 import { FuzzySearchConfig } from '../fuzzy-search.js';
 import { FuzzySearcher } from '../fuzzy-searchers/fuzzy-searcher.js';
 import { InequalityPenalizingSearcher } from '../string-searchers/inequality-penalizing-searcher.js';
@@ -50,7 +50,7 @@ export class EntitySearcherFactory {
     stringSearcher = new NormalizingSearcher(stringSearcher, defaultNormalizer, 'normalizationDurationDefault');
     let entitySearcher: EntitySearcher<TEntity, TId> =
       new DefaultEntitySearcher<TEntity, TId>(stringSearcher, config.searcherTypes);
-    entitySearcher = new FastEntitySearcher<TEntity, TId>(entitySearcher);
+    entitySearcher = new FastEntitySearcher<TEntity, TId>(entitySearcher, config.searcherTypes);
     entitySearcher = new SortingEntitySearcher<TEntity, TId>(config.sortOrder, entitySearcher);
     return entitySearcher;
   }

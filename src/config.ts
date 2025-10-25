@@ -10,7 +10,7 @@ import { SubstringSearchConfig } from './suffix-array-searchers/substring-search
 export class Config {
   /**
    * Creates a new instance of the Config class.
-   * @param searcherTypes The seπarcher types to use.
+   * @param searcherTypes The searcher types to use.
    * @param normalizerConfig The configuration for the default normalizer.
    * @param maxQueryLength The maximum query length.
    * @param sortOrder The sort order for the entity matches.

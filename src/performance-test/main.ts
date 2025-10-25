@@ -9,6 +9,7 @@ import { PerformanceTest } from '../performance/performance-test.js';
 import { Query } from '../interfaces/query.js';
 import { Report } from '../performance/report.js';
 import { SearcherFactory } from '../searcher-factory.js';
+import { SearcherType } from '../interfaces/searcher-type.js';
 import { TestRunParameters } from '../performance/test-run-parameters.js';
 
 const outputPath = './src/performance-test/output';
@@ -26,6 +27,7 @@ interface GeoEntity {
 }
 
 const config = Config.createDefaultConfig();
+config.searcherTypes = [SearcherType.Fuzzy, SearcherType.Substring, SearcherType.Prefix];
 config.normalizerConfig.allowCharacter = (_) => true;
 const searcher = SearcherFactory.createSearcher<GeoEntity, number>(config);
 
