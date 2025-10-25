@@ -40,6 +40,7 @@ export class PerformanceTest<TEntity, TId> {
    * @returns The performance test report.
    */
   public run(parameters: TestRunParameters): Report {
+    console.log(`Running performance test with parameters: ${JSON.stringify(parameters, null, 2)}`);
     const measurements: TimedQuery[] = [];
     this.terms = this.dynamicSearcher.getTerms().filter((t) => t);
     this.random = this.mulberry32(parameters.testSeed);

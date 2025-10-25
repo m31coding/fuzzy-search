@@ -1,211 +1,221 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fuzzy Search Demo</title>
-    <link rel="stylesheet" href="main.css" />
-  </head>
 
-  <body>
-    <div id="fuzzy-demo">
-      <h1 class="center">Fuzzy Search Demo</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuzzy Search Demo</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
 
-      <h2 id="dataset-header" class="center">Select a dataset</h2>
+<body>
+  <div id="fuzzy-demo">
+    <h1 class="center">Fuzzy Search Demo</h1>
 
-      <div id="data-selection">
-        <div id="osm-data-card" class="data-card">
-          <h3>Open Street Map Data (~16 Mb)</h3>
-          <p class="data-description">
-            All names of cities, towns, villages and suburbs worldwide in their local language. More than one million
-            terms. See also openstreetmap.org/<wbr />copyright.
-          </p>
-        </div>
+    <h2 id="dataset-header" class="center">Select a dataset</h2>
 
-        <div id="person-data-card" class="data-card">
-          <h3>Person names (~5 Mb)</h3>
-          <p class="data-description">
-            First names and last names generated with faker-js for all available languages. Demonstrates how entities
-            can be found by different terms.
-          </p>
-        </div>
+    <div id="data-selection">
+      <div id="osm-data-card" class="data-card">
+        <h3>Open Street Map Data (~16 Mb)</h3>
+        <p class="data-description">
+          All names of cities, towns, villages and suburbs worldwide in their local language. More than one million
+          terms. See also openstreetmap.org/<wbr />copyright.
+        </p>
       </div>
 
-      <div id="index-status" class="invisible">
-        <button type="button" id="cancel-button">Cancel</button>
-        <span id="index-status-text"></span>
+      <div id="person-data-card" class="data-card">
+        <h3>Person names (~5 Mb)</h3>
+        <p class="data-description">
+          First names and last names generated with faker-js for all available languages. Demonstrates how entities
+          can be found by different terms.
+        </p>
       </div>
+    </div>
 
-      <details id="data-details" class="invisible">
-        <summary>Data preview</summary>
-        <div id="data-preview-container">
-          <div id="name-container">
-            <div id="locale-selection"></div>
-            <div id="person-parameters" class="parameters">
-              <label>
-                <span>Number of names <span class="parameter-error"></span></span>
-                <input type="number" name="number-of-names" value="50000" min="0" />
-              </label>
-              <label>
-                <span>Random seed <span class="parameter-error"></span></span>
-                <input type="number" name="random-seed" value="0" />
-              </label>
-            </div>
+    <div id="index-status" class="invisible">
+      <button type="button" id="cancel-button">Cancel</button>
+      <span id="index-status-text"></span>
+    </div>
 
-            <div id="reindex-status">
-              <button type="button" id="reindex-button">Reindex</button>
-              <button type="button" id="reindex-cancel-button">Cancel</button>
-              <span id="reindex-status-text"></span>
-            </div>
-          </div>
-          <textarea id="data-preview" name="data-preview" rows="12" cols="60" readonly></textarea>
-          <button type="button" id="download-data-button">Download</button>
-        </div>
-      </details>
-
-      <details id="indexing-meta-details" class="invisible">
-        <summary>Indexing meta</summary>
-        <div id="indexing-meta"></div>
-      </details>
-
-      <div id="hint" class="invisible"></div>
-
-      <div id="search-bar-div" class="invisible">
-        <input type="text" name="search-bar" id="search-bar" value="" placeholder="Start typing..." />
-        <span id="query-duration">0 ms</span>
-      </div>
-
-      <div id="matches-container" class="invisible">
-        <table id="matches-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Entity</th>
-              <th>Matched String</th>
-              <th>Quality</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="invisible">1</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">2</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">3</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">4</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">5</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">6</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">7</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">8</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">9</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-            <tr>
-              <td class="invisible">10</td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-              <td class="invisible"></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div id="edit-modal" class="modal invisible">
-          <div class="modal-content">
-            <h3>Edit</h3>
-            <div class="entity-properties parameters"></div>
-            <div id="edit-buttons">
-              <button type="button" id="update-entity">Update</button>
-              <button type="button" id="remove-entity">Remove</button>
-              <button type="button" id="close-edit-modal">Close</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="add-modal" class="modal invisible">
-          <div class="modal-content">
-            <h3>Add</h3>
-            <div class="entity-properties parameters"></div>
-            <div id="add-buttons">
-              <button type="button" id="add-entity">Add</button>
-              <button type="button" id="close-add-modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="add-container" class="invisible">
-        <button type="button" id="open-add-modal">Add</button>
-        <p>To update or remove an entity, click on it in the matches table above.</p>
-      </div>
-
-      <details id="performance-test-details" class="invisible">
-        <summary>Performance test</summary>
-        <div id="performance-test">
-          <div class="parameters">
+    <details id="data-details" class="invisible">
+      <summary>Data preview</summary>
+      <div id="data-preview-container">
+        <div id="name-container">
+          <div id="locale-selection"></div>
+          <div id="person-parameters" class="parameters">
+            <label>
+              <span>Number of names <span class="parameter-error"></span></span>
+              <input type="number" name="number-of-names" value="50000" min="0" />
+            </label>
             <label>
               <span>Random seed <span class="parameter-error"></span></span>
               <input type="number" name="random-seed" value="0" />
             </label>
-            <label>
-              <span>Number of queries <span class="parameter-error"></span></span>
-              <input type="number" name="number-of-queries" value="1000" min="0" />
-            </label>
-            <label>
-              <span>Maximum number of matches (topN) <span class="parameter-error"></span></span>
-              <input type="number" name="max-matches" value="10" />
-            </label>
-            <label>
-              <span>Minimum quality <span class="parameter-error"></span></span>
-              <input type="number" name="min-quality" value="0.3" />
-            </label>
           </div>
-          <button type="button" id="performance-test-button">run performance test</button>
-          <textarea id="performance-test-result" name="performance-test-result" rows="6" cols="60" readonly></textarea>
+
+          <div id="reindex-status">
+            <button type="button" id="reindex-button">Reindex</button>
+            <button type="button" id="reindex-cancel-button">Cancel</button>
+            <span id="reindex-status-text"></span>
+          </div>
         </div>
-      </details>
+        <textarea id="data-preview" name="data-preview" rows="12" cols="60" readonly></textarea>
+        <button type="button" id="download-data-button">Download</button>
+      </div>
+    </details>
+
+    <details id="indexing-meta-details" class="invisible">
+      <summary>Indexing meta</summary>
+      <div id="indexing-meta"></div>
+    </details>
+
+    <div id="hint" class="invisible"></div>
+
+    <div id="search-bar-div" class="invisible">
+      <input type="text" name="search-bar" id="search-bar" value="" placeholder="Start typing..." />
+      <span id="query-duration">0 ms</span>
     </div>
 
-    <script src="../node_modules/file-saver/dist/FileSaver.min.js"></script>
-    <script type="module" src="./fuzzy-demo.js"></script>
-  </body>
+    <div id="matches-container" class="invisible">
+      <table id="matches-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Entity</th>
+            <th>Matched String</th>
+            <th>Quality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="invisible">1</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">2</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">3</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">4</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">5</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">6</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">7</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">8</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">9</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+          <tr>
+            <td class="invisible">10</td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+            <td class="invisible"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div id="edit-modal" class="modal invisible">
+        <div class="modal-content">
+          <h3>Edit</h3>
+          <div class="entity-properties parameters"></div>
+          <div id="edit-buttons">
+            <button type="button" id="update-entity">Update</button>
+            <button type="button" id="remove-entity">Remove</button>
+            <button type="button" id="close-edit-modal">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="add-modal" class="modal invisible">
+        <div class="modal-content">
+          <h3>Add</h3>
+          <div class="entity-properties parameters"></div>
+          <div id="add-buttons">
+            <button type="button" id="add-entity">Add</button>
+            <button type="button" id="close-add-modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="add-container" class="invisible">
+      <button type="button" id="open-add-modal">Add</button>
+      <p>To update or remove an entity, click on it in the matches table above.</p>
+    </div>
+
+    <details id="performance-test-details" class="invisible">
+      <summary>Performance test</summary>
+      <div id="performance-test">
+        <div class="parameters">
+          <label>
+            <span>Random seed <span class="parameter-error"></span></span>
+            <input type="number" name="random-seed" value="0" />
+          </label>
+          <label>
+            <span>Number of queries <span class="parameter-error"></span></span>
+            <input type="number" name="number-of-queries" value="1000" min="0" />
+          </label>
+          <label>
+            <span>Maximum number of matches (topN) <span class="parameter-error"></span></span>
+            <input type="number" name="max-matches" value="10" />
+          </label>
+          <label>
+            <span>Fuzzy searcher minimum quality <span class="parameter-error"></span></span>
+            <input type="number" name="min-quality-fuzzy" value="0.3" />
+          </label>
+          <label>
+            <span>Substring searcher minimum quality <span class="parameter-error"></span></span>
+            <input type="number" name="min-quality-substring" value="0.0" />
+          </label>
+          <label>
+            <span>Prefix searcher minimum quality <span class="parameter-error"></span></span>
+            <input type="number" name="min-quality-prefix" value="0.0" />
+          </label>
+        </div>
+        <button type="button" id="performance-test-button">run performance test</button>
+        <textarea id="performance-test-result" name="performance-test-result" rows="6" cols="60" readonly></textarea>
+      </div>
+    </details>
+  </div>
+
+  <script src="../node_modules/file-saver/dist/FileSaver.min.js"></script>
+  <script type="module" src="./fuzzy-demo.js"></script>
+</body>
+
 </html>
