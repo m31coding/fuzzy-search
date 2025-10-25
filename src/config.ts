@@ -24,7 +24,7 @@ export class Config {
     public sortOrder: SortOrder,
     public fuzzySearchConfig?: FuzzySearchConfig,
     public substringSearchConfig?: SubstringSearchConfig
-  ) { }
+  ) {}
 
   /**
    * Creates an opinionated default configuration.
@@ -38,6 +38,12 @@ export class Config {
     const fuzzySearchConfig = FuzzySearchConfig.createDefaultConfig();
     const substringSearchConfig = SubstringSearchConfig.createDefaultConfig();
     return new Config(
-      searcherTypes, normalizerConfig, maxQueryLength, sortOrder, fuzzySearchConfig, substringSearchConfig);
+      searcherTypes,
+      normalizerConfig,
+      maxQueryLength,
+      sortOrder,
+      fuzzySearchConfig,
+      substringSearchConfig
+    );
   }
 }

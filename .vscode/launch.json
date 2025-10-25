@@ -5,25 +5,17 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Basic Usage",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/dist/basic-usage.js",
-      "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
+      "outFiles": ["${workspaceFolder}/**/*.js"]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Run Regression Test",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/dist/regression-test/main.js",
-      "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
+      "outFiles": ["${workspaceFolder}/**/*.js"]
     }
   ]
 }

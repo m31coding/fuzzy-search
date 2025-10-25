@@ -1,6 +1,6 @@
 /**
  * Performance test. Run this file and check the git diff of the output files to see how the performance changed.
-*/
+ */
 
 import { readFileSync, writeFileSync } from 'fs';
 import { Config } from '../config.js';
@@ -42,8 +42,12 @@ writeFileSync(`${outputPath}/_indexing-meta.txt`, metaJson, { encoding: 'utf8' }
 console.log(metaJson);
 
 const performanceTest: PerformanceTest<GeoEntity, number> = new PerformanceTest<GeoEntity, number>(searcher);
-const testRunParameters: TestRunParameters =
-  new TestRunParameters(seed, numberOfQueries, topN, new Query('').searchers);
+const testRunParameters: TestRunParameters = new TestRunParameters(
+  seed,
+  numberOfQueries,
+  topN,
+  new Query('').searchers
+);
 
 console.log('Running performance test...');
 const report: Report = performanceTest.run(testRunParameters);

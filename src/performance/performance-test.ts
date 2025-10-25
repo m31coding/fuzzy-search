@@ -74,8 +74,7 @@ export class PerformanceTest<TEntity, TId> {
     if (this.RollPercentage(0.5)) {
       start = 0;
       this.queryCounts.prefixQueries++;
-    }
-    else {
+    } else {
       start = this.getRandomInteger(0, term.length);
       this.queryCounts.substringQueries++;
     }
@@ -89,10 +88,12 @@ export class PerformanceTest<TEntity, TId> {
 
     const errorPosition = this.getRandomInteger(0, substring.length - 1);
     this.queryCounts.transpositionErrors++;
-    return substring.substring(0, errorPosition)
-      + substring[errorPosition + 1]
-      + substring[errorPosition]
-      + substring.substring(errorPosition + 2);
+    return (
+      substring.substring(0, errorPosition) +
+      substring[errorPosition + 1] +
+      substring[errorPosition] +
+      substring.substring(errorPosition + 2)
+    );
   }
 
   private RollPercentage(chance: number): boolean {

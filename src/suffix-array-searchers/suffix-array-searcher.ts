@@ -103,7 +103,7 @@ export class SuffixArraySearcher implements StringSearcher {
   /**
    * Gets the positions in the suffix array where the given substring matches.
    * @param substring The substring to search for.
-   * @returns The start and end positions of the substring in the suffix array. The start is inclusive, the end is 
+   * @returns The start and end positions of the substring in the suffix array. The start is inclusive, the end is
    * exclusive.
    */
   private GetPositionsInSuffixArray(substring: string): number[] {

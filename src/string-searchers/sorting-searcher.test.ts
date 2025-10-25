@@ -13,8 +13,8 @@ const stringSearcher = {
       query,
       new Meta()
     ),
-  save: (_memento: Memento): void => { },
-  load: (_memento: Memento): void => { }
+  save: (_memento: Memento): void => {},
+  load: (_memento: Memento): void => {}
 };
 
 const sortingSearcher = new SortingSearcher(stringSearcher);

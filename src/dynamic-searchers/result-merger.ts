@@ -47,8 +47,8 @@ export class ResultMerger {
     const newMatches = [...matches1, ...matches2];
     newMatches.sort((m1, m2) =>
       m1.quality > m2.quality ? -1
-        : m1.quality < m2.quality ? 1
-          : 0
+      : m1.quality < m2.quality ? 1
+      : 0
     );
     return newMatches.length <= topN ? newMatches : newMatches.slice(0, topN);
   }

@@ -14,7 +14,7 @@ export class SortingSearcher implements StringSearcher {
    * Creates a new instance of the SortingSearcher class.
    * @param stringSearcher The string searcher to use.
    */
-  public constructor(private readonly stringSearcher: StringSearcher) { }
+  public constructor(private readonly stringSearcher: StringSearcher) {}
 
   /**
    * {@inheritDoc StringSearcher.index}
@@ -43,10 +43,10 @@ export class SortingSearcher implements StringSearcher {
   private compareMatchesByQualityAndIndex(m1: Match, m2: Match): number {
     return (
       m1.quality > m2.quality ? -1
-        : m1.quality < m2.quality ? 1
-          : m1.index < m2.index ? -1
-            : m1.index > m2.index ? 1
-              : 0
+      : m1.quality < m2.quality ? 1
+      : m1.index < m2.index ? -1
+      : m1.index > m2.index ? 1
+      : 0
     );
   }
 

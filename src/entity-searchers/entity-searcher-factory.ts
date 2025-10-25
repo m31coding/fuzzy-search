@@ -39,17 +39,15 @@ export class EntitySearcherFactory {
     const suffixArraySearcher: SuffixArraySearcher | null = this.tryCreateSubstringSearcher(config);
     const prefixSearcher: StringSearcher | null = this.tryCreatePrefixSearcher(config, suffixArraySearcher);
 
-    let stringSearcher: StringSearcher = new SearcherSwitch(
-      prefixSearcher,
-      suffixArraySearcher,
-      fuzzySearcher
-    );
+    let stringSearcher: StringSearcher = new SearcherSwitch(prefixSearcher, suffixArraySearcher, fuzzySearcher);
 
     stringSearcher = new DistinctSearcher(stringSearcher);
     stringSearcher = new SortingSearcher(stringSearcher);
     stringSearcher = new NormalizingSearcher(stringSearcher, defaultNormalizer, 'normalizationDurationDefault');
-    let entitySearcher: EntitySearcher<TEntity, TId> =
-      new DefaultEntitySearcher<TEntity, TId>(stringSearcher, config.searcherTypes);
+    let entitySearcher: EntitySearcher<TEntity, TId> = new DefaultEntitySearcher<TEntity, TId>(
+      stringSearcher,
+      config.searcherTypes
+    );
     entitySearcher = new FastEntitySearcher<TEntity, TId>(entitySearcher, config.searcherTypes);
     entitySearcher = new SortingEntitySearcher<TEntity, TId>(config.sortOrder, entitySearcher);
     return entitySearcher;
@@ -64,13 +62,13 @@ export class EntitySearcherFactory {
     const forbiddenCharacters = new Set();
 
     if (config.fuzzySearchConfig) {
-      config.fuzzySearchConfig.paddingLeft.split('').forEach(c => forbiddenCharacters.add(c));
-      config.fuzzySearchConfig.paddingRight.split('').forEach(c => forbiddenCharacters.add(c));
-      config.fuzzySearchConfig.paddingMiddle.split('').forEach(c => forbiddenCharacters.add(c));
+      config.fuzzySearchConfig.paddingLeft.split('').forEach((c) => forbiddenCharacters.add(c));
+      config.fuzzySearchConfig.paddingRight.split('').forEach((c) => forbiddenCharacters.add(c));
+      config.fuzzySearchConfig.paddingMiddle.split('').forEach((c) => forbiddenCharacters.add(c));
     }
 
     if (config.substringSearchConfig) {
-      config.substringSearchConfig.suffixArraySeparator.split('').forEach(c => forbiddenCharacters.add(c));
+      config.substringSearchConfig.suffixArraySeparator.split('').forEach((c) => forbiddenCharacters.add(c));
     }
 
     const allowCharacter: (c: string) => boolean = (c) =>

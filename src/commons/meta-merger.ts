@@ -7,11 +7,11 @@ import { Meta } from '../interfaces/meta.js';
  */
 export class MetaMerger {
   /**
-  * Merges {@link Meta} objects into a new {@link Meta} object. Numbers for the same key are summed up, other values 
-  * are stored with an index suffix.
-  * @param metas The meta objects to merge.
-  * @returns The merged meta object.
-  */
+   * Merges {@link Meta} objects into a new {@link Meta} object. Numbers for the same key are summed up, other values
+   * are stored with an index suffix.
+   * @param metas The meta objects to merge.
+   * @returns The merged meta object.
+   */
   public static mergeMeta(metas: Meta[]): Meta {
     if (metas.length === 0) {
       return new Meta();
@@ -28,8 +28,7 @@ export class MetaMerger {
         const present = metaLists.get(key);
         if (present === undefined) {
           metaLists.set(key, [value]);
-        }
-        else {
+        } else {
           present.push(value);
         }
       }
@@ -43,7 +42,7 @@ export class MetaMerger {
         continue;
       }
 
-      if (values.every(v => typeof v === 'number')) {
+      if (values.every((v) => typeof v === 'number')) {
         const sum = values.reduce((acc, val) => acc + val, 0);
         newMetaEntries.set(key, sum);
         continue;

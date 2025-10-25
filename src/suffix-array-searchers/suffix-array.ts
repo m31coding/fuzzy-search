@@ -206,7 +206,7 @@ class SuffixRank {
   public constructor(
     public readonly head: number,
     public readonly rank: number
-  ) { }
+  ) {}
 }
 
 /**
@@ -214,10 +214,12 @@ class SuffixRank {
  */
 class Chain {
   /**
-   * Creates a new instance of the Chain class. 
+   * Creates a new instance of the Chain class.
    * @param head The head index of the chain.
    * @param length The length of the chain.
    */
-  public constructor(public head: number, public readonly length: number) {
-  }
+  public constructor(
+    public head: number,
+    public readonly length: number
+  ) {}
 }

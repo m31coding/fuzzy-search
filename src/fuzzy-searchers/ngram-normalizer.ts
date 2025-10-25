@@ -15,7 +15,7 @@ export class NgramNormalizer implements Normalizer {
     public readonly paddingLeft: string,
     public readonly paddingRight: string,
     public readonly paddingMiddle: string
-  ) { }
+  ) {}
 
   /**
    * {@inheritDoc Normalizer.normalize}

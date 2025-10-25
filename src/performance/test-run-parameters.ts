@@ -1,4 +1,4 @@
-import { SearcherSpec } from "../interfaces/searcher-spec.js";
+import { SearcherSpec } from '../interfaces/searcher-spec.js';
 
 /**
  * Parameters of a performance test run.
@@ -16,5 +16,5 @@ export class TestRunParameters {
     public readonly numberOfQueries: number,
     public readonly topN: number,
     public readonly searchers: readonly SearcherSpec[]
-  ) { }
+  ) {}
 }

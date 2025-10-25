@@ -8,7 +8,7 @@ class Person {
     public id: number,
     public name: string,
     public favoriteHobby: string
-  ) { }
+  ) {}
 }
 
 function createSearcher(): DynamicSearcher<Person, number> {

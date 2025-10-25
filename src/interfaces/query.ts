@@ -1,4 +1,4 @@
-import { FuzzySearcher, PrefixSearcher, SearcherSpec, SubstringSearcher, } from './searcher-spec.js';
+import { FuzzySearcher, PrefixSearcher, SearcherSpec, SubstringSearcher } from './searcher-spec.js';
 
 /**
  * Holds the query string and query parameters.
@@ -28,7 +28,7 @@ export class Query {
   public constructor(
     string: string,
     topN: number = 10,
-    searchers = [new FuzzySearcher(0.3), new SubstringSearcher(0), new PrefixSearcher(0)],
+    searchers = [new FuzzySearcher(0.3), new SubstringSearcher(0), new PrefixSearcher(0)]
   ) {
     this.string = string;
     this.topN = Math.max(0, topN);

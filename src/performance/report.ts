@@ -26,7 +26,7 @@ export class Report {
     public readonly fastest: TimedQuery,
     public readonly slowest: TimedQuery,
     public readonly longest: TimedQuery
-  ) { }
+  ) {}
 
   /**
    * Creates a report from the timed queries.
@@ -38,7 +38,8 @@ export class Report {
   public static Create(
     testRunParameters: TestRunParameters,
     queryCounts: QueryCounts,
-    measurements: TimedQuery[]): Report {
+    measurements: TimedQuery[]
+  ): Report {
     if (measurements.length === 0) {
       return new Report(
         testRunParameters,
@@ -61,7 +62,15 @@ export class Report {
     const slowest: TimedQuery = measurements.reduce((prev, cur) => (prev.duration > cur.duration ? prev : cur));
     const longest: TimedQuery = measurements.reduce((prev, cur) => (prev.query.length > cur.query.length ? prev : cur));
     return new Report(
-      testRunParameters, queryCounts, totalDuration, averageDuration, standardDeviation, fastest, slowest, longest);
+      testRunParameters,
+      queryCounts,
+      totalDuration,
+      averageDuration,
+      standardDeviation,
+      fastest,
+      slowest,
+      longest
+    );
   }
 
   /**

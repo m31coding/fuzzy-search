@@ -16,5 +16,5 @@ export class Result {
     public readonly matches: Match[],
     public readonly query: StringSearchQuery,
     public readonly meta: Meta
-  ) { }
+  ) {}
 }

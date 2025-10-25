@@ -39,8 +39,8 @@ export class DistinctSearcher implements StringSearcher {
     const termsSorted = terms.map((term, index) => ({ term, index }));
     termsSorted.sort((t1, t2) =>
       t1.term < t2.term ? -1
-        : t1.term > t2.term ? 1
-          : 0
+      : t1.term > t2.term ? 1
+      : 0
     );
     this.sortMapping = new Int32Array(termsSorted.length);
     for (let i = 0, l = termsSorted.length; i < l; i++) {

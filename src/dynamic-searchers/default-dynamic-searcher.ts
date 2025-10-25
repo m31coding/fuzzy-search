@@ -25,7 +25,7 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
     private readonly maxQueryLength: number,
     private readonly mainSearcher: EntitySearcher<TEntity, TId>,
     private readonly secondarySearcher: EntitySearcher<TEntity, TId>
-  ) { }
+  ) {}
 
   /**
    * {@inheritDoc DynamicSearcher.indexEntities}
@@ -47,8 +47,7 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
       return new EntityResult([], query, new Meta());
     }
     if (query.string.length > this.maxQueryLength) {
-      query = new Query(
-        query.string.substring(0, this.maxQueryLength), query.topN, query.searchers);
+      query = new Query(query.string.substring(0, this.maxQueryLength), query.topN, query.searchers);
     }
     return ResultMerger.mergeResults(this.mainSearcher.getMatches(query), this.secondarySearcher.getMatches(query));
   }
@@ -203,8 +202,10 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
    * {@inheritDoc DynamicSearcher.replaceEntity}
    */
   public replaceEntity(id: TId, newEntity: TEntity, newEntityId: TId): boolean {
-    return this.mainSearcher.replaceEntity(id, newEntity, newEntityId) ||
-      this.secondarySearcher.replaceEntity(id, newEntity, newEntityId);
+    return (
+      this.mainSearcher.replaceEntity(id, newEntity, newEntityId) ||
+      this.secondarySearcher.replaceEntity(id, newEntity, newEntityId)
+    );
   }
 
   /**

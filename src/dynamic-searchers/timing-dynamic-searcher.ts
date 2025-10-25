@@ -17,7 +17,7 @@ export class TimingDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEnt
    * @typeParam TId The type of the entity ids.
    * @param dynamicSearcher The dynamic searcher.
    */
-  public constructor(private readonly dynamicSearcher: DynamicSearcher<TEntity, TId>) { }
+  public constructor(private readonly dynamicSearcher: DynamicSearcher<TEntity, TId>) {}
 
   /**
    * {@inheritDoc DynamicSearcher.removeEntities}

@@ -7,8 +7,10 @@ import { SearcherType } from '../interfaces/searcher-type.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 const literalSearcher: StringSearcher = new LiteralSearcher();
-const entitySearcher: EntitySearcher<{ id: number; name: string }, number> =
-  new DefaultEntitySearcher(literalSearcher, [SearcherType.Prefix]);
+const entitySearcher: EntitySearcher<{ id: number; name: string }, number> = new DefaultEntitySearcher(
+  literalSearcher,
+  [SearcherType.Prefix]
+);
 const entities = [
   { id: 23501, name: 'Alice' },
   { id: 99234, name: 'Bob' },
@@ -36,12 +38,13 @@ class Person {
     public id: number,
     public name: string,
     public job: string
-  ) { }
+  ) {}
 }
 
 const literalSearcher2: StringSearcher = new LiteralSearcher();
-const entitySearcher2: EntitySearcher<Person, number> =
-  new DefaultEntitySearcher(literalSearcher2, [SearcherType.Prefix]);
+const entitySearcher2: EntitySearcher<Person, number> = new DefaultEntitySearcher(literalSearcher2, [
+  SearcherType.Prefix
+]);
 const entities2 = [
   new Person(23501, 'Alice', 'Programmer'),
   new Person(99234, 'Bob', 'Teacher'),

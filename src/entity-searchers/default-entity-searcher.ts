@@ -70,7 +70,6 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    * @typeParam TId The type of the entity ids.
    * @param stringSearcher The string searcher to use.
    * @param searcherTypes The types of searchers that are available.
-   * 
    */
   public constructor(stringSearcher: StringSearcher, searcherTypes: SearcherType[]) {
     this.stringSearcher = stringSearcher;
@@ -145,14 +144,16 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
     searcherSpec: SearcherSpec,
     qualityOffset: number
   ): void {
-
     const minQuality = Math.max(0, searcherSpec.minQuality - qualityOffset);
     if (minQuality > 1) {
       return;
     }
 
     const stringSearchQuery: StringSearchQuery = new StringSearchQuery(
-      searchState.query.string, minQuality, searcherSpec.type);
+      searchState.query.string,
+      minQuality,
+      searcherSpec.type
+    );
     const result: Result = this.stringSearcher.getMatches(stringSearchQuery);
     this.addMatchesFromResult(searchState, result, qualityOffset);
   }
@@ -163,11 +164,7 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    * @param result The string searcher result.
    * @param qualityOffset The quality offset that is added.
    */
-  private addMatchesFromResult(
-    searchState: SearchState<TEntity>,
-    result: Result,
-    qualityOffset: number
-  ): void {
+  private addMatchesFromResult(searchState: SearchState<TEntity>, result: Result, qualityOffset: number): void {
     searchState.meta.push(result.meta);
     if (searchState.query.topN === 0) {
       return;
@@ -177,8 +174,9 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
       const entityIndex: number = this.termIndexToEntityIndex[match.index];
       if (!searchState.matchedIndexes.has(entityIndex) && this.entities[entityIndex] !== null) {
         searchState.matchedIndexes.add(entityIndex);
-        searchState.matches.push(new EntityMatch(
-          this.entities[entityIndex] as TEntity, match.quality + qualityOffset, this.terms[match.index]));
+        searchState.matches.push(
+          new EntityMatch(this.entities[entityIndex] as TEntity, match.quality + qualityOffset, this.terms[match.index])
+        );
         if (searchState.matches.length === searchState.query.topN) {
           break;
         }
