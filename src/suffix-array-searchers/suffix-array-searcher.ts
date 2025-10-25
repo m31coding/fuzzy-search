@@ -59,18 +59,22 @@ export class SuffixArraySearcher implements StringSearcher {
 
     const [start, end] = this.GetPositionsInSuffixArray(query.string);
     const matchedTermIds = new Int32Array(end - start);
+    const seen: Set<number> = new Set<number>();
+    let uniqueCount = 0;
 
-    let i = 0;
     for (let j = start; j < end; j++) {
       const termIndex = this.indexToTermIndex[this.suffixArray[j]];
-      matchedTermIds[i++] = termIndex;
+      if (!seen.has(termIndex)) {
+        seen.add(termIndex);
+        matchedTermIds[uniqueCount++] = termIndex;
+      }
     }
 
     const matches: Match[] = [];
 
     queryLength = queryLength ?? query.string.length;
     let quality = 0;
-    for (let k = 0; k < matchedTermIds.length; k++) {
+    for (let k = 0; k < uniqueCount; k++) {
       quality = this.computeQuality(queryLength, this.termLengths[matchedTermIds[k]]);
       if (quality > query.minQuality) {
         matches.push(new Match(matchedTermIds[k], quality));
