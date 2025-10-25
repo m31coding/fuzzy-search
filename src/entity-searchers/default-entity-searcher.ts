@@ -12,6 +12,7 @@ import { SearcherSpec } from '../interfaces/searcher-spec.js';
 import { SearcherType } from '../interfaces/searcher-type.js';
 import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
+import { UsableSearchers } from '../commons/usable-searchers.js';
 
 /**
  * A searcher that indexes and retrieves entities.
@@ -27,7 +28,7 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
   /**
    * The types of searchers that are available.
    */
-  private readonly searcherTypes: Set<SearcherType>;
+  private readonly searcherTypes: SearcherType[];
 
   /**
    * The indexed entities.
@@ -73,7 +74,7 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    */
   public constructor(stringSearcher: StringSearcher, searcherTypes: SearcherType[]) {
     this.stringSearcher = stringSearcher;
-    this.searcherTypes = new Set(searcherTypes);
+    this.searcherTypes = searcherTypes;
     this.entities = [];
     this.idToIndex = new Map<TId, number>();
     this.terms = [];
@@ -115,22 +116,18 @@ export class DefaultEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
    */
   public getMatches(query: Query): EntityResult<TEntity> {
     const searchState: SearchState<TEntity> = new SearchState<TEntity>(query);
-    const requestedSearchers = new Map(query.searchers.map(s => [s.type, s]));
+    const usableSearchers = new UsableSearchers(this.searcherTypes, query.searchers);
 
     for (const { searcherType, qualityOffset } of this.searchersAndQualityOffsets) {
       if (query.topN == searchState.matches.length) {
         break;
       }
 
-      if (!requestedSearchers.has(searcherType)) {
+      if (!usableSearchers.has(searcherType)) {
         continue;
       }
 
-      if (!this.searcherTypes.has(searcherType)) {
-        continue;
-      }
-
-      this.addMatchesFromSearcher(searchState, requestedSearchers.get(searcherType)!, qualityOffset);
+      this.addMatchesFromSearcher(searchState, usableSearchers.spec(searcherType)!, qualityOffset);
     }
 
     const mergedMeta = MetaMerger.mergeMeta(searchState.meta);

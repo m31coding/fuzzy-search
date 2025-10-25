@@ -25,4 +25,8 @@ export class UsableSearchers {
     public minQuality(type: SearcherType): number {
         return this.usableSearchers.get(type)!.minQuality;
     }
+
+    public spec(type: SearcherType): SearcherSpec {
+        return this.usableSearchers.get(type)!;
+    }
 }
