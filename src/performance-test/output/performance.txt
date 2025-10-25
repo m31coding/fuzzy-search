@@ -23,19 +23,19 @@
     "substringQueries": 997,
     "transpositionErrors": 299
   },
-  "totalDuration": 4651.252601999997,
-  "averageDuration": 2.3256263009999985,
-  "standardDeviation": 3.839822005245632,
+  "totalDuration": 1675.3076380000512,
+  "averageDuration": 0.8376538190000256,
+  "standardDeviation": 1.0061714290337511,
   "fastest": {
-    "query": "tn",
-    "duration": 0.010874999999941792
+    "query": "iji",
+    "duration": 0.010958000000755419
   },
   "slowest": {
-    "query": "K",
-    "duration": 28.094750000000204
+    "query": "浩庄",
+    "duration": 9.829207999999198
   },
   "longest": {
     "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
-    "duration": 3.050999999999476
+    "duration": 3.016749999998865
   }
 }

@@ -7,8 +7,7 @@ import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 import { SuffixArray } from './suffix-array.js';
 
-// todo: make sure the terms don't have the separating character. Move to a suffix array config.
-
+// todo: docs.
 export class SuffixArraySearcher implements StringSearcher {
   public readonly separator: string;
   private str: string;
@@ -58,9 +57,7 @@ export class SuffixArraySearcher implements StringSearcher {
       return new Result([], query, new Meta());
     }
 
-    // todo prefix: pass query.string modified
     const [start, end] = this.GetPositionsInSuffixArray(query.string);
-    // todo: refactor such that end is included.
     const matchedTermIds = new Int32Array(end - start);
 
     let i = 0;
@@ -80,7 +77,6 @@ export class SuffixArraySearcher implements StringSearcher {
       }
     }
 
-    // todo: remove duplicate matches, measure performance
     return new Result(matches, query, new Meta());
   }
 
