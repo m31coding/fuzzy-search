@@ -1,27 +1,26 @@
 {
   "string": "東京都",
   "topN": 10,
-  "minQuality": 0,
-  "searcherTypes": [
-    "fuzzy",
-    "substring",
-    "prefix"
+  "searchers": [
+    {
+      "type": "fuzzy",
+      "minQuality": 0.3
+    },
+    {
+      "type": "substring",
+      "minQuality": 0
+    },
+    {
+      "type": "prefix",
+      "minQuality": 0
+    }
   ]
 }
 
 {
-  "queryDuration": 4
+  "queryDuration": 2
 }
 
 Rank    Entity                                  Matched String                          Quality 
 
 1       東京都                                     東京都                                     3.00    
-2       東勢區                                     東勢區                                     0.24    
-3       東勢鄉                                     東勢鄉                                     0.24    
-4       東区                                      東区                                      0.24    
-5       東區                                      東區                                      0.24    
-6       東山區                                     東山區                                     0.24    
-7       東河鄉                                     東河鄉                                     0.24    
-8       東港鎮                                     東港鎮                                     0.24    
-9       東澳                                      東澳                                      0.24    
-10      東石鄉                                     東石鄉                                     0.24    

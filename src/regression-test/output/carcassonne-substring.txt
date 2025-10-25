@@ -1,16 +1,24 @@
 {
   "string": "cassonn",
   "topN": 10,
-  "minQuality": 0,
-  "searcherTypes": [
-    "fuzzy",
-    "substring",
-    "prefix"
+  "searchers": [
+    {
+      "type": "fuzzy",
+      "minQuality": 0.3
+    },
+    {
+      "type": "substring",
+      "minQuality": 0
+    },
+    {
+      "type": "prefix",
+      "minQuality": 0
+    }
   ]
 }
 
 {
-  "queryDuration": 4
+  "queryDuration": 5
 }
 
 Rank    Entity                                  Matched String                          Quality 

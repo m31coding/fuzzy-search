@@ -1,11 +1,19 @@
 {
   "string": "muniich",
   "topN": 10,
-  "minQuality": 0,
-  "searcherTypes": [
-    "fuzzy",
-    "substring",
-    "prefix"
+  "searchers": [
+    {
+      "type": "fuzzy",
+      "minQuality": 0.3
+    },
+    {
+      "type": "substring",
+      "minQuality": 0
+    },
+    {
+      "type": "prefix",
+      "minQuality": 0
+    }
   ]
 }
 

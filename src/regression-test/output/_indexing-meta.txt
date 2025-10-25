@@ -1,12 +1,12 @@
 {
-  "indexingDurationSuffixArraySearcher": 2851,
+  "indexingDurationSuffixArraySearcher": 2829,
   "numberOfInvalidTerms": 1,
-  "indexingDurationFuzzySearcher": 3770,
-  "normalizationDurationNgrams": 271,
+  "indexingDurationFuzzySearcher": 3951,
+  "normalizationDurationNgrams": 292,
   "numberOfDistinctTerms": 1190185,
-  "normalizationDurationDefault": 1369,
+  "normalizationDurationDefault": 1302,
   "numberOfSurrogateCharacters": 46,
   "numberOfEntities": 1237154,
   "numberOfTerms": 1237486,
-  "indexingDurationTotal": 9638
+  "indexingDurationTotal": 9790
 }

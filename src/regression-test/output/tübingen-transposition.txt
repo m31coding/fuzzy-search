@@ -1,16 +1,24 @@
 {
   "string": "tübignen",
   "topN": 10,
-  "minQuality": 0,
-  "searcherTypes": [
-    "fuzzy",
-    "substring",
-    "prefix"
+  "searchers": [
+    {
+      "type": "fuzzy",
+      "minQuality": 0.3
+    },
+    {
+      "type": "substring",
+      "minQuality": 0
+    },
+    {
+      "type": "prefix",
+      "minQuality": 0
+    }
   ]
 }
 
 {
-  "queryDuration": 2
+  "queryDuration": 3
 }
 
 Rank    Entity                                  Matched String                          Quality 
