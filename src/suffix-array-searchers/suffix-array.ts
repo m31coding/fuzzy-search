@@ -17,26 +17,32 @@ export class SuffixArray {
    * The end-of-chain marker.
    */
   private readonly eoc: number = 2147483647;
+
   /**
    * The suffix array.
    */
   private sa: Int32Array;
+
   /**
    * The inverse suffix array.
    */
   private isa: Int32Array;
+
   /**
    * The chain heads dictionary.
    */
   private chainHeadsDict: Map<number, number>;
+
   /**
    * The chain stack.
    */
   private chainStack: Chain[] = [];
+
   /**
    * The sub-chains.
    */
   private subChains: Chain[] = [];
+
   /**
    * The next rank to assign.
    */
