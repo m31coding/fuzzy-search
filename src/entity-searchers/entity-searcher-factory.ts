@@ -8,7 +8,7 @@ import { FuzzySearchConfig } from '../fuzzy-search.js';
 import { FuzzySearcher } from '../fuzzy-searchers/fuzzy-searcher.js';
 import { InequalityPenalizingSearcher } from '../string-searchers/inequality-penalizing-searcher.js';
 import { NgramComputer } from '../fuzzy-searchers/ngram-computer.js';
-import { NgramNormalizer } from '../normalization/ngram-normalizer.js';
+import { NgramNormalizer } from '../fuzzy-searchers/ngram-normalizer.js';
 import { Normalizer } from '../interfaces/normalizer.js';
 import { NormalizerConfig } from '../normalization/normalizer-config.js';
 import { NormalizingSearcher } from '../string-searchers/normalizing-searcher.js';

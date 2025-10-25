@@ -1,7 +1,6 @@
 import { Meta } from '../interfaces/meta.js';
-import { NormalizationResult } from './normalization-result.js';
+import { NormalizationResult } from '../normalization/normalization-result.js';
 import { Normalizer } from '../interfaces/normalizer.js';
-// todo: move to fuzzy-searchers
 /**
  * Normalization for creating proper n-grams.
  */
@@ -16,7 +15,7 @@ export class NgramNormalizer implements Normalizer {
     public readonly paddingLeft: string,
     public readonly paddingRight: string,
     public readonly paddingMiddle: string
-  ) {}
+  ) { }
 
   /**
    * {@inheritDoc Normalizer.normalize}

@@ -3,7 +3,6 @@ export { DefaultNormalizer } from './default-normalizer.js';
 export { GenericNormalizer } from './generic-normalizer.js';
 export { LatinReplacements } from './latin-replacements.js';
 export { MultiNormalizer } from './multi-normalizer.js';
-export { NgramNormalizer } from './ngram-normalizer.js';
 export { NormalizationResult } from './normalization-result.js';
 export { NormalizerConfig } from './normalizer-config.js';
 export { SanitizingNormalizer } from './sanitizing-normalizer.js';

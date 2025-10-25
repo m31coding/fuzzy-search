@@ -1,4 +1,4 @@
-import { NgramNormalizer } from './ngram-normalizer.js';
+import { NgramNormalizer } from '../fuzzy-searchers/ngram-normalizer.js';
 
 const normalizer = new NgramNormalizer('$$', '!!', '%%');
 

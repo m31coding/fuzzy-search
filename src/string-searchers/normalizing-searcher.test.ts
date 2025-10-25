@@ -2,7 +2,7 @@ import { DefaultNormalizer } from '../normalization/default-normalizer.js';
 import { LiteralSearcher } from './literal-searcher.js';
 import { Match } from './match.js';
 import { MultiNormalizer } from '../normalization/multi-normalizer.js';
-import { NgramNormalizer } from '../normalization/ngram-normalizer.js';
+import { NgramNormalizer } from '../fuzzy-searchers/ngram-normalizer.js';
 import { NormalizerConfig } from '../normalization/normalizer-config.js';
 import { NormalizingSearcher } from './normalizing-searcher.js';
 import { StringSearchQuery } from '../interfaces/string-search-query.js';

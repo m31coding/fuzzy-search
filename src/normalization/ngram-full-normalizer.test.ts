@@ -1,6 +1,6 @@
 import { DefaultNormalizer } from './default-normalizer.js';
 import { MultiNormalizer } from './multi-normalizer.js';
-import { NgramNormalizer } from './ngram-normalizer.js';
+import { NgramNormalizer } from '../fuzzy-searchers/ngram-normalizer.js';
 import { NormalizerConfig } from './normalizer-config.js';
 
 const defaultNormalizer = DefaultNormalizer.create(NormalizerConfig.createDefaultConfig());
