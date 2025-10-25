@@ -7,7 +7,9 @@ import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 import { SuffixArray } from './suffix-array.js';
 
-// todo: docs.
+/**
+ * A suffix array-based string searcher.
+ */
 export class SuffixArraySearcher implements StringSearcher {
   public readonly separator: string;
   private str: string;
@@ -15,6 +17,10 @@ export class SuffixArraySearcher implements StringSearcher {
   private indexToTermIndex: Int32Array;
   private termLengths: Int32Array;
 
+  /**
+   * Creates a new instance of the SuffixArraySearcher class.
+   * @param separator The separator used between terms.
+   */
   public constructor(separator: string) {
     this.separator = separator;
     this.str = '';
@@ -84,10 +90,22 @@ export class SuffixArraySearcher implements StringSearcher {
     return new Result(matches, query, new Meta());
   }
 
+  /**
+   * Computes the quality of a match based on the lengths of the query and the term.
+   * @param queryLength The length of the query.
+   * @param termLength The length of the term.
+   * @returns The quality of the match.
+   */
   private computeQuality(queryLength: number, termLength: number): number {
     return queryLength / termLength;
   }
 
+  /**
+   * Gets the positions in the suffix array where the given substring matches.
+   * @param substring The substring to search for.
+   * @returns The start and end positions of the substring in the suffix array. The start is inclusive, the end is 
+   * exclusive.
+   */
   private GetPositionsInSuffixArray(substring: string): number[] {
     let l = 0;
     let r = this.suffixArray.length;
