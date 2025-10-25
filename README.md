@@ -3,10 +3,11 @@
 @m31coding/fuzzy-search is a frontend library for searching objects with ids (entities) by their names and features (terms). It is
 
 - Fast: A query takes usually well below 10 ms. 
-- Accurate: Powered by n-grams with a novel approach of character sorting.
+- Accurate: Powered by a suffix array and n-grams with a novel approach of character sorting.
 - Multilingual: The language-agnostic design of the algorithm enables operation across all languages.
 - Flexible: Entities and their terms can be inserted, updated and removed.
 - Reliable: Well tested standalone library with no dependencies.
+- Universal: Works seamlessly in both frontend and backend (Node.js) environments.
 
 [![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/m31coding/fuzzy-search/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/%40m31coding%2Ffuzzy-search)](https://www.npmjs.com/package/@m31coding/fuzzy-search)
@@ -65,11 +66,9 @@ const indexingMeta = searcher.indexEntities(
 console.dir(indexingMeta);
 /* {
   "entries": {
-    "numberOfInvalidTerms": 0,
-    "numberOfDistinctTerms": 12,
-    "normalizationDuration": 0,
-    "numberOfSurrogateCharacters": 0,
-    "indexingDuration": 1
+    "numberOfTerms": 12,
+    "indexingDurationTotal": 1,
+    ...
   }
 } */
 
@@ -90,11 +89,24 @@ console.dir(result);
   "query": {
     "string": "alice kign",
     "topN": 10,
-    "minQuality": 0.3
+    "searchers": [
+      {
+        "type": "fuzzy",
+        "minQuality": 0.3
+      },
+      {
+        "type": "substring",
+        "minQuality": 0
+      },
+      {
+        "type": "prefix",
+        "minQuality": 0
+      }
+    ]
   },
   "meta": {
     "entries": {
-      "queryDuration": 0
+      "queryDuration": 1
     }
   }
 } */
