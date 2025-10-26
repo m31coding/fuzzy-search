@@ -1,11 +1,11 @@
-import { StringUtilities } from "./commons/string-utilities.js";
-import { Config } from "./config.js";
-import { Query } from "./interfaces/query.js";
-import { FuzzySearcher, PrefixSearcher, SubstringSearcher } from "./interfaces/searcher-spec.js";
-import { SearcherType } from "./interfaces/searcher-type.js";
-import { LatinReplacements } from "./normalization/latin-replacements.js";
-import { SearcherFactory } from "./searcher-factory.js";
-import { SortOrder } from "./sort-order.js";
+import { StringUtilities } from './commons/string-utilities.js';
+import { Config } from './config.js';
+import { Query } from './interfaces/query.js';
+import { FuzzySearcher, PrefixSearcher, SubstringSearcher } from './interfaces/searcher-spec.js';
+import { SearcherType } from './interfaces/searcher-type.js';
+import { LatinReplacements } from './normalization/latin-replacements.js';
+import { SearcherFactory } from './searcher-factory.js';
+import { SortOrder } from './sort-order.js';
 
 ///
 /// Indexing configuration
@@ -16,7 +16,7 @@ const config = Config.createDefaultConfig();
 const searcher = SearcherFactory.createSearcher(config);
 
 /**
- * The default configuration has been chosen carefully. There are only a few specific scenarios that require 
+ * The default configuration has been chosen carefully. There are only a few specific scenarios that require
  * adjustments (see below).
  */
 
@@ -37,8 +37,8 @@ config.fuzzySearchConfig!.paddingMiddle = '!$$';
 config.fuzzySearchConfig!.ngramN = 3;
 config.fuzzySearchConfig!.transformNgram = (ngram) =>
   ngram.endsWith('$') ? null
-    : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
-      : ngram;
+  : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
+  : ngram;
 config.fuzzySearchConfig!.inequalityPenalty = 0.05;
 
 config.substringSearchConfig!.suffixArraySeparator = '$';
@@ -57,10 +57,10 @@ config.normalizerConfig.allowCharacter = (_c) => true;
 config.searcherTypes = [SearcherType.Substring, SearcherType.Prefix];
 
 /**
-* Change the padding and separator characters ('$' and '!') if they appear in your data terms or are relevant for 
-* searching. Choose characters that do not occur in your data terms and are not relevant for searching. Here, we use 
-* the Greekcharacters 'μ' and 'ν'. Of course, choose different characters if you are indexing Greek terms.
-*/
+ * Change the padding and separator characters ('$' and '!') if they appear in your data terms or are relevant for
+ * searching. Choose characters that do not occur in your data terms and are not relevant for searching. Here, we use
+ * the Greekcharacters 'μ' and 'ν'. Of course, choose different characters if you are indexing Greek terms.
+ */
 
 config.fuzzySearchConfig!.paddingLeft = 'μμ';
 config.fuzzySearchConfig!.paddingRight = 'ν';
@@ -68,8 +68,8 @@ config.fuzzySearchConfig!.paddingMiddle = 'νμμ';
 config.fuzzySearchConfig!.ngramN = 3;
 config.fuzzySearchConfig!.transformNgram = (ngram) =>
   ngram.endsWith('μ') ? null
-    : ngram.indexOf('μ') === -1 ? ngram.split('').sort().join('')
-      : ngram;
+  : ngram.indexOf('μ') === -1 ? ngram.split('').sort().join('')
+  : ngram;
 config.fuzzySearchConfig!.inequalityPenalty = 0.05;
 
 config.substringSearchConfig!.suffixArraySeparator = 'μ';
@@ -84,27 +84,20 @@ config.substringSearchConfig!.suffixArraySeparator = 'μ';
 
 const query = new Query('alice kign');
 
-const defaultQuery = new Query(
-  'alice kign',
-  10,
-  [new FuzzySearcher(0.3), new SubstringSearcher(0), new PrefixSearcher(0)]
-);
+const defaultQuery = new Query('alice kign', 10, [
+  new FuzzySearcher(0.3),
+  new SubstringSearcher(0),
+  new PrefixSearcher(0)
+]);
 
 /**
  * Adjust the topN parameter as needed, to obtain more or fewer matches:
  */
 
-const queryTop25 = new Query(
-  'alice kign',
-  25
-);
+const queryTop25 = new Query('alice kign', 25);
 
 /**
- * The quality thresholds are well chosen for general purpose searching. Quality 0 for the substring and prefix 
+ * The quality thresholds are well chosen for general purpose searching. Quality 0 for the substring and prefix
  * searchers express that any match is relevant. The fuzzy searcher threshold of 0.3 is a good trade-off between recall
  * and precision. A lower value will result in matches that are most likely irrelevant.
  */
-
-
-
-
