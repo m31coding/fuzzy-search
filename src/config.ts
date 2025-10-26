@@ -11,20 +11,20 @@ export class Config {
   /**
    * Creates a new instance of the Config class.
    * @param searcherTypes The searcher types to use.
-   * @param normalizerConfig The configuration for the default normalizer.
    * @param maxQueryLength The maximum query length.
    * @param sortOrder The sort order for the entity matches.
+   * @param normalizerConfig The configuration for the default normalizer.
    * @param fuzzySearchConfig The fuzzy search configuration.
    * @param substringSearchConfig The substring search configuration.
    */
   public constructor(
     public searcherTypes: SearcherType[],
-    public normalizerConfig: NormalizerConfig,
     public maxQueryLength: number,
     public sortOrder: SortOrder,
+    public normalizerConfig: NormalizerConfig,
     public fuzzySearchConfig?: FuzzySearchConfig,
     public substringSearchConfig?: SubstringSearchConfig
-  ) {}
+  ) { }
 
   /**
    * Creates an opinionated default configuration.
@@ -32,16 +32,16 @@ export class Config {
    */
   public static createDefaultConfig(): Config {
     const searcherTypes = [SearcherType.Fuzzy, SearcherType.Substring, SearcherType.Prefix];
-    const normalizerConfig = NormalizerConfig.createDefaultConfig();
     const maxQueryLength = 150;
     const sortOrder = SortOrder.QualityAndMatchedString;
+    const normalizerConfig = NormalizerConfig.createDefaultConfig();
     const fuzzySearchConfig = FuzzySearchConfig.createDefaultConfig();
     const substringSearchConfig = SubstringSearchConfig.createDefaultConfig();
     return new Config(
       searcherTypes,
-      normalizerConfig,
       maxQueryLength,
       sortOrder,
+      normalizerConfig,
       fuzzySearchConfig,
       substringSearchConfig
     );

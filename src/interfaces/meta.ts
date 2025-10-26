@@ -50,4 +50,14 @@ export class Meta {
   public get allEntries(): ReadonlyMap<string, any> {
     return this.entries;
   }
+
+  /**
+   * Serializes the meta object to a JSON object.
+   * @returns The JSON representation of the meta object.
+   */
+  public toJSON(): object {
+    return {
+      entries: Object.fromEntries(this.entries)
+    };
+  }
 }
