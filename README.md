@@ -140,11 +140,9 @@ const upsertMeta = searcher.upsertEntities(
 console.dir(upsertMeta);
 /* {
   "entries": {
-    "numberOfInvalidTerms": 0,
-    "numberOfDistinctTerms": 12,
-    "normalizationDuration": 0,
-    "numberOfSurrogateCharacters": 0,
-    "upsertDuration": 0
+    "numberOfTerms": 12,
+    "upsertDuration": 0,
+    ...
   }
 } */
 
@@ -158,14 +156,27 @@ console.dir(result2);
         "firstName": "Allie",
         "lastName": "King"
       },
-      "quality": 1,
+      "quality": 3,
       "matchedString": "Allie"
     }
   ],
   "query": {
     "string": "allie",
     "topN": 10,
-    "minQuality": 0.3
+    "searchers": [
+      {
+        "type": "fuzzy",
+        "minQuality": 0.3
+      },
+      {
+        "type": "substring",
+        "minQuality": 0
+      },
+      {
+        "type": "prefix",
+        "minQuality": 0
+      }
+    ]
   },
   "meta": {
     "entries": {
@@ -181,7 +192,7 @@ The following parameters are available when creating a query:
 | --------- | ---- | ------- | ----------- |
 | string | string | - | The query string. |
 | topN | number | 10 | The maximum number of matches to return. Provide Infinity to return all matches. |
-| minQuality | number | 0.3 | The minimum quality of a match, ranging from 0 to 1. When set to zero, all terms that share at least one common n-gram with the query are considered a match. |
+| searchers | SearcherSpec[] | [new FuzzySearcher(0.3), new SubstringSearcher(0), new PrefixSearcher(0)] | The searchers to use, each with its minimum quality threshold for considering a match. |
 
 If the data terms contain characters and strings in non-latin scripts (such as Arabic, Cyrillic, Greek, Han, ... see also [ISO 15924](https://en.wikipedia.org/wiki/ISO_15924)), the default configuration must be adjusted before creating the searcher:
 
