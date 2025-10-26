@@ -335,20 +335,7 @@ The matches of the searchers are mixed with a simple approach. Prefix matches ge
 
 ## Changing the default configuration
 
-The default configuration works very well. There are only few specific scenarios that require adjustments.
-
-```js
-const config = fuzzySearch.Config.createDefaultConfig();
-// adjustments ...
-const searcher = fuzzySearch.SearcherFactory.createSearcher(config);
-```
-
-// disable a searcher
-// different padding qualities.
-
-```js
-config.normalizerConfig.allowCharacter = (_c) => true;
-```
+The default configuration has been chosen carefully. There are only a few specific scenarios that require adjustments. Consult the file [default-config.ts](src/default-config.ts) for all configuration options and their default values.
 
 ## Support and Contribution
 
