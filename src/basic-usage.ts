@@ -1,4 +1,4 @@
-// import { Config } from './config';
+// import { Config } from './config.js';
 import { Query } from './interfaces/query.js';
 import { SearcherFactory } from './searcher-factory.js';
 
@@ -29,13 +29,13 @@ const indexingMeta = searcher.indexEntities(
   (e) => e.id,
   (e) => [e.firstName, e.lastName, `${e.firstName} ${e.lastName}`]
 );
-console.dir(indexingMeta);
+console.log(JSON.stringify(indexingMeta, null, 2));
 
 const result = searcher.getMatches(new Query('alice kign'));
-console.dir(result);
+console.log(JSON.stringify(result, null, 2));
 
 const removalResult = searcher.removeEntities([99234, 5823]);
-console.dir(removalResult);
+console.log(JSON.stringify(removalResult, null, 2));
 
 const persons2 = [
   { id: 723, firstName: 'David', lastName: 'Knight' }, // new
@@ -49,8 +49,7 @@ const upsertMeta = searcher.upsertEntities(
   (e) => e.id,
   (e) => [e.firstName, e.lastName, `${e.firstName} ${e.lastName}`]
 );
-console.dir(upsertMeta);
+console.log(JSON.stringify(upsertMeta, null, 2));
 
 const result2 = searcher.getMatches(new Query('allie'));
-console.dir(result2);
-console.log('Finished.');
+console.log(JSON.stringify(result2, null, 2));
