@@ -56,7 +56,7 @@ export class TimingDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEnt
     const start = performance.now();
     const meta = this.dynamicSearcher.indexEntities(entities, getId, getTerms);
     const duration = Math.round(performance.now() - start);
-    meta.add('indexingDuration', duration);
+    meta.add('indexingDurationTotal', duration);
     return meta;
   }
 
@@ -97,6 +97,20 @@ export class TimingDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEnt
    */
   public getTerms(): string[] {
     return this.dynamicSearcher.getTerms();
+  }
+
+  /**
+   * {@inheritDoc DynamicSearcher.removeEntity}
+   */
+  public removeEntity(id: TId): boolean {
+    return this.dynamicSearcher.removeEntity(id);
+  }
+
+  /**
+   * {@inheritDoc DynamicSearcher.replaceEntity}
+   */
+  public replaceEntity(id: TId, newEntity: TEntity, newEntityId: TId): boolean {
+    return this.dynamicSearcher.replaceEntity(id, newEntity, newEntityId);
   }
 
   /**

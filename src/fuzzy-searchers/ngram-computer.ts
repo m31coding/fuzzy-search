@@ -1,5 +1,3 @@
-import { NgramComputerConfig } from './ngram-computer-config.js';
-
 /**
  * Computes the n-grams of a string.
  */
@@ -16,11 +14,13 @@ export class NgramComputer {
 
   /**
    * Creates a new instance of the NgramComputer class.
-   * @param ngramComputerConfig The configuration for the n-gram computer.
+   * @param ngramN The number of characters in each n-gram.
+   * @param transformNgram A function for transforming each n-gram. N-grams that are transformed to null will be
+   * removed.
    */
-  public constructor(ngramComputerConfig: NgramComputerConfig) {
-    this.ngramN = ngramComputerConfig.ngramN;
-    this.transformNgram = ngramComputerConfig.transformNgram ?? ((ngram): string => ngram);
+  public constructor(ngramN: number, transformNgram?: (ngram: string) => string | null) {
+    this.ngramN = ngramN;
+    this.transformNgram = transformNgram ?? ((ngram): string => ngram);
   }
 
   /**

@@ -1,21 +1,17 @@
 import { NgramComputer } from './ngram-computer.js';
-import { NgramComputerConfig } from './ngram-computer-config.js';
 
 // Common n-grams.
-const commonNgramComputerConfig = new NgramComputerConfig(3);
-const commonNgramComputer = new NgramComputer(commonNgramComputerConfig);
+const commonNgramComputer = new NgramComputer(3);
 
 // Sorted n-grams.
-const sortedNgramComputerConfig = new NgramComputerConfig(3, (ngram) => ngram.split('').sort().join(''));
-const sortedNgramComputer = new NgramComputer(sortedNgramComputerConfig);
+const sortedNgramComputer = new NgramComputer(3, (ngram) => ngram.split('').sort().join(''));
 
 // Default n-grams: remove n-grams that end with $, sort n-grams that don't contain $.
-const defaultNgramComputerConfig = new NgramComputerConfig(3, (ngram) =>
+const defaultNgramComputer = new NgramComputer(3, (ngram) =>
   ngram.endsWith('$') ? null
   : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
   : ngram
 );
-const defaultNgramComputer = new NgramComputer(defaultNgramComputerConfig);
 
 test('can compute n-grams of empty string', () => {
   expect(commonNgramComputer.computeNgrams('')).toEqual([]);

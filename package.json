@@ -1,6 +1,6 @@
 {
   "name": "@m31coding/fuzzy-search",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "license": "MIT",
   "description": "A fast, accurate and multilingual fuzzy search library.",
   "homepage": "https://github.com/m31coding/fuzzy-search",
@@ -55,20 +55,21 @@
     "prepack": "npm run build"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
-    "@stylistic/eslint-plugin": "^2.11.0",
+    "@faker-js/faker": "^10.1.0",
+    "@stylistic/eslint-plugin": "^2.13.0",
     "@types/jest": "^29.5.14",
-    "@typescript-eslint/eslint-plugin": "^8.15.0",
-    "@typescript-eslint/parser": "^8.15.0",
-    "eslint": "^8.57.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
     "file-saver": "^2.0.5",
-    "jest": "^29.7.0",
+    "jest": "^30.2.0",
     "microbundle": "^0.15.1",
-    "prettier": "^3.3.3",
-    "ts-jest": "^29.2.5",
-    "tsx": "^4.19.2",
-    "typedoc": "^0.26.11",
-    "typescript": "^5.6.3"
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.5",
+    "tsx": "^4.20.6",
+    "typedoc": "^0.28.14",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2"
   },
   "files": [
     "dist",

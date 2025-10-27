@@ -6,5 +6,6 @@ export * from './interfaces/index.js';
 export * from './normalization/index.js';
 export * from './performance/index.js';
 export * from './string-searchers/index.js';
+export * from './suffix-array-searchers/index.js';
 export { Config } from './config.js';
 export { SearcherFactory } from './searcher-factory.js';

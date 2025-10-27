@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { EntityMatch } from '../interfaces/entity-match.js';
 import { EntityResult } from '../interfaces/entity-result.js';
 import { Meta } from '../interfaces/meta.js';
+import { MetaMerger } from '../commons/meta-merger.js';
 import { Query } from '../interfaces/query.js';
 
 /**
@@ -22,7 +21,7 @@ export class ResultMerger {
   ): EntityResult<TEntity> {
     const query: Query = result1.query;
     const newMatches = this.mergeMatches(result1.matches, result2.matches, query.topN);
-    const newMeta: Meta = this.mergeMeta(result1.meta, result2.meta);
+    const newMeta: Meta = MetaMerger.mergeMeta([result1.meta, result2.meta]);
     return new EntityResult(newMatches, query, newMeta);
   }
 
@@ -52,36 +51,5 @@ export class ResultMerger {
       : 0
     );
     return newMatches.length <= topN ? newMatches : newMatches.slice(0, topN);
-  }
-
-  /**
-   * Merges two {@link Meta} objects into a new {@link Meta} object.
-   * @param meta1 The first meta object.
-   * @param meta2 The second meta object.
-   * @returns The merged meta object.
-   */
-  private static mergeMeta(meta1: Meta, meta2: Meta): Meta {
-    const newMetaEntries: Map<string, any> = new Map<string, any>();
-
-    for (const [key, value] of meta1.allEntries) {
-      newMetaEntries.set(key, value);
-    }
-
-    for (const [key, value] of meta2.allEntries) {
-      const presentValue = newMetaEntries.get(key);
-      if (presentValue === undefined) {
-        newMetaEntries.set(key, value);
-        continue;
-      }
-      if (typeof presentValue === 'number' && typeof value === 'number') {
-        newMetaEntries.set(key, presentValue + value);
-        continue;
-      }
-      newMetaEntries.delete(key);
-      newMetaEntries.set(`${key}_0`, presentValue);
-      newMetaEntries.set(`${key}_1`, value);
-    }
-
-    return new Meta(newMetaEntries);
   }
 }

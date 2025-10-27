@@ -1,7 +1,20 @@
 {
   "string": "tübignen",
   "topN": 10,
-  "minQuality": 0.3
+  "searchers": [
+    {
+      "type": "fuzzy",
+      "minQuality": 0.3
+    },
+    {
+      "type": "substring",
+      "minQuality": 0
+    },
+    {
+      "type": "prefix",
+      "minQuality": 0
+    }
+  ]
 }
 
 {
@@ -12,11 +25,11 @@ Rank    Entity                                  Matched String                  
 
 1       Tübingen                                Tübingen                                0.76    
 2       Tüfingen                                Tüfingen                                0.57    
-3       Tusingene                               Tusingene                               0.47    
-4       Täbingen                                Täbingen                                0.47    
-5       Hübingen                                Hübingen                                0.47    
-6       Tuningen                                Tuningen                                0.47    
-7       Tumlingen                               Tumlingen                               0.47    
-8       Bübingen                                Bübingen                                0.47    
-9       Tumringen                               Tumringen                               0.47    
+3       Bübingen                                Bübingen                                0.47    
+4       Hübingen                                Hübingen                                0.47    
+5       Täbingen                                Täbingen                                0.47    
+6       Tumlingen                               Tumlingen                               0.47    
+7       Tumringen                               Tumringen                               0.47    
+8       Tuningen                                Tuningen                                0.47    
+9       Tusingene                               Tusingene                               0.47    
 10      Tuttlingen                              Tuttlingen                              0.43    

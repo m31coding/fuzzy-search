@@ -1,3 +1,5 @@
+import { FuzzySearcher, PrefixSearcher, SearcherSpec, SubstringSearcher } from './searcher-spec.js';
+
 /**
  * Holds the query string and query parameters.
  */
@@ -13,22 +15,23 @@ export class Query {
   public readonly topN: number;
 
   /**
-   * The minimum quality of matches to return. Increasing this value will increase the performance but make
-   * the searcher less fuzzy. The value must be between 0 and 1.
+   * The searchers to use.
    */
-  public readonly minQuality: number;
+  public readonly searchers: SearcherSpec[];
 
   /**
    * Creates a new instance of the Query class.
    * @param string The query string.
    * @param topN The maximum number of matches to return. Provide Infinity to return all matches.
-   * @param minQuality The minimum quality of matches to return. Increasing this value will increase the
-   * performance but make the searcher less fuzzy. The value must be between 0 and 1; lower or larger values will be
-   * clamped.
+   * @param searchers The searchers to use.
    */
-  public constructor(string: string, topN: number = 10, minQuality: number = 0.3) {
+  public constructor(
+    string: string,
+    topN: number = 10,
+    searchers = [new FuzzySearcher(0.3), new SubstringSearcher(0), new PrefixSearcher(0)]
+  ) {
     this.string = string;
     this.topN = Math.max(0, topN);
-    this.minQuality = Math.max(0, Math.min(1, minQuality));
+    this.searchers = searchers;
   }
 }

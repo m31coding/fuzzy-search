@@ -11,6 +11,13 @@
         "isDefault": true
       },
       "label": "tsc: watch - tsconfig.json"
+    },
+    {
+      "label": "Performance Test",
+      "type": "shell",
+      "command": "node dist/performance-test/main.js",
+      "problemMatcher": [],
+      "group": "test"
     }
   ]
 }

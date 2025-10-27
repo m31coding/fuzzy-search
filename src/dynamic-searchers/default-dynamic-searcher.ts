@@ -1,6 +1,6 @@
-import { DefaultEntitySearcher } from '../entity-searchers/default-entity-searcher.js';
 import { DynamicSearcher } from '../interfaces/dynamic-searcher.js';
 import { EntityResult } from '../interfaces/entity-result.js';
+import { EntitySearcher } from '../interfaces/entity-searcher.js';
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
 import { Query } from '../interfaces/query.js';
@@ -23,8 +23,8 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
    */
   public constructor(
     private readonly maxQueryLength: number,
-    private readonly mainSearcher: DefaultEntitySearcher<TEntity, TId>,
-    private readonly secondarySearcher: DefaultEntitySearcher<TEntity, TId>
+    private readonly mainSearcher: EntitySearcher<TEntity, TId>,
+    private readonly secondarySearcher: EntitySearcher<TEntity, TId>
   ) {}
 
   /**
@@ -47,7 +47,7 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
       return new EntityResult([], query, new Meta());
     }
     if (query.string.length > this.maxQueryLength) {
-      query = new Query(query.string.substring(0, this.maxQueryLength), query.topN, query.minQuality);
+      query = new Query(query.string.substring(0, this.maxQueryLength), query.topN, query.searchers);
     }
     return ResultMerger.mergeResults(this.mainSearcher.getMatches(query), this.secondarySearcher.getMatches(query));
   }
@@ -114,7 +114,7 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
       }
     }
     this.removeEntities(idsToRemove);
-    return entities.length > 0 ? this.reindexSecondarySearcher(entitiesToInsert, getId, getTerms) : new Meta();
+    return entitiesToInsert.length > 0 ? this.reindexSecondarySearcher(entitiesToInsert, getId, getTerms) : new Meta();
   }
 
   /**
@@ -163,7 +163,7 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
     entity: TEntity,
     entityId: TId,
     getTerms: (entity: TEntity) => string[],
-    searcher: DefaultEntitySearcher<TEntity, TId>
+    searcher: EntitySearcher<TEntity, TId>
   ): boolean {
     const presentTerms: string[] | null = searcher.tryGetTerms(entityId);
     if (presentTerms === null) {
@@ -189,6 +189,23 @@ export class DefaultDynamicSearcher<TEntity, TId> implements DynamicSearcher<TEn
     if (terms1 == null || terms2 == null) return false;
     if (terms1.length !== terms2.length) return false;
     return terms1.every((term, index) => term === terms2[index]);
+  }
+
+  /**
+   * {@inheritDoc DynamicSearcher.removeEntity}
+   */
+  public removeEntity(id: TId): boolean {
+    return this.mainSearcher.removeEntity(id) || this.secondarySearcher.removeEntity(id);
+  }
+
+  /**
+   * {@inheritDoc DynamicSearcher.replaceEntity}
+   */
+  public replaceEntity(id: TId, newEntity: TEntity, newEntityId: TId): boolean {
+    return (
+      this.mainSearcher.replaceEntity(id, newEntity, newEntityId) ||
+      this.secondarySearcher.replaceEntity(id, newEntity, newEntityId)
+    );
   }
 
   /**

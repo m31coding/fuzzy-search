@@ -4,8 +4,8 @@ import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
 import { NgramComputer } from './ngram-computer.js';
 import { QualityComputer } from './quality-computer.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from '../string-searchers/result.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 import { TermIds } from './term-ids.js';
 
@@ -42,10 +42,10 @@ export class FuzzySearcher implements StringSearcher {
    * {@inheritDoc StringSearcher.index}
    */
   public index(terms: string[]): Meta {
+    const start = performance.now();
     this.invertedIndex = new InvertedIndex();
     this.commonNgramCounts = new Int32Array(terms.length);
     this.numberOfNgrams = new Int32Array(terms.length);
-    const meta = new Meta();
     let nofInvalidTerms = 0;
 
     for (let i = 0, l = terms.length; i < l; i++) {
@@ -66,7 +66,12 @@ export class FuzzySearcher implements StringSearcher {
     }
 
     this.invertedIndex.seal();
+
+    const duration = Math.round(performance.now() - start);
+
+    const meta = new Meta();
     meta.add('numberOfInvalidTerms', nofInvalidTerms);
+    meta.add('indexingDurationFuzzySearcher', duration);
     return meta;
   }
 
@@ -82,7 +87,7 @@ export class FuzzySearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  public getMatches(query: Query): Result {
+  public getMatches(query: StringSearchQuery): Result {
     if (this.invertedIndex.size === 0) {
       return new Result([], query, new Meta());
     }

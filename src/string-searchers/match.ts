@@ -10,8 +10,5 @@ export class Match {
   public constructor(
     public readonly index: number,
     public quality: number
-  ) {
-    this.index = index;
-    this.quality = quality;
-  }
+  ) {}
 }

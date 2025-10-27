@@ -1,7 +1,20 @@
 {
   "string": "bostn",
   "topN": 10,
-  "minQuality": 0.3
+  "searchers": [
+    {
+      "type": "fuzzy",
+      "minQuality": 0.3
+    },
+    {
+      "type": "substring",
+      "minQuality": 0
+    },
+    {
+      "type": "prefix",
+      "minQuality": 0
+    }
+  ]
 }
 
 {
@@ -10,13 +23,13 @@
 
 Rank    Entity                                  Matched String                          Quality 
 
-1       Bosti                                   Bosti                                   0.67    
-2       Bosto                                   Bosto                                   0.67    
-3       Bosta                                   Bosta                                   0.67    
+1       Bosta                                   Bosta                                   0.67    
+2       Bosti                                   Bosti                                   0.67    
+3       Bosto                                   Bosto                                   0.67    
 4       Bost                                    Bost                                    0.63    
-5       Boston                                  Boston                                  0.54    
-6       Boston                                  Boston                                  0.54    
+5       Bostan                                  Bostan                                  0.54    
+6       Bostel                                  Bostel                                  0.54    
 7       Boston                                  Boston                                  0.54    
 8       Boston                                  Boston                                  0.54    
-9       Bostel                                  Bostel                                  0.54    
-10      Bostan                                  Bostan                                  0.54    
+9       Boston                                  Boston                                  0.54    
+10      Boston                                  Boston                                  0.54    

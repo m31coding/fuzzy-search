@@ -195,8 +195,16 @@
               <input type="number" name="max-matches" value="10" />
             </label>
             <label>
-              <span>Minimum quality <span class="parameter-error"></span></span>
-              <input type="number" name="min-quality" value="0.3" />
+              <span>Fuzzy searcher minimum quality <span class="parameter-error"></span></span>
+              <input type="number" name="min-quality-fuzzy" value="0.3" />
+            </label>
+            <label>
+              <span>Substring searcher minimum quality <span class="parameter-error"></span></span>
+              <input type="number" name="min-quality-substring" value="0.0" />
+            </label>
+            <label>
+              <span>Prefix searcher minimum quality <span class="parameter-error"></span></span>
+              <input type="number" name="min-quality-prefix" value="0.0" />
             </label>
           </div>
           <button type="button" id="performance-test-button">run performance test</button>

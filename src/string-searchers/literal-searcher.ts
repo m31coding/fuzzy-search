@@ -1,8 +1,8 @@
 import { Match } from './match.js';
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from './result.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
@@ -32,7 +32,7 @@ export class LiteralSearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  public getMatches(query: Query): Result {
+  public getMatches(query: StringSearchQuery): Result {
     const matches: Match[] = [];
     for (let i = 0, l = this.terms.length; i < l; i++) {
       const term = this.terms[i];

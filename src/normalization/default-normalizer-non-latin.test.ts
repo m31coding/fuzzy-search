@@ -2,9 +2,6 @@ import { DefaultNormalizer } from './default-normalizer.js';
 import { NormalizerConfig } from './normalizer-config.js';
 
 const config = NormalizerConfig.createDefaultConfig();
-config.paddingLeft = '';
-config.paddingRight = '';
-config.paddingMiddle = ' ';
 config.allowCharacter = (_c: string) => true;
 const normalizer = DefaultNormalizer.create(config);
 

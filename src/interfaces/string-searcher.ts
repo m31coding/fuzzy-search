@@ -1,7 +1,7 @@
 import { MementoSerializable } from './memento-serializable.js';
 import { Meta } from './meta.js';
-import { Query } from './query.js';
 import { Result } from '../string-searchers/result.js';
+import { StringSearchQuery } from './string-search-query.js';
 
 /**
  * A string searcher for indexing strings and retrieving matches.
@@ -19,5 +19,5 @@ export interface StringSearcher extends MementoSerializable {
    * @param query The query.
    * @returns The matches.
    */
-  getMatches(query: Query): Result;
+  getMatches(query: StringSearchQuery): Result;
 }

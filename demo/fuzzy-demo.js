@@ -23,7 +23,13 @@ const dataPreview = document.getElementById('data-preview');
 const performanceTestRandomSeedInput = document.querySelector('#performance-test input[name="random-seed"]');
 const performanceTestNumberOfQueriesInput = document.querySelector('#performance-test input[name="number-of-queries"]');
 const performanceTestMaxMatchesInput = document.querySelector('#performance-test input[name="max-matches"]');
-const performanceTestMinQualityInput = document.querySelector('#performance-test input[name="min-quality"]');
+const performanceTestMinQualityFuzzyInput = document.querySelector('#performance-test input[name="min-quality-fuzzy"]');
+const performanceTestMinQualitySubstringInput = document.querySelector(
+  '#performance-test input[name="min-quality-substring"]'
+);
+const performanceTestMinQualityPrefixInput = document.querySelector(
+  '#performance-test input[name="min-quality-prefix"]'
+);
 document.getElementById('osm-data-card').addEventListener('click', downloadAndIndexOsmData);
 document
   .getElementById('person-data-card')
@@ -52,7 +58,9 @@ initializeParameterInput(personRandomSeedInput, parseIntInput);
 initializeParameterInput(performanceTestRandomSeedInput, parseIntInput);
 initializeParameterInput(performanceTestNumberOfQueriesInput, parsePositiveIntInput);
 initializeParameterInput(performanceTestMaxMatchesInput, parsePositiveIntInput);
-initializeParameterInput(performanceTestMinQualityInput, parsePositiveFloatInput);
+initializeParameterInput(performanceTestMinQualityFuzzyInput, parsePositiveFloatInput);
+initializeParameterInput(performanceTestMinQualitySubstringInput, parsePositiveFloatInput);
+initializeParameterInput(performanceTestMinQualityPrefixInput, parsePositiveFloatInput);
 
 wireTableRows();
 
@@ -206,11 +214,7 @@ async function downloadAndIndexOsmData() {
     return;
   }
 
-  const data = {
-    entities: entities,
-    kind: 'osm-places',
-    latinOnly: false
-  };
+  const data = { entities: entities, kind: 'osm-places', latinOnly: false };
 
   indexingRequest.data = data;
   indexingRequest.searchDataConfig = self.getSearchDataConfig(data.kind);
@@ -253,7 +257,7 @@ async function generateAndIndexPersonData(reindex = false) {
 
 async function importFaker() {
   try {
-    return await import('../node_modules/@faker-js/faker/dist/esm/index.mjs');
+    return await import('../node_modules/@faker-js/faker/dist/index.js');
   } catch (e) {
     console.log(e);
     getIndexStatusTextElement().innerHTML += `Import error.`;
@@ -272,11 +276,7 @@ function generateAndIndexPersonDataPart2(indexingRequest, numberOfNames, randomS
 
   const latinOnly = personData.scripts.size === 1 && personData.scripts.has('Latn');
 
-  const data = {
-    entities: entities,
-    kind: 'persons',
-    latinOnly: latinOnly
-  };
+  const data = { entities: entities, kind: 'persons', latinOnly: latinOnly };
 
   indexingRequest.data = data;
   indexingRequest.searchDataConfig = self.getSearchDataConfig(data.kind);
@@ -815,19 +815,28 @@ function runPerformanceTest() {
   const randomSeed = performanceTestRandomSeedInput.dataValue;
   const numberOfQueries = performanceTestNumberOfQueriesInput.dataValue;
   const maxMatches = performanceTestMaxMatchesInput.dataValue;
-  const minQuality = performanceTestMinQualityInput.dataValue;
+  const minQualityFuzzy = performanceTestMinQualityFuzzyInput.dataValue;
+  const minQualitySubstring = performanceTestMinQualitySubstringInput.dataValue;
+  const minQualityPrefix = performanceTestMinQualityPrefixInput.dataValue;
 
   if (
     nullOrUndefined(randomSeed) ||
     nullOrUndefined(numberOfQueries) ||
     nullOrUndefined(maxMatches) ||
-    nullOrUndefined(minQuality)
+    nullOrUndefined(minQualityFuzzy) ||
+    nullOrUndefined(minQualitySubstring) ||
+    nullOrUndefined(minQualityPrefix)
   ) {
     renderPerformanceTestResult();
     return;
   }
 
-  const testRunParameters = new fuzzySearch.TestRunParameters(randomSeed, numberOfQueries, maxMatches, minQuality);
+  const searchers = [
+    new fuzzySearch.FuzzySearcher(minQualityFuzzy),
+    new fuzzySearch.SubstringSearcher(minQualitySubstring),
+    new fuzzySearch.PrefixSearcher(minQualityPrefix)
+  ];
+  const testRunParameters = new fuzzySearch.TestRunParameters(randomSeed, numberOfQueries, maxMatches, searchers);
   const performanceTest = new fuzzySearch.PerformanceTest(currentInstance.searcher);
   const report = performanceTest.run(testRunParameters);
   renderPerformanceTestResult(report);

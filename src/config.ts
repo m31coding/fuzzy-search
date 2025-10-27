@@ -1,5 +1,8 @@
-import { NgramComputerConfig } from './fuzzy-searchers/ngram-computer-config.js';
+import { FuzzySearchConfig } from './fuzzy-searchers/fuzzy-search-config.js';
 import { NormalizerConfig } from './normalization/normalizer-config.js';
+import { SearcherType } from './interfaces/searcher-type.js';
+import { SortOrder } from './interfaces/sort-order.js';
+import { SubstringSearchConfig } from './suffix-array-searchers/substring-search-config.js';
 
 /**
  * Holds configuration values for the searcher.
@@ -7,16 +10,20 @@ import { NormalizerConfig } from './normalization/normalizer-config.js';
 export class Config {
   /**
    * Creates a new instance of the Config class.
-   * @param normalizerConfig The configuration for the default normalizer.
-   * @param ngramComputerConfig The configuration for the n-gram computer.
+   * @param searcherTypes The searcher types to use.
    * @param maxQueryLength The maximum query length.
-   * @param inequalityPenalty The inequality penalty.
+   * @param sortOrder The sort order for the entity matches.
+   * @param normalizerConfig The configuration for the default normalizer.
+   * @param fuzzySearchConfig The fuzzy search configuration.
+   * @param substringSearchConfig The substring search configuration.
    */
   public constructor(
-    public normalizerConfig: NormalizerConfig,
-    public ngramComputerConfig: NgramComputerConfig,
+    public searcherTypes: SearcherType[],
     public maxQueryLength: number,
-    public inequalityPenalty: number
+    public sortOrder: SortOrder,
+    public normalizerConfig: NormalizerConfig,
+    public fuzzySearchConfig?: FuzzySearchConfig,
+    public substringSearchConfig?: SubstringSearchConfig
   ) {}
 
   /**
@@ -24,8 +31,19 @@ export class Config {
    * @returns The default configuration.
    */
   public static createDefaultConfig(): Config {
+    const searcherTypes = [SearcherType.Fuzzy, SearcherType.Substring, SearcherType.Prefix];
+    const maxQueryLength = 150;
+    const sortOrder = SortOrder.QualityAndMatchedString;
     const normalizerConfig = NormalizerConfig.createDefaultConfig();
-    const ngramComputerConfig = NgramComputerConfig.createDefaultConfig();
-    return new Config(normalizerConfig, ngramComputerConfig, 150, 0.05);
+    const fuzzySearchConfig = FuzzySearchConfig.createDefaultConfig();
+    const substringSearchConfig = SubstringSearchConfig.createDefaultConfig();
+    return new Config(
+      searcherTypes,
+      maxQueryLength,
+      sortOrder,
+      normalizerConfig,
+      fuzzySearchConfig,
+      substringSearchConfig
+    );
   }
 }

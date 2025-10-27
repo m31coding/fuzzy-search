@@ -3,10 +3,14 @@ import { EntityMatch } from '../interfaces/entity-match.js';
 import { EntitySearcher } from '../interfaces/entity-searcher.js';
 import { LiteralSearcher } from '../string-searchers/literal-searcher.js';
 import { Query } from '../interfaces/query.js';
+import { SearcherType } from '../interfaces/searcher-type.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 const literalSearcher: StringSearcher = new LiteralSearcher();
-const entitySearcher: EntitySearcher<{ id: number; name: string }, number> = new DefaultEntitySearcher(literalSearcher);
+const entitySearcher: EntitySearcher<{ id: number; name: string }, number> = new DefaultEntitySearcher(
+  literalSearcher,
+  [SearcherType.Prefix]
+);
 const entities = [
   { id: 23501, name: 'Alice' },
   { id: 99234, name: 'Bob' },
@@ -21,7 +25,7 @@ entitySearcher.indexEntities(
 
 test('can match entity', () => {
   expect(entitySearcher.getMatches(new Query('Alice')).matches).toEqual([
-    new EntityMatch<{ id: number; name: string }>(entities[0], 1.0, 'Alice')
+    new EntityMatch<{ id: number; name: string }>(entities[0], 3, 'Alice')
   ]);
 });
 
@@ -38,7 +42,9 @@ class Person {
 }
 
 const literalSearcher2: StringSearcher = new LiteralSearcher();
-const entitySearcher2: EntitySearcher<Person, number> = new DefaultEntitySearcher(literalSearcher2);
+const entitySearcher2: EntitySearcher<Person, number> = new DefaultEntitySearcher(literalSearcher2, [
+  SearcherType.Prefix
+]);
 const entities2 = [
   new Person(23501, 'Alice', 'Programmer'),
   new Person(99234, 'Bob', 'Teacher'),
@@ -53,13 +59,13 @@ entitySearcher2.indexEntities(
 
 test('can match entity with first term', () => {
   expect(entitySearcher2.getMatches(new Query('Alice')).matches).toEqual([
-    new EntityMatch<Person>(entities2[0], 1.0, 'Alice')
+    new EntityMatch<Person>(entities2[0], 3, 'Alice')
   ]);
 });
 
 test('can match entity with second term', () => {
   expect(entitySearcher2.getMatches(new Query('Programmer')).matches).toEqual([
-    new EntityMatch<{ id: number; name: string; job: string }>(entities2[0], 1.0, 'Programmer')
+    new EntityMatch<{ id: number; name: string; job: string }>(entities2[0], 3, 'Programmer')
   ]);
 });
 

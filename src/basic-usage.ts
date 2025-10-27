@@ -1,4 +1,4 @@
-// import { Config } from './config';
+// import { Config } from './config.js';
 import { Query } from './interfaces/query.js';
 import { SearcherFactory } from './searcher-factory.js';
 
@@ -8,6 +8,10 @@ class Person {
     public firstName: string,
     public lastName: string
   ) {}
+}
+
+function log<T>(obj: T): void {
+  console.log(JSON.stringify(obj, null, 2));
 }
 
 const searcher = SearcherFactory.createDefaultSearcher<Person, number>();
@@ -29,13 +33,13 @@ const indexingMeta = searcher.indexEntities(
   (e) => e.id,
   (e) => [e.firstName, e.lastName, `${e.firstName} ${e.lastName}`]
 );
-console.dir(indexingMeta);
+log(indexingMeta);
 
 const result = searcher.getMatches(new Query('alice kign'));
-console.dir(result);
+log(result);
 
 const removalResult = searcher.removeEntities([99234, 5823]);
-console.dir(removalResult);
+log(removalResult);
 
 const persons2 = [
   { id: 723, firstName: 'David', lastName: 'Knight' }, // new
@@ -49,7 +53,7 @@ const upsertMeta = searcher.upsertEntities(
   (e) => e.id,
   (e) => [e.firstName, e.lastName, `${e.firstName} ${e.lastName}`]
 );
-console.dir(upsertMeta);
+log(upsertMeta);
 
 const result2 = searcher.getMatches(new Query('allie'));
-console.dir(result2);
+log(result2);

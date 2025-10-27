@@ -7,4 +7,8 @@ export { MementoSerializable } from './memento-serializable.js';
 export { Meta } from './meta.js';
 export { Normalizer } from './normalizer.js';
 export { Query } from './query.js';
+export { SearcherType } from './searcher-type.js';
 export { StringSearcher } from './string-searcher.js';
+export { StringSearchQuery } from './string-search-query.js';
+export { SearcherSpec, FuzzySearcher, SubstringSearcher, PrefixSearcher } from './searcher-spec.js';
+export { SortOrder } from './sort-order.js';

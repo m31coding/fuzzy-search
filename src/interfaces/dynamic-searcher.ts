@@ -3,7 +3,7 @@ import { Meta } from './meta.js';
 import { RemovalResult } from '../dynamic-searchers/removal-result.js';
 
 /**
- * A dynamic searcher that, in addition to indexing and searching, can also remove and upsert entities.
+ * A dynamic searcher that, in addition to indexing and searching, can also remove and upsert entities in bulk.
  * @typeParam TEntity The type of the entities.
  * @typeParam TId The type of the entity ids.
  */

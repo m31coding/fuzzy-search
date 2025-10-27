@@ -1,12 +1,13 @@
-# Frontend Fuzzy Search
+# Frontend Fuzzy + Substring + Prefix Search
 
 @m31coding/fuzzy-search is a frontend library for searching objects with ids (entities) by their names and features (terms). It is
 
 - Fast: A query takes usually well below 10 ms. 
-- Accurate: Powered by n-grams with a novel approach of character sorting.
+- Accurate: Powered by a suffix array and n-grams with a novel approach of character sorting.
 - Multilingual: The language-agnostic design of the algorithm enables operation across all languages.
 - Flexible: Entities and their terms can be inserted, updated and removed.
 - Reliable: Well tested standalone library with no dependencies.
+- Universal: Works seamlessly in both frontend and backend (Node.js) environments.
 
 [![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/m31coding/fuzzy-search/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/%40m31coding%2Ffuzzy-search)](https://www.npmjs.com/package/@m31coding/fuzzy-search)
@@ -57,24 +58,26 @@ const persons = [
   { id: 11923, firstName: 'Charlie', lastName: 'Rook' }
 ];
 
+function log<T>(obj: T): void {
+  console.log(JSON.stringify(obj, null, 2));
+}
+
 const indexingMeta = searcher.indexEntities(
   persons,
   (e) => e.id,
   (e) => [e.firstName, e.lastName, `${e.firstName} ${e.lastName}`]
 );
-console.dir(indexingMeta);
+log(indexingMeta);
 /* {
   "entries": {
-    "numberOfInvalidTerms": 0,
-    "numberOfDistinctTerms": 12,
-    "normalizationDuration": 0,
-    "numberOfSurrogateCharacters": 0,
-    "indexingDuration": 1
+    "numberOfTerms": 12,
+    "indexingDurationTotal": 1,
+    ...
   }
 } */
 
 const result = searcher.getMatches(new fuzzySearch.Query('alice kign'));
-console.dir(result);
+log(result);
 /* {
   "matches": [
     {
@@ -90,17 +93,30 @@ console.dir(result);
   "query": {
     "string": "alice kign",
     "topN": 10,
-    "minQuality": 0.3
+    "searchers": [
+      {
+        "type": "fuzzy",
+        "minQuality": 0.3
+      },
+      {
+        "type": "substring",
+        "minQuality": 0
+      },
+      {
+        "type": "prefix",
+        "minQuality": 0
+      }
+    ]
   },
   "meta": {
     "entries": {
-      "queryDuration": 0
+      "queryDuration": 1
     }
   }
 } */
 
 const removalResult = searcher.removeEntities([99234, 5823]);
-console.dir(removalResult);
+log(removalResult);
 /* {
   "removedEntities": [
     99234,
@@ -125,19 +141,17 @@ const upsertMeta = searcher.upsertEntities(
   (e) => e.id,
   (e) => [e.firstName, e.lastName, `${e.firstName} ${e.lastName}`]
 );
-console.dir(upsertMeta);
+log(upsertMeta);
 /* {
   "entries": {
-    "numberOfInvalidTerms": 0,
-    "numberOfDistinctTerms": 12,
-    "normalizationDuration": 0,
-    "numberOfSurrogateCharacters": 0,
-    "upsertDuration": 0
+    "numberOfTerms": 12,
+    "upsertDuration": 0,
+    ...
   }
 } */
 
 const result2 = searcher.getMatches(new fuzzySearch.Query('allie'));
-console.dir(result2);
+log(result2);
 /* {
   "matches": [
     {
@@ -146,14 +160,27 @@ console.dir(result2);
         "firstName": "Allie",
         "lastName": "King"
       },
-      "quality": 1,
+      "quality": 3,
       "matchedString": "Allie"
     }
   ],
   "query": {
     "string": "allie",
     "topN": 10,
-    "minQuality": 0.3
+    "searchers": [
+      {
+        "type": "fuzzy",
+        "minQuality": 0.3
+      },
+      {
+        "type": "substring",
+        "minQuality": 0
+      },
+      {
+        "type": "prefix",
+        "minQuality": 0
+      }
+    ]
   },
   "meta": {
     "entries": {
@@ -169,7 +196,9 @@ The following parameters are available when creating a query:
 | --------- | ---- | ------- | ----------- |
 | string | string | - | The query string. |
 | topN | number | 10 | The maximum number of matches to return. Provide Infinity to return all matches. |
-| minQuality | number | 0.3 | The minimum quality of a match, ranging from 0 to 1. When set to zero, all terms that share at least one common n-gram with the query are considered a match. |
+| searchers | SearcherSpec[] | [new FuzzySearcher(0.3), new SubstringSearcher(0), new PrefixSearcher(0)] | The searchers to use and the minimum quality thresholds for their matches. |
+
+A fuzzy search minimum quality threshold below 0.3 is not recommended, as the respective matches are most likely irrelevant.
 
 If the data terms contain characters and strings in non-latin scripts (such as Arabic, Cyrillic, Greek, Han, ... see also [ISO 15924](https://en.wikipedia.org/wiki/ISO_15924)), the default configuration must be adjusted before creating the searcher:
 
@@ -218,33 +247,29 @@ Query strings and data terms are normalized in the following normalization pipel
 - Strings are normalized to NFKD.
 - Space equivalent characters are replaced by a space.
 - Surrogate characters, padding characters and other non-allowed characters are removed.
-- Strings are padded to the left, right and in the middle (replacement of spaces).
 
 >Normalization to NFKC decomposes characters by compatibility, then re-composes them by canonical equivalence. This ensures that the characters in the replacement table always match. Normalization to NFKD decomposes the characters by compatibility but does not re-compose them, allowing undesired characters to be removed thereafter.
 
 The default normalizer config adopts the following values:
 
 ```js
-let paddingLeft = '$$';
-let paddingRight = '!';
-let paddingMiddle = '!$$';
-let replacements = [fuzzySearch.LatinReplacements.Value];
+config.normalizerConfig.replacements = [fuzzySearch.LatinReplacements.Value];
 let spaceEquivalentCharacters = new Set(['_', '-', '–', '/', ',', '\t']);
-let treatCharacterAsSpace = (c) => spaceEquivalentCharacters.has(c);
-let allowCharacter = (c) => {
+config.normalizerConfig.treatCharacterAsSpace = (c) => spaceEquivalentCharacters.has(c);
+config.normalizerConfig.allowCharacter = (c) => {
   return fuzzySearch.StringUtilities.isAlphanumeric(c);
 };
 ```
 
-With this pipeline and configuration, the string `Thanh Việt Đoàn` is normalized to `thanh viet doan` before padding. With padding applied, it becomes `$$thanh!$$viet!$$doan!`. The choice of the padding is explained in the next section.
+With this pipeline and configuration, the string `Thanh Việt Đoàn` is normalized to `thanh viet doan`. 
 
-## Sorted n-grams
+## Fuzzy search: sorted n-grams
 
-The general idea of n-grams and the sorting trick is outlined in this [blog post](https://www.m31coding.com/blog/fuzzy-search.html). In short, the data terms and the query string are broken down into 3-grams, e.g. the string `$$sarah!` becomes:
+The general idea of n-grams and the sorting trick is outlined in this [blog post](https://www.m31coding.com/blog/fuzzy-search.html). In short, the data terms and the query string are padded on the left, right and middle (replacement of spaces) with `$$`, `!`, and `!$$`, respectively, before they are broken down into 3-grams. For example, the string `sarah` becomes `$$sarah!` after padding and the resulting 3-grams are:
 
 ```text
 $$s, $sa, sar, ara, rah, ah!
-``````
+```
 
 The more common 3-grams between the query and the term, the higher the quality of the match. By padding the front with two characters, and the back with one character, more weight is given to the beginning of the string.
 
@@ -269,18 +294,48 @@ The quality is then computed by dividing the number of common n-grams by the num
 
 Padding strings in the middle allows for extending the algorithm across word boundaries. `sarah wolff` becomes `$$sarah!$$wolff!` and matches `wolff sarah` with a quality of 0.95, if 3-grams that end with a '\$' are discarded.
 
-The overall approach outlined above can be summarized as: remove n-grams that end with '\$', sort n-grams that don't contain '\$'. The default configuration appears in the code as follows:
+The overall approach outlined above can be summarized as: remove n-grams that end with '\$', sort n-grams that don't contain '\$'. The default fuzzy search configuration appears in the code as follows:
 
 ```js
-let ngramN = 3;
-let transformNgram = (ngram) =>
+config.fuzzySearchConfig.paddingLeft = '$$';
+config.fuzzySearchConfig.paddingRight = '!';
+config.fuzzySearchConfig.paddingMiddle = '!$$';
+config.fuzzySearchConfig.ngramN = 3;
+config.fuzzySearchConfig.transformNgram = (ngram) =>
   ngram.endsWith('$') ? null
   : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
   : ngram;
-
-let inequalityPenalty = 0.05;
+config.fuzzySearchConfig.inequalityPenalty = 0.05;
 ```
 
+## Substring and prefix search
+
+Substring and prefix search is realized with a single suffix array created by [An efficient, versatile approach to suffix sorting](https://dl.acm.org/doi/10.1145/1227161.1278374).
+
+The base quality of a prefix or substring match is simply computed by dividing the query length by the term length. For example, the query `sa` matches the term `sarah` with a quality of 2/5 = 0.4, and the query `ara` matches the same term with a quality of 3/5 = 0.6. 
+
+A quality offset of +2 and +1 is added to prefix and substring matches, respectively, as explained in the next section.
+
+The final qualities of the examples are:
+
+| Query | Term  | Searcher  | Quality   |
+| ----- | ----- | ----------| ----------|
+| sa  | sarah | Prefix    | 2 / 5 + 2 = 2.4 |     
+| ara   | sarah | Substring | 3 / 5 + 1 = 1.6 |
+
+The default configuration for the searchers is as follows:
+
+```js
+config.substringSearchConfig.suffixArraySeparator = '$';
+```
+
+## Combining the searchers
+
+The matches of the searchers are mixed with a simple approach. Prefix matches get a quality offset of +2, substring matches of +1, and fuzzy matches keep their original quality. The rationale is that, for the same query length, prefix matches are more relevant than substring matches. Additionally, fuzzy matches are only relevant if there are no prefix or substring matches. 
+
+## Changing the default configuration
+
+The default configuration has been chosen carefully. There are only a few specific scenarios that require adjustments. Consult the file [default-config.ts](src/default-config.ts) for all configuration options and their default values.
 
 ## Support and Contribution
 

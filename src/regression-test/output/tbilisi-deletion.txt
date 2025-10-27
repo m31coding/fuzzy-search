@@ -1,7 +1,20 @@
 {
   "string": "თბიისი",
   "topN": 10,
-  "minQuality": 0.3
+  "searchers": [
+    {
+      "type": "fuzzy",
+      "minQuality": 0.3
+    },
+    {
+      "type": "substring",
+      "minQuality": 0
+    },
+    {
+      "type": "prefix",
+      "minQuality": 0
+    }
+  ]
 }
 
 {
@@ -18,5 +31,5 @@ Rank    Entity                                  Matched String                  
 6       თეჯისი                                  თეჯისი                                  0.41    
 7       ყვიბისი                                 ყვიბისი                                 0.36    
 8       ყვიბისი                                 ყვიბისი                                 0.36    
-9       თერგვისი                                თერგვისი                                0.32    
-10      თამარისი                                თამარისი                                0.32    
+9       თამარისი                                თამარისი                                0.32    
+10      თერგვისი                                თერგვისი                                0.32    

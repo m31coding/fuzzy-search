@@ -1,41 +1,19 @@
 import { Meta } from '../interfaces/meta.js';
 import { NormalizationResult } from './normalization-result.js';
 import { Normalizer } from '../interfaces/normalizer.js';
-import { NormalizerConfig } from './normalizer-config.js';
 import { StringUtilities } from '../commons/string-utilities.js';
 
 /**
- * Normalization for creating proper n-grams.
+ * Normalizes every character according to the configuration.
  */
-export class NgramNormalizer implements Normalizer {
-  /**
-   * The string that is appended to the left of the input string.
-   */
-  private readonly paddingLeft: string;
-
-  /**
-   * The string that is appended to the right of the input string.
-   */
-  private readonly paddingRight: string;
-
-  /**
-   * The string that is inserted for spaces in the input string.
-   */
-  private readonly paddingMiddle: string;
-
-  /**
-   * A set of all padding characters.
-   */
-  private readonly paddingCharacters: Set<string>;
-
+export class CharacterNormalizer implements Normalizer {
   /**
    * A function that determines whether a character is treated as a space.
    */
   private readonly treatCharacterAsSpace: (c: string) => boolean;
 
   /**
-   * A function that determines whether a character is allowed. Padding characters.
-   * and surrogate characters are disallowed by default.
+   * A function that determines whether a character is allowed. Surrogate characters are disallowed by default.
    */
   private readonly allowCharacter: (c: string) => boolean;
 
@@ -45,33 +23,22 @@ export class NgramNormalizer implements Normalizer {
   private numberOfSurrogateCharacters: number = 0;
 
   /**
-   * Creates a new instance of the NgramNormalizer class.
-   * @param normalizerConfig The configuration for the normalizer.
+   * Creates a new instance of the CharacterNormalizer class.
+   * @param treatCharacterAsSpace A function that determines whether a character is treated as a space.
+   * @param allowCharacter A function that determines whether a character is allowed.
    */
-  public constructor(normalizerConfig: NormalizerConfig) {
-    this.paddingLeft = normalizerConfig.paddingLeft;
-    this.paddingRight = normalizerConfig.paddingRight;
-    this.paddingMiddle = normalizerConfig.paddingMiddle;
-    this.paddingCharacters = new Set(
-      [
-        normalizerConfig.paddingLeft.split(''),
-        normalizerConfig.paddingRight.split(''),
-        normalizerConfig.paddingMiddle.split('')
-      ].flat()
-    );
-    this.treatCharacterAsSpace = normalizerConfig.treatCharacterAsSpace;
-    this.allowCharacter = normalizerConfig.allowCharacter;
+  public constructor(treatCharacterAsSpace: (c: string) => boolean, allowCharacter: (c: string) => boolean) {
+    this.treatCharacterAsSpace = treatCharacterAsSpace;
+    this.allowCharacter = allowCharacter;
   }
 
   /**
    * {@inheritDoc Normalizer.normalize}
    */
   public normalize(input: string): string {
-    const normalized: string[] = new Array(input.length + 2);
+    const normalized: string[] = new Array(input.length);
     let j = 0;
 
-    normalized[j++] = this.paddingLeft;
-    let previousIsPadding = true;
     let previousIsSkippedEmptyChar = false;
     let properCharacterAdded = false;
 
@@ -85,18 +52,15 @@ export class NgramNormalizer implements Normalizer {
       if (normalizedChar === ' ') {
         previousIsSkippedEmptyChar = true;
       } else {
-        if (previousIsSkippedEmptyChar && !previousIsPadding) {
-          normalized[j++] = this.paddingMiddle;
+        if (previousIsSkippedEmptyChar && properCharacterAdded) {
+          normalized[j++] = ' ';
         }
 
         normalized[j++] = normalizedChar;
         properCharacterAdded = true;
-        previousIsPadding = false;
         previousIsSkippedEmptyChar = false;
       }
     }
-
-    normalized[j++] = this.paddingRight;
 
     if (!properCharacterAdded) {
       return '';
@@ -116,7 +80,7 @@ export class NgramNormalizer implements Normalizer {
       return ' ';
     }
 
-    if (this.isSurrogate(character) || this.paddingCharacters.has(character) || !this.allowCharacter(character)) {
+    if (this.isSurrogate(character) || !this.allowCharacter(character)) {
       return '';
     }
 

@@ -1,8 +1,8 @@
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
 import { Normalizer } from '../interfaces/normalizer.js';
-import { Query } from '../interfaces/query.js';
 import { Result } from './result.js';
+import { StringSearchQuery } from '../interfaces/string-search-query.js';
 import { StringSearcher } from '../interfaces/string-searcher.js';
 
 /**
@@ -13,10 +13,12 @@ export class NormalizingSearcher implements StringSearcher {
    * Creates a new instance of the NormalizingStringSearcher class.
    * @param stringSearcher The string searcher to use.
    * @param normalizer The normalizer to use.
+   * @param normalizationDurationMetaKey The meta key under which the normalization duration is reported.
    */
   public constructor(
     private readonly stringSearcher: StringSearcher,
-    private readonly normalizer: Normalizer
+    private readonly normalizer: Normalizer,
+    private readonly normalizationDurationMetaKey: string = 'normalizationDuration'
   ) {}
 
   /**
@@ -27,7 +29,7 @@ export class NormalizingSearcher implements StringSearcher {
     const result = this.normalizer.normalizeBulk(terms);
     const duration = Math.round(performance.now() - start);
     const meta = this.stringSearcher.index(result.strings);
-    meta.add('normalizationDuration', duration);
+    meta.add(this.normalizationDurationMetaKey, duration);
     for (const entry of result.meta.allEntries) {
       meta.add(entry[0], entry[1]);
     }
@@ -37,8 +39,12 @@ export class NormalizingSearcher implements StringSearcher {
   /**
    * {@inheritDoc StringSearcher.getMatches}
    */
-  public getMatches(query: Query): Result {
-    const normalizedQuery = new Query(this.normalizer.normalize(query.string), query.topN, query.minQuality);
+  public getMatches(query: StringSearchQuery): Result {
+    const normalizedQuery = new StringSearchQuery(
+      this.normalizer.normalize(query.string),
+      query.minQuality,
+      query.searcherType
+    );
     const result = this.stringSearcher.getMatches(normalizedQuery);
     return new Result(result.matches, query, result.meta);
   }

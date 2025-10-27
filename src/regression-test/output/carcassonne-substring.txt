@@ -1,0 +1,35 @@
+{
+  "string": "cassonn",
+  "topN": 10,
+  "searchers": [
+    {
+      "type": "fuzzy",
+      "minQuality": 0.3
+    },
+    {
+      "type": "substring",
+      "minQuality": 0
+    },
+    {
+      "type": "prefix",
+      "minQuality": 0
+    }
+  ]
+}
+
+{
+  "queryDuration": 4
+}
+
+Rank    Entity                                  Matched String                          Quality 
+
+1       Carcassonne                             Carcassonne                             1.64    
+2       Cassone                                 Cassone                                 0.75    
+3       Casson                                  Casson                                  0.71    
+4       Canossa                                 Canossa                                 0.59    
+5       Cassola                                 Cassola                                 0.59    
+6       Cassop                                  Cassop                                  0.59    
+7       Cassou                                  Cassou                                  0.59    
+8       Cassoneca                               Cassoneca                               0.57    
+9       Cassongue                               Cassongue                               0.57    
+10      Cassoday                                Cassoday                                0.53    

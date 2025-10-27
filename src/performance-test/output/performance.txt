@@ -1,0 +1,41 @@
+{
+  "testParameters": {
+    "testSeed": 0,
+    "numberOfQueries": 2000,
+    "topN": 10,
+    "searchers": [
+      {
+        "type": "fuzzy",
+        "minQuality": 0.3
+      },
+      {
+        "type": "substring",
+        "minQuality": 0
+      },
+      {
+        "type": "prefix",
+        "minQuality": 0
+      }
+    ]
+  },
+  "queryCounts": {
+    "prefixQueries": 1003,
+    "substringQueries": 997,
+    "transpositionErrors": 299
+  },
+  "totalDuration": 2297.086775000058,
+  "averageDuration": 1.148543387500029,
+  "standardDeviation": 1.1531595937361367,
+  "fastest": {
+    "query": "Roui",
+    "duration": 0.013291999999637483
+  },
+  "slowest": {
+    "query": "浩庄",
+    "duration": 9.378167000000758
+  },
+  "longest": {
+    "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
+    "duration": 2.9190419999995356
+  }
+}
