@@ -25,7 +25,6 @@ import { SuffixArraySearcher } from '../suffix-array-searchers/suffix-array-sear
  * Factory for creating entity searchers.
  */
 export class EntitySearcherFactory {
-
   /**
    * Creates a new entity searcher.
    * @typeParam TEntity The type of the entities.

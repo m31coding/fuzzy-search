@@ -13,7 +13,6 @@ import { StringComparison } from './string-comparison.js';
  * Creates a suffix array for a given string.
  */
 export class SuffixArray {
-
   /**
    * The end-of-chain marker.
    */
@@ -213,7 +212,7 @@ class SuffixRank {
   public constructor(
     public readonly head: number,
     public readonly rank: number
-  ) { }
+  ) {}
 }
 
 /**
@@ -228,5 +227,5 @@ class Chain {
   public constructor(
     public head: number,
     public readonly length: number
-  ) { }
+  ) {}
 }

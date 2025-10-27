@@ -2,7 +2,6 @@
  * Provides string comparison utilities.
  */
 export class StringComparison {
-
   /**
    * Compares two substrings of the given strings using ordinal comparison.
    *

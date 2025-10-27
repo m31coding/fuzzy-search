@@ -27,7 +27,7 @@ export class SortingEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
   public constructor(
     private readonly sortOrder: SortOrder,
     private readonly entitySearcher: EntitySearcher<TEntity, TId>
-  ) { }
+  ) {}
 
   /**
    * {@inheritDoc EntitySearcher.indexEntities}
@@ -66,8 +66,8 @@ export class SortingEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
     matches.sort((m1, m2) => {
       return (
         m1.quality > m2.quality ? -1
-          : m1.quality < m2.quality ? 1
-            : this.collator.compare(m1.matchedString, m2.matchedString)
+        : m1.quality < m2.quality ? 1
+        : this.collator.compare(m1.matchedString, m2.matchedString)
       );
     });
   }

@@ -24,7 +24,7 @@ export class Config {
     public normalizerConfig: NormalizerConfig,
     public fuzzySearchConfig?: FuzzySearchConfig,
     public substringSearchConfig?: SubstringSearchConfig
-  ) { }
+  ) {}
 
   /**
    * Creates an opinionated default configuration.
