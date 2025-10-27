@@ -11,3 +11,4 @@ export { SearcherType } from './searcher-type.js';
 export { StringSearcher } from './string-searcher.js';
 export { StringSearchQuery } from './string-search-query.js';
 export { SearcherSpec, FuzzySearcher, SubstringSearcher, PrefixSearcher } from './searcher-spec.js';
+export { SortOrder } from './sort-order.js';

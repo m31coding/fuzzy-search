@@ -4,7 +4,7 @@ import { EntitySearcher } from '../interfaces/entity-searcher.js';
 import { Memento } from '../interfaces/memento.js';
 import { Meta } from '../interfaces/meta.js';
 import { Query } from '../interfaces/query.js';
-import { SortOrder } from '../sort-order.js';
+import { SortOrder } from '../interfaces/sort-order.js';
 
 /**
  * Sorts entity matches according to the specified order after retrieval.
@@ -27,7 +27,7 @@ export class SortingEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
   public constructor(
     private readonly sortOrder: SortOrder,
     private readonly entitySearcher: EntitySearcher<TEntity, TId>
-  ) {}
+  ) { }
 
   /**
    * {@inheritDoc EntitySearcher.indexEntities}
@@ -66,8 +66,8 @@ export class SortingEntitySearcher<TEntity, TId> implements EntitySearcher<TEnti
     matches.sort((m1, m2) => {
       return (
         m1.quality > m2.quality ? -1
-        : m1.quality < m2.quality ? 1
-        : this.collator.compare(m1.matchedString, m2.matchedString)
+          : m1.quality < m2.quality ? 1
+            : this.collator.compare(m1.matchedString, m2.matchedString)
       );
     });
   }

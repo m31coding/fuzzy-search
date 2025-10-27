@@ -5,7 +5,7 @@ import { FuzzySearcher, PrefixSearcher, SubstringSearcher } from './interfaces/s
 import { SearcherType } from './interfaces/searcher-type.js';
 import { LatinReplacements } from './normalization/latin-replacements.js';
 import { SearcherFactory } from './searcher-factory.js';
-import { SortOrder } from './sort-order.js';
+import { SortOrder } from './interfaces/sort-order.js';
 
 ///
 /// Indexing configuration
@@ -37,8 +37,8 @@ config.fuzzySearchConfig!.paddingMiddle = '!$$';
 config.fuzzySearchConfig!.ngramN = 3;
 config.fuzzySearchConfig!.transformNgram = (ngram) =>
   ngram.endsWith('$') ? null
-  : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
-  : ngram;
+    : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
+      : ngram;
 config.fuzzySearchConfig!.inequalityPenalty = 0.05;
 
 config.substringSearchConfig!.suffixArraySeparator = '$';
@@ -68,8 +68,8 @@ config.fuzzySearchConfig!.paddingMiddle = 'νμμ';
 config.fuzzySearchConfig!.ngramN = 3;
 config.fuzzySearchConfig!.transformNgram = (ngram) =>
   ngram.endsWith('μ') ? null
-  : ngram.indexOf('μ') === -1 ? ngram.split('').sort().join('')
-  : ngram;
+    : ngram.indexOf('μ') === -1 ? ngram.split('').sort().join('')
+      : ngram;
 config.fuzzySearchConfig!.inequalityPenalty = 0.05;
 
 config.substringSearchConfig!.suffixArraySeparator = 'μ';

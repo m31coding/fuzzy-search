@@ -14,6 +14,7 @@ import { UsableSearchers } from '../commons/usable-searchers.js';
  * @typeParam TId The type of the entity ids.
  */
 export class FastEntitySearcher<TEntity, TId> implements EntitySearcher<TEntity, TId> {
+
   /**
    * Creates a new instance of the FastEntitySearcher class.
    * @typeParam TEntity The type of the entities.
@@ -24,7 +25,7 @@ export class FastEntitySearcher<TEntity, TId> implements EntitySearcher<TEntity,
   public constructor(
     private readonly entitySearcher: EntitySearcher<TEntity, TId>,
     private readonly searcherTypes: SearcherType[]
-  ) {}
+  ) { }
 
   /**
    * {@inheritDoc EntitySearcher.indexEntities}
