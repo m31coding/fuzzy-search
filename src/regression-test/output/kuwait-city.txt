@@ -18,7 +18,7 @@
 }
 
 {
-  "queryDuration": 3
+  "queryDuration": 2
 }
 
 Rank    Entity                                  Matched String                          Quality 
