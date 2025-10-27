@@ -23,19 +23,19 @@
     "substringQueries": 997,
     "transpositionErrors": 299
   },
-  "totalDuration": 2851.210188999972,
-  "averageDuration": 1.425605094499986,
-  "standardDeviation": 1.4213752363807146,
+  "totalDuration": 2297.086775000058,
+  "averageDuration": 1.148543387500029,
+  "standardDeviation": 1.1531595937361367,
   "fastest": {
-    "query": "gaar",
-    "duration": 0.01508300000023155
+    "query": "Roui",
+    "duration": 0.013291999999637483
   },
   "slowest": {
     "query": "浩庄",
-    "duration": 12.020540999999866
+    "duration": 9.378167000000758
   },
   "longest": {
     "query": "Şehit Jandarma Binbaşı Kıvanç Cesur M",
-    "duration": 3.677625000000262
+    "duration": 2.9190419999995356
   }
 }
