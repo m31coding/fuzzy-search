@@ -7,7 +7,7 @@ class Person {
     public id: number,
     public firstName: string,
     public lastName: string
-  ) { }
+  ) {}
 }
 
 function log<T>(obj: T): void {
