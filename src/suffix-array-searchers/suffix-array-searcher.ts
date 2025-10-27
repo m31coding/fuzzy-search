@@ -34,7 +34,7 @@ export class SuffixArraySearcher implements StringSearcher {
    */
   index(terms: string[]): Meta {
     const start = performance.now();
-    this.str = this.separator + terms.join(this.separator) + this.separator;
+    this.str = terms.length > 0 ? this.separator + terms.join(this.separator) + this.separator : '';
     this.suffixArray = SuffixArray.create(this.str);
     this.indexToTermIndex = new Int32Array(this.suffixArray.length);
     this.termLengths = new Int32Array(terms.length);
