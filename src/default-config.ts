@@ -1,11 +1,11 @@
-import { StringUtilities } from './commons/string-utilities.js';
-import { Config } from './config.js';
-import { Query } from './interfaces/query.js';
 import { FuzzySearcher, PrefixSearcher, SubstringSearcher } from './interfaces/searcher-spec.js';
-import { SearcherType } from './interfaces/searcher-type.js';
+import { Config } from './config.js';
 import { LatinReplacements } from './normalization/latin-replacements.js';
+import { Query } from './interfaces/query.js';
 import { SearcherFactory } from './searcher-factory.js';
+import { SearcherType } from './interfaces/searcher-type.js';
 import { SortOrder } from './interfaces/sort-order.js';
+import { StringUtilities } from './commons/string-utilities.js';
 
 ///
 /// Indexing configuration
@@ -13,7 +13,7 @@ import { SortOrder } from './interfaces/sort-order.js';
 
 const config = Config.createDefaultConfig();
 // make adjustments as needed
-const searcher = SearcherFactory.createSearcher(config);
+const _searcher = SearcherFactory.createSearcher(config);
 
 /**
  * The default configuration has been chosen carefully. There are only a few specific scenarios that require
@@ -37,8 +37,8 @@ config.fuzzySearchConfig!.paddingMiddle = '!$$';
 config.fuzzySearchConfig!.ngramN = 3;
 config.fuzzySearchConfig!.transformNgram = (ngram) =>
   ngram.endsWith('$') ? null
-  : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
-  : ngram;
+    : ngram.indexOf('$') === -1 ? ngram.split('').sort().join('')
+      : ngram;
 config.fuzzySearchConfig!.inequalityPenalty = 0.05;
 
 config.substringSearchConfig!.suffixArraySeparator = '$';
@@ -68,8 +68,8 @@ config.fuzzySearchConfig!.paddingMiddle = 'νμμ';
 config.fuzzySearchConfig!.ngramN = 3;
 config.fuzzySearchConfig!.transformNgram = (ngram) =>
   ngram.endsWith('μ') ? null
-  : ngram.indexOf('μ') === -1 ? ngram.split('').sort().join('')
-  : ngram;
+    : ngram.indexOf('μ') === -1 ? ngram.split('').sort().join('')
+      : ngram;
 config.fuzzySearchConfig!.inequalityPenalty = 0.05;
 
 config.substringSearchConfig!.suffixArraySeparator = 'μ';
@@ -82,9 +82,9 @@ config.substringSearchConfig!.suffixArraySeparator = 'μ';
  * The following two query instances are equivalent:
  */
 
-const query = new Query('alice kign');
+const _query = new Query('alice kign');
 
-const defaultQuery = new Query('alice kign', 10, [
+const _defaultQuery = new Query('alice kign', 10, [
   new FuzzySearcher(0.3),
   new SubstringSearcher(0),
   new PrefixSearcher(0)
@@ -94,7 +94,7 @@ const defaultQuery = new Query('alice kign', 10, [
  * Adjust the topN parameter as needed, to obtain more or fewer matches:
  */
 
-const queryTop25 = new Query('alice kign', 25);
+const _queryTop25 = new Query('alice kign', 25);
 
 /**
  * The quality thresholds are well chosen for general purpose searching. Quality 0 for the substring and prefix

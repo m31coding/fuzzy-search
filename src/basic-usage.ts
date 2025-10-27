@@ -7,10 +7,10 @@ class Person {
     public id: number,
     public firstName: string,
     public lastName: string
-  ) {}
+  ) { }
 }
 
-function log(obj: any): void {
+function log<T>(obj: T): void {
   console.log(JSON.stringify(obj, null, 2));
 }
 

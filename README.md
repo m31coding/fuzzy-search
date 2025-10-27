@@ -58,8 +58,8 @@ const persons = [
   { id: 11923, firstName: 'Charlie', lastName: 'Rook' }
 ];
 
-function log(obj: any): void {
-    console.log(JSON.stringify(obj, null, 2));
+function log<T>(obj: T): void {
+  console.log(JSON.stringify(obj, null, 2));
 }
 
 const indexingMeta = searcher.indexEntities(
